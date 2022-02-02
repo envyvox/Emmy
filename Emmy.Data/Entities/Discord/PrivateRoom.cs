@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Emmy.Data.Entities.Discord
 {
-    public class PrivateRoom : IUniqueIdentifiedEntity, ICreatedEntity, IUpdatedEntity
+    public class PrivateRoom : IUniqueIdentifiedEntity, IExpirationEntity, ICreatedEntity, IUpdatedEntity
     {
         public Guid Id { get; set; }
         public long UserId { get; set; }

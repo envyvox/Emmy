@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Emmy.Data.Entities.User
 {
-    public class UserPremium : IUniqueIdentifiedEntity, ICreatedEntity, IUpdatedEntity
+    public class UserPremium : IUniqueIdentifiedEntity, IExpirationEntity, ICreatedEntity, IUpdatedEntity
     {
         public Guid Id { get; set; }
         public long UserId { get; set; }
