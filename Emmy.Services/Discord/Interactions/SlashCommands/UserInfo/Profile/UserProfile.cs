@@ -3,11 +3,9 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
 using Emmy.Data.Enums;
-using Emmy.Data.Enums.Discord;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
-using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Banner.Queries;
 using Emmy.Services.Game.Relationship.Queries;
@@ -16,7 +14,6 @@ using MediatR;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Profile
 {
-    [RequireModuleEnabled(CommandModule.Profile)]
     public class UserProfile : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;

@@ -39,7 +39,6 @@ namespace Emmy.Data
         public DbSet<Localization> Localizations { get; set; }
         public DbSet<Relationship> Relationships { get; set; }
         public DbSet<ShopRole> ShopRoles { get; set; }
-        public DbSet<WorldModule> WorldModules { get; set; }
         public DbSet<WorldProperty> WorldProperties { get; set; }
         public DbSet<WorldState> WorldStates { get; set; }
 
