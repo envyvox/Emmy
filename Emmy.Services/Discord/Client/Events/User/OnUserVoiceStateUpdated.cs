@@ -32,6 +32,7 @@ namespace Emmy.Services.Discord.Client.Events.User
             var createRoomParent = channels[Channel.CreateRoomParent].Id;
             var createRoom = channels[Channel.CreateRoom].Id;
             var familyParent = channels[Channel.PrivateRoomParent].Id;
+            var loveRoomParent = channels[Channel.LoveRoomParent].Id;
             var afkRoom = channels[Channel.Afk].Id;
 
             var oldChannel = request.OldSocketVoiceState.VoiceChannel;
@@ -89,6 +90,22 @@ namespace Emmy.Services.Discord.Client.Events.User
                         startEmbeddedActivities: PermValue.Allow));
             }
 
+            if (newChannel?.CategoryId == loveRoomParent &&
+                newChannel.Users.Count == 1)
+            {
+                await newChannel.AddPermissionOverwriteAsync(newChannel.Guild.EveryoneRole,
+                    new OverwritePermissions(
+                        createInstantInvite: PermValue.Deny,
+                        manageChannel: PermValue.Deny,
+                        manageRoles: PermValue.Deny,
+                        viewChannel: PermValue.Allow,
+                        connect: PermValue.Deny,
+                        speak: PermValue.Allow,
+                        useVoiceActivation: PermValue.Allow,
+                        stream: PermValue.Allow,
+                        startEmbeddedActivities: PermValue.Allow));
+            }
+
             if (oldChannel?.CategoryId == createRoomParent &&
                 oldChannel.Users.Count == 0 &&
                 oldChannel.Id != createRoom)
@@ -113,6 +130,22 @@ namespace Emmy.Services.Discord.Client.Events.User
                         moveMembers: PermValue.Deny,
                         useVoiceActivation: PermValue.Allow,
                         prioritySpeaker: PermValue.Deny,
+                        stream: PermValue.Allow,
+                        startEmbeddedActivities: PermValue.Allow));
+            }
+
+            if (oldChannel?.CategoryId == loveRoomParent &&
+                oldChannel.Users.Count == 0)
+            {
+                await oldChannel.AddPermissionOverwriteAsync(oldChannel.Guild.EveryoneRole,
+                    new OverwritePermissions(
+                        createInstantInvite: PermValue.Deny,
+                        manageChannel: PermValue.Deny,
+                        manageRoles: PermValue.Deny,
+                        viewChannel: PermValue.Deny,
+                        connect: PermValue.Deny,
+                        speak: PermValue.Allow,
+                        useVoiceActivation: PermValue.Allow,
                         stream: PermValue.Allow,
                         startEmbeddedActivities: PermValue.Allow));
             }
