@@ -1,0 +1,27 @@
+﻿using System;
+using AutoMapper;
+using Emmy.Data.Enums;
+
+namespace Emmy.Services.Game.User.Models
+{
+    public record UserDto(
+        long Id,
+        string About,
+        uint Level,
+        uint Xp,
+        Fraction Fraction,
+        Location Location,
+        Title Title,
+        Gender Gender,
+        Cube Cube,
+        string CommandColor,
+        bool IsPremium,
+        bool OnGuild,
+        DateTimeOffset CreatedAt,
+        DateTimeOffset UpdatedAt);
+
+    public class UserProfile : Profile
+    {
+        public UserProfile() => CreateMap<Data.Entities.User.User, UserDto>();
+    }
+}
