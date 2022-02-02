@@ -22,7 +22,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
         }
 
         [SlashCommand(
-            "гарберобная",
+            "гардеробная",
             "Создавай и управляй своей собственной ролью")]
         public async Task Execute()
         {

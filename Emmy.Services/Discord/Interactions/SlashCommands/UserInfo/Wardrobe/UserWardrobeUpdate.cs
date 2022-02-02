@@ -24,7 +24,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
         }
 
         [SlashCommand(
-            "гарберобная-обновить",
+            "гардеробная-обновить",
             "Обнови свою собственную роль благодаря гардеробной")]
         public async Task Execute(
             [Summary("название", "Новое название твоей собственной роли")]
