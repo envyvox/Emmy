@@ -3,6 +3,7 @@
     public enum Statistic : byte
     {
         Messages = 1,
-        MinutesInVoice = 2
+        MinutesInVoice = 2,
+        CasinoBet = 3,
     }
 }

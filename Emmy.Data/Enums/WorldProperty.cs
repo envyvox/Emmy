@@ -7,6 +7,7 @@
         TransferCurrencyTaxPercentWithPremium = 3,
         PremiumPrice30days = 4,
         PremiumPrice365days = 5,
-        PremiumFullPrice365days = 6
+        PremiumFullPrice365days = 6,
+        CasinoBetCooldownDurationInMinutes = 7
     }
 }
