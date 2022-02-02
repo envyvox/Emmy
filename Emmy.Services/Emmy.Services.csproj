@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
+      <PackageReference Include="CoordinateSharp" Version="2.12.1.1" />
+      <PackageReference Include="Discord.Net.Labs" Version="3.6.1" />
+      <PackageReference Include="Hangfire" Version="1.7.28" />
+      <PackageReference Include="Hangfire.Core" Version="1.7.28" />
+      <PackageReference Include="Humanizer.Core" Version="2.13.14" />
+      <PackageReference Include="Humanizer.Core.ru" Version="2.13.14" />
+      <PackageReference Include="MediatR" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Discord\CommunityDesc" />
+      <Folder Include="Discord\Role" />
+      <Folder Include="Game\Donate\Models" />
+      <Folder Include="Game\Donate\Queries" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Emmy.Data\Emmy.Data.csproj" />
+    </ItemGroup>
+
+</Project>

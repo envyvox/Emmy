@@ -1,0 +1,7 @@
+version: '3.5'
+services:
+  bot:
+    image: registry.envyvox.app/emmy
+    build:
+      context: .
+      dockerfile: ./Emmy/Dockerfile
