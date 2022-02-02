@@ -43,6 +43,18 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
         {
             await Context.Interaction.DeferAsync();
 
+            if (Context.User.Id == mentionedUser.Id)
+            {
+                throw new GameUserExpectedException(
+                    "нельзя передать валюту самому себе.");
+            }
+
+            if (mentionedUser.IsBot)
+            {
+                throw new GameUserExpectedException(
+                    "нельзя передать валюту боту");
+            }
+
             var currency = (Currency) currencyHashcode;
 
             var emotes = DiscordRepository.Emotes;

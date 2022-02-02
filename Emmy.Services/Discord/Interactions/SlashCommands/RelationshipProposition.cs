@@ -36,6 +36,18 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
 
+            if (Context.User.Id == mentionedUser.Id)
+            {
+                throw new GameUserExpectedException(
+                    "нельзя предложить отношения самому себе.");
+            }
+
+            if (mentionedUser.IsBot)
+            {
+                throw new GameUserExpectedException(
+                    "нельзя предложить отношения боту.");
+            }
+
             if (user.Gender is Gender.None)
             {
                 throw new GameUserExpectedException(
