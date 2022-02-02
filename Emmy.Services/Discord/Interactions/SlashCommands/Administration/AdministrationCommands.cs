@@ -2,22 +2,17 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
-using Emmy.Data;
 using Emmy.Data.Enums;
 using Emmy.Data.Enums.Discord;
-using Emmy.Data.Extensions;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
-using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Role.Commands;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Currency.Commands;
 using Emmy.Services.Game.Donate.Commands;
 using Emmy.Services.Game.User.Commands;
-using Emmy.Services.Game.User.Queries;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using static Discord.Emote;
 using static Emmy.Data.Enums.Discord.Role;
 
@@ -28,13 +23,9 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
     public class AdministrationCommands : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;
-        private readonly AppDbContext _db;
 
-        public AdministrationCommands(
-            IMediator mediator,
-            DbContextOptions options)
+        public AdministrationCommands(IMediator mediator)
         {
-            _db = new AppDbContext(options);
             _mediator = mediator;
         }
 
