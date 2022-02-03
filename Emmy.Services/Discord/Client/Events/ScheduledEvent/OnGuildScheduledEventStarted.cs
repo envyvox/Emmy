@@ -34,7 +34,7 @@ namespace Emmy.Services.Discord.Client.Events.ScheduledEvent
             {
                 var emotes = DiscordRepository.Emotes;
                 var channels = DiscordRepository.Channels;
-                var channel = await _mediator.Send(new GetSocketTextChannelQuery(channels[Channel.Chat].Id));
+                var channel = await _mediator.Send(new GetSocketTextChannelQuery(channels[Channel.EventLobby].Id));
                 var usersString = restUsers.Aggregate(string.Empty, (s, v) => s + $"{v.Mention}, ");
 
                 await channel.SendMessageAsync(

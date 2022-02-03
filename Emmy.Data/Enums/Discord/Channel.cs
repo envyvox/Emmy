@@ -33,6 +33,7 @@ namespace Emmy.Data.Enums.Discord
         SearchMobileGaming,
 
         EventParent,
+        EventLobby,
 
         CommunityDescParent,
         CommunityDescHowItWork,
@@ -111,6 +112,7 @@ namespace Emmy.Data.Enums.Discord
                 Channel.SearchMobileGaming => Emote + "mobile-gaming",
 
                 Channel.EventParent => "мероприятия",
+                Channel.EventLobby => "Лобби мероприятия",
 
                 Channel.CommunityDescParent => "доска сообщества",
                 Channel.CommunityDescHowItWork => Emote + "как-работает",
@@ -187,6 +189,7 @@ namespace Emmy.Data.Enums.Discord
                 Channel.SearchMobileGaming => ChannelType.Text,
 
                 Channel.EventParent => ChannelType.Category,
+                Channel.EventLobby => ChannelType.Voice,
 
                 Channel.CommunityDescParent => ChannelType.Category,
                 Channel.CommunityDescHowItWork => ChannelType.Text,
@@ -253,6 +256,8 @@ namespace Emmy.Data.Enums.Discord
                 Channel.SearchAmongUs => Channel.SearchParent,
                 Channel.SearchRust => Channel.SearchParent,
                 Channel.SearchMobileGaming => Channel.SearchParent,
+
+                Channel.EventLobby => Channel.EventParent,
 
                 Channel.CommunityDescHowItWork => Channel.CommunityDescParent,
                 Channel.Photos => Channel.CommunityDescParent,
