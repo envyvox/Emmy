@@ -17,7 +17,6 @@ using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredRoles;
 using Emmy.Services.Hangfire.BackgroundJobs.VoiceStatistic;
 using Hangfire;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -28,7 +27,6 @@ namespace Emmy.Services.Discord.Client.Events
 
     public class OnReadyHandler : IRequestHandler<OnReady>
     {
-        private readonly IWebHostEnvironment _env;
         private readonly DiscordClientOptions _options;
         private readonly ILogger<OnReadyHandler> _logger;
         private readonly IMediator _mediator;
@@ -36,14 +34,12 @@ namespace Emmy.Services.Discord.Client.Events
         private readonly TimeZoneInfo _timeZoneInfo;
 
         public OnReadyHandler(
-            IWebHostEnvironment env,
             IOptions<DiscordClientOptions> options,
             ILogger<OnReadyHandler> logger,
             IMediator mediator,
             IHostApplicationLifetime lifetime,
             TimeZoneInfo timeZoneInfo)
         {
-            _env = env;
             _options = options.Value;
             _logger = logger;
             _mediator = mediator;
@@ -92,21 +88,11 @@ namespace Emmy.Services.Discord.Client.Events
                     x => x.Execute(),
                     Cron.Weekly, _timeZoneInfo);
 
-                if (_env.IsDevelopment())
-                {
-                    _logger.LogInformation(
-                        "Env is development, registering commands to guild {GuildId}",
-                        _options.GuildId);
+                _logger.LogInformation(
+                    "Registering commands to guild {GuildId}",
+                    _options.GuildId);
 
-                    await request.InteractionService.RegisterCommandsToGuildAsync(_options.GuildId);
-                }
-                else
-                {
-                    _logger.LogInformation(
-                        "Env is production, registering commands globally");
-
-                    await request.InteractionService.RegisterCommandsGloballyAsync();
-                }
+                await request.InteractionService.RegisterCommandsToGuildAsync(_options.GuildId);
 
                 _logger.LogInformation(
                     "Bot started");
