@@ -10,6 +10,8 @@ using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Emote.Models;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Container.Models;
+using Emmy.Services.Game.Container.Queries;
 using Emmy.Services.Game.Currency.Models;
 using Emmy.Services.Game.Currency.Queries;
 using Emmy.Services.Game.Key.Models;
@@ -44,6 +46,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
             _emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var userCurrencies = await _mediator.Send(new GetUserCurrenciesQuery(user.Id));
+            var userContainers = await _mediator.Send(new GetUserContainersQuery(user.Id));
             var userKeys = await _mediator.Send(new GetUserKeysQuery(user.Id));
 
             var embed = new EmbedBuilder()
@@ -54,6 +57,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     "все полученные предметы попадают сюда:" +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Валюта", DisplayUserCurrencies(userCurrencies))
+                .AddField("Контейнеры", DisplayUserContainers(userContainers))
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.UserInventory)));
 
             if (userKeys.Any())
@@ -73,6 +77,19 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     s +
                     $"{_emotes.GetEmote(v.ToString())} {(userCurrencies.ContainsKey(v) ? userCurrencies[v].Amount : 0)} " +
                     $"{_local.Localize(LocalizationCategory.Currency, v.ToString(), userCurrencies.ContainsKey(v) ? userCurrencies[v].Amount : 0)}, ");
+
+            return str.RemoveFromEnd(2);
+        }
+
+        private string DisplayUserContainers(Dictionary<Container, UserContainerDto> userContainers)
+        {
+            var str = Enum
+                .GetValues(typeof(Container))
+                .Cast<Container>()
+                .Aggregate(string.Empty, (s, v) =>
+                    s +
+                    $"{_emotes.GetEmote(v.EmoteName())} {(userContainers.ContainsKey(v) ? userContainers[v].Amount : 0)} " +
+                    $"{_local.Localize(LocalizationCategory.Container, v.ToString(), userContainers.ContainsKey(v) ? userContainers[v].Amount : 0)}, ");
 
             return str.RemoveFromEnd(2);
         }
