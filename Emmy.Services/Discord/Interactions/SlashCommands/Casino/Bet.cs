@@ -46,7 +46,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Casino
             [Summary("количество", "Количество которое ты хочешь поставить")] [MinValue(20)] [MaxValue(200)]
             uint amount)
         {
-            await Context.Interaction.DeferAsync(true);
+            await Context.Interaction.DeferAsync();
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
