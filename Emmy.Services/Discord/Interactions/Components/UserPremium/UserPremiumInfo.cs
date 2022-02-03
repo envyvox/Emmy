@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
+using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Extensions;
@@ -26,6 +27,13 @@ namespace Emmy.Services.Discord.Interactions.Components.UserPremium
 
             var page = uint.Parse(pageString);
 
+            var fromMainComponent = false;
+            if (page == 0)
+            {
+                fromMainComponent = true;
+                page = 1;
+            }
+
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var image = page switch
@@ -41,8 +49,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserPremium
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"нажимай на кнопки **Назад** или **Вперед** чтобы ознакомиться со всеми преимуществами статуса {emotes.GetEmote("Premium")} премиума.")
-                .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(image)))
-                .Build();
+                .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(image)));
 
             var components = new ComponentBuilder()
                 .WithButton(
@@ -55,11 +62,18 @@ namespace Emmy.Services.Discord.Interactions.Components.UserPremium
                     disabled: page is 3)
                 .Build();
 
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            if (fromMainComponent)
             {
-                x.Embed = embed;
-                x.Components = components;
-            });
+                await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components, Ephemeral: true));
+            }
+            else
+            {
+                await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                {
+                    x.Embed = embed.Build();
+                    x.Components = components;
+                });
+            }
         }
     }
 }

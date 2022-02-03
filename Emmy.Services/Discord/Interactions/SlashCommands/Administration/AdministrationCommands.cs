@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
 using Emmy.Data.Enums;
 using Emmy.Data.Enums.Discord;
+using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
 using Emmy.Services.Discord.Image.Queries;
@@ -11,7 +14,10 @@ using Emmy.Services.Discord.Role.Commands;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Currency.Commands;
 using Emmy.Services.Game.Donate.Commands;
+using Emmy.Services.Game.Localization;
+using Emmy.Services.Game.Premium.Queries;
 using Emmy.Services.Game.User.Commands;
+using Emmy.Services.Game.World.Queries;
 using MediatR;
 using static Discord.Emote;
 using static Emmy.Data.Enums.Discord.Role;
@@ -23,10 +29,14 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
     public class AdministrationCommands : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;
+        private readonly ILocalizationService _local;
 
-        public AdministrationCommands(IMediator mediator)
+        public AdministrationCommands(
+            IMediator mediator,
+            ILocalizationService local)
         {
             _mediator = mediator;
+            _local = local;
         }
 
         [SlashCommand("add-currency", "Add currency to user")]
@@ -277,6 +287,71 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
 
             // todo game info messages
 
+            await Context.Interaction.FollowupAsync("Ok");
+        }
+
+        [SlashCommand("preset-donation-info", "Sends a preset message with donate info")]
+        public async Task AdmPresetDonationInfoTask()
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            var emotes = DiscordRepository.Emotes;
+            var roles = DiscordRepository.Roles;
+
+            var embed = new EmbedBuilder()
+                .WithDefaultColor()
+                .WithAuthor("Поддержка сервера")
+                .WithDescription(
+                    $"Ты можешь поддержать развие сервера копеечкой и получить {emotes.GetEmote(Currency.Lobbs.ToString())} лоббсы в благодарность." +
+                    $"\n\n{emotes.GetEmote("Arrow")} За каждый пожертвованный {emotes.GetEmote("Ruble")} рубль ты получишь {emotes.GetEmote(Currency.Lobbs.ToString())} {_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString())}." +
+                    $"\n{StringExtensions.EmptyChar}")
+                .AddField("Реквизиты",
+                    $"{emotes.GetEmote("Monobank")} `5375 4141 0460 6651` GARBUZOV EUGENE" +
+                    $"\n{emotes.GetEmote("Sberbank")} `4276 6800 1181 7390` CHERNYKH TATIANA" +
+                    $"\n\n{emotes.GetEmote("Arrow")} После перевода необходимо сделать скриншот оплаты и отправить в личные сообщения {roles[Data.Enums.Discord.Role.Administration].Id.ToMention(MentionType.Role)}.")
+                .WithFooter("Ты можешь обратиться в личные сообщения по любым вопросам")
+                .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.DonateInfo)));
+
+            await Context.Channel.SendMessageAsync("", false, embed.Build());
+            await Context.Interaction.FollowupAsync("Ok");
+        }
+
+        [SlashCommand("preset-premium-info", "Sends a preset message with premium info")]
+        public async Task AdmPresetPremiumInfoTask()
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            var emotes = DiscordRepository.Emotes;
+
+            var premium30daysPrice = await _mediator.Send(new GetWorldPropertyValueQuery(
+                WorldProperty.PremiumPrice30days));
+            var premium365daysPrice = await _mediator.Send(new GetWorldPropertyValueQuery(
+                WorldProperty.PremiumPrice365days));
+            var premium365daysFullPrice = await _mediator.Send(new GetWorldPropertyValueQuery(
+                WorldProperty.PremiumFullPrice365days));
+
+            var embed = new EmbedBuilder()
+                .WithDefaultColor()
+                .WithAuthor("Премиум")
+                .WithDescription(
+                    $"Тут отображается информация о статусе {emotes.GetEmote("Premium")} премиум:" +
+                    $"\n{StringExtensions.EmptyChar}")
+                .AddField("Стоимость подписки",
+                    $"{emotes.GetEmote("Premium")} премиум на 30 дней стоит {emotes.GetEmote(Currency.Lobbs.ToString())} {premium30daysPrice} {_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), premium30daysPrice)}" +
+                    $"\n{emotes.GetEmote("Premium")} премиум на 365 дней стоит {emotes.GetEmote(Currency.Lobbs.ToString())} ~~{premium365daysFullPrice}~~ {premium365daysPrice} {_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), premium365daysPrice)}" +
+                    $"\n{emotes.GetEmote("Arrow")} Экономия {emotes.GetEmote(Currency.Lobbs.ToString())} {premium365daysFullPrice - premium365daysPrice} {_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), premium365daysFullPrice - premium365daysPrice)}")
+                .AddField(StringExtensions.EmptyChar,
+                    $"Для того чтобы приобрести, продлить или проверить свою подписку на статус {emotes.GetEmote("Premium")} премиум загляни в `/премиум`.")
+                .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.GetPremium)));
+
+            var components = new ComponentBuilder()
+                .WithButton(
+                    "Узнать о преимуществах премиум статуса",
+                    "user-premium-info:0",
+                    ButtonStyle.Secondary)
+                .Build();
+
+            await Context.Channel.SendMessageAsync("", false, embed.Build(), components: components);
             await Context.Interaction.FollowupAsync("Ok");
         }
     }

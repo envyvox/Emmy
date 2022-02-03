@@ -48,6 +48,7 @@ namespace Emmy.Data.Enums.Discord
         LibraryParent,
         Rules,
         Giveaways,
+        Donate,
         Suggestions,
 
         TavernParent,
@@ -127,6 +128,7 @@ namespace Emmy.Data.Enums.Discord
                 Channel.LibraryParent => "великая «тосёкан»",
                 Channel.Rules => Emote + "правила",
                 Channel.Giveaways => Emote + "розыгрыши",
+                Channel.Donate => Emote + "поддержка",
                 Channel.Suggestions => Emote + "предложения",
 
                 Channel.TavernParent => "Таверны",
@@ -204,6 +206,7 @@ namespace Emmy.Data.Enums.Discord
                 Channel.LibraryParent => ChannelType.Category,
                 Channel.Rules => ChannelType.Text,
                 Channel.Giveaways => ChannelType.Text,
+                Channel.Donate => ChannelType.Text,
                 Channel.Suggestions => ChannelType.Text,
 
                 Channel.TavernParent => ChannelType.Category,
@@ -270,6 +273,7 @@ namespace Emmy.Data.Enums.Discord
 
                 Channel.Rules => Channel.LibraryParent,
                 Channel.Giveaways => Channel.LibraryParent,
+                Channel.Donate => Channel.LibraryParent,
                 Channel.Suggestions => Channel.LibraryParent,
 
                 Channel.TavernOne => Channel.TavernParent,
