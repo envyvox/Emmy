@@ -13,7 +13,7 @@ namespace Emmy.Services.Discord.Emote.Extensions
                 ? value.Code
                 : emotes.TryGetValue("Blank", out var blankValue)
                     ? blankValue.Code
-                    : "<:Blank:813150566695174204>";
+                    : "<:Blank:938763187929636906>";
         }
 
         /// <summary> Возвращает строку с иконками, отображающими прогресс-бар на основе заданнного числа. </summary>
