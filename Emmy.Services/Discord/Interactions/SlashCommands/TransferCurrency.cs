@@ -71,6 +71,14 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var targetUser = await _mediator.Send(new GetUserQuery((long) mentionedUser.Id));
             var targetSocketUser = await _mediator.Send(new GetSocketGuildUserQuery(mentionedUser.Id));
+
+            if (targetSocketUser is null)
+            {
+                throw new GameUserExpectedException(
+                    "я не смогла найти указанного пользователя на сервере. " +
+                    "Возможно это ошибка со стороны дискорда и нужно попробовать позже.");
+            }
+
             var taxPercentWithPremium = await _mediator.Send(new GetWorldPropertyValueQuery(
                 WorldProperty.TransferCurrencyTaxPercentWithPremium));
             var taxPercentWithoutPremium = await _mediator.Send(new GetWorldPropertyValueQuery(

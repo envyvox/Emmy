@@ -18,7 +18,7 @@ namespace Emmy.Data.Extensions
         {
             var assembly = Assembly.GetAssembly(typeof(T));
 
-            if (TypesPerAssembly.TryGetValue(assembly, out var configurationTypes) == false)
+            if (TypesPerAssembly.TryGetValue(assembly!, out var configurationTypes) == false)
             {
                 TypesPerAssembly[assembly] = configurationTypes = assembly
                     .GetExportedTypes()

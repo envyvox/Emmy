@@ -21,6 +21,7 @@ namespace Emmy.Data.Extensions
             return _excepts.Any(x => x.Type == type && x.PropertyInfo.Name == propertyInfo.Name);
         }
 
+        // ReSharper disable once InconsistentNaming
         private static PropertyInfo GetPropertyInfo<T, P>(Expression<Func<T, P>> property)
         {
             if (property is null)
