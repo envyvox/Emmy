@@ -5,6 +5,7 @@
         Basic = 1,
         Vote = 2,
         Currency = 3,
-        Key = 4
+        Key = 4,
+        Container = 5
     }
 }

@@ -2,6 +2,15 @@
 {
     public enum Container : byte
     {
-        Common = 1
+        Token = 1,
+        Supply = 2
+    }
+
+    public static class ContainerHelper
+    {
+        public static string EmoteName(this Container container)
+        {
+            return "Container" + container;
+        }
     }
 }

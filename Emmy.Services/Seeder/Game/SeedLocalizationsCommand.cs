@@ -68,6 +68,14 @@ namespace Emmy.Services.Seeder.Game
                             category, KeyType.PrivateRoom.ToString(), "ключ от приватного сектора", "ключа от приватного сектора", "ключей от приватного сектора"));
 
                         break;
+                    case LocalizationCategory.Container:
+                        
+                        commands.Add(new CreateLocalizationCommand(
+                            category, Container.Token.ToString(), "контейнер с токенами", "контейнера с токенами", "контейнеров с токенами"));
+                        commands.Add(new CreateLocalizationCommand(
+                            category, Container.Supply.ToString(), "контейнер с припасами", "контейнера с припасами", "контейнеров с припасами"));
+                        
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
