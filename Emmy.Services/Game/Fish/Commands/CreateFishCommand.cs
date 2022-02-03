@@ -15,9 +15,9 @@ namespace Emmy.Services.Game.Fish.Commands
     public record CreateFishCommand(
             string Name,
             FishRarity Rarity,
+            List<Season> CatchSeasons,
             Weather CatchWeather,
             TimesDayType CatchTimesDay,
-            List<Season> CatchSeasons,
             uint Price)
         : IRequest<FishDto>;
 

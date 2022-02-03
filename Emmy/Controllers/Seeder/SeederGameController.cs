@@ -21,7 +21,13 @@ namespace Emmy.Controllers.Seeder
         {
             return Ok(await _mediator.Send(new SeedBannersCommand()));
         }
-        
+
+        [HttpPost, Route("fishes")]
+        public async Task<ActionResult<TotalAndAffectedCountDto>> SeedFishes()
+        {
+            return Ok(await _mediator.Send(new SeedFishesCommand()));
+        }
+
         [HttpPost, Route("keys")]
         public async Task<ActionResult<TotalAndAffectedCountDto>> SeedKeys()
         {
