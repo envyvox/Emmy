@@ -6,6 +6,7 @@ using Emmy.Data.Entities.Discord;
 using Emmy.Data.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Emmy.Services.Discord.CommunityDesc.Commands
 {
@@ -13,10 +14,14 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
 
     public class CreateContentMessageHandler : IRequestHandler<CreateContentMessageCommand>
     {
+        private readonly ILogger<CreateContentMessageHandler> _logger;
         private readonly AppDbContext _db;
 
-        public CreateContentMessageHandler(DbContextOptions options)
+        public CreateContentMessageHandler(
+            DbContextOptions options,
+            ILogger<CreateContentMessageHandler> logger)
         {
+            _logger = logger;
             _db = new AppDbContext(options);
         }
 
@@ -34,7 +39,7 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
                     $"content message {request.MessageId} from user {request.UserId} in channel {request.ChannelId} already exist");
             }
 
-            await _db.CreateEntity(new ContentMessage
+            var created = await _db.CreateEntity(new ContentMessage
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
@@ -42,6 +47,10 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
                 MessageId = request.MessageId,
                 CreatedAt = DateTimeOffset.UtcNow
             });
+
+            _logger.LogInformation(
+                "Created content message entity {@Entity}",
+                created);
 
             return Unit.Value;
         }

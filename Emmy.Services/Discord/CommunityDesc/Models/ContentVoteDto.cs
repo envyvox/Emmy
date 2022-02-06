@@ -11,7 +11,7 @@ namespace Emmy.Services.Discord.CommunityDesc.Models
         Vote Vote,
         bool IsActive,
         UserDto User,
-        ContentMessageDto Message);
+        ContentMessageDto ContentMessage);
 
     public class ContentVoteProfile : Profile
     {

@@ -10,6 +10,7 @@ using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Extensions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Emmy.Services.Discord.CommunityDesc.Commands
 {
@@ -18,10 +19,14 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
     public class CheckContentMessageDislikesHandler : IRequestHandler<CheckContentMessageDislikesCommand>
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<CheckContentMessageDislikesHandler> _logger;
 
-        public CheckContentMessageDislikesHandler(IMediator mediator)
+        public CheckContentMessageDislikesHandler(
+            IMediator mediator,
+            ILogger<CheckContentMessageDislikesHandler> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(CheckContentMessageDislikesCommand request, CancellationToken cancellationToken)
@@ -32,7 +37,7 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
             if (messageDislikes.Count >= 5)
             {
                 var message = await _mediator.Send(new GetUserMessageQuery(
-                    (ulong) messageDislikes[0].Message.ChannelId, (ulong) messageDislikes[0].Message.MessageId));
+                    (ulong) messageDislikes[0].ContentMessage.ChannelId, (ulong) messageDislikes[0].ContentMessage.MessageId));
                 var emotes = DiscordRepository.Emotes;
 
                 var embed = new EmbedBuilder()
@@ -43,6 +48,10 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
 
                 await _mediator.Send(new SendEmbedToUserCommand(message.Author.Id, embed));
                 await message.DeleteAsync();
+
+                _logger.LogInformation(
+                    "Content message {MessageId} in channel {ChannelId} got 5 dislikes and deleted",
+                    message.Id, message.Channel.Id);
             }
 
             return Unit.Value;

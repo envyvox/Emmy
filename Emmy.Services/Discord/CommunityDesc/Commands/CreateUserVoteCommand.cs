@@ -7,6 +7,7 @@ using Emmy.Data.Enums;
 using Emmy.Data.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Emmy.Services.Discord.CommunityDesc.Commands
 {
@@ -15,14 +16,17 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
     public class CreateUserVoteHandler : IRequestHandler<CreateUserVoteCommand>
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<CreateUserVoteHandler> _logger;
         private readonly AppDbContext _db;
 
         public CreateUserVoteHandler(
             DbContextOptions options,
-            IMediator mediator)
+            IMediator mediator,
+            ILogger<CreateUserVoteHandler> logger)
         {
             _db = new AppDbContext(options);
             _mediator = mediator;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(CreateUserVoteCommand request, CancellationToken cancellationToken)
@@ -30,15 +34,16 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
             var exist = await _db.ContentVotes
                 .AnyAsync(x =>
                     x.UserId == request.UserId &&
-                    x.ContentMessageId == request.ContentMessageId);
+                    x.ContentMessageId == request.ContentMessageId &&
+                    x.Vote == request.Vote);
 
             if (exist)
             {
                 throw new Exception(
-                    $"vote from user {request.UserId} on content message {request.ContentMessageId} already exist");
+                    $"vote {request.Vote.ToString()} from user {request.UserId} on content message {request.ContentMessageId} already exist");
             }
 
-            await _db.CreateEntity(new ContentVote
+            var created = await _db.CreateEntity(new ContentVote
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
@@ -48,6 +53,10 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
                 CreatedAt = DateTimeOffset.UtcNow,
                 UpdatedAt = DateTimeOffset.UtcNow
             });
+
+            _logger.LogInformation(
+                "Created user vote entity {@Entity}",
+                created);
 
             if (request.Vote == Vote.Like)
                 await _mediator.Send(new CheckContentMessageLikesCommand(request.ContentMessageId));

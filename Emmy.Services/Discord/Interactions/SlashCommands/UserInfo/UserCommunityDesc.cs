@@ -143,7 +143,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
         {
             return votes
                 .Where(cv => messages
-                    .Any(cm => cv.Message.Id == cm.Id))
+                    .Any(cm => cv.ContentMessage.Id == cm.Id))
                 .Count(cv => cv.Vote == vote);
         }
 

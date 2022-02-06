@@ -6,6 +6,7 @@ using Emmy.Data.Enums;
 using Emmy.Data.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Emmy.Services.Discord.CommunityDesc.Commands
 {
@@ -13,10 +14,14 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
 
     public class DeactivateUserVoteHandler : IRequestHandler<DeactivateUserVoteCommand>
     {
+        private readonly ILogger<DeactivateUserVoteHandler> _logger;
         private readonly AppDbContext _db;
 
-        public DeactivateUserVoteHandler(DbContextOptions options)
+        public DeactivateUserVoteHandler(
+            DbContextOptions options,
+            ILogger<DeactivateUserVoteHandler> logger)
         {
+            _logger = logger;
             _db = new AppDbContext(options);
         }
 
@@ -38,6 +43,10 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
             entity.UpdatedAt = DateTimeOffset.UtcNow;
 
             await _db.UpdateEntity(entity);
+
+            _logger.LogInformation(
+                "Deactivated user {UserId} {Vote} on content message {ContentMessageId}",
+                request.UserId, request.Vote.ToString(), request.ContentMessageId);
 
             return Unit.Value;
         }
