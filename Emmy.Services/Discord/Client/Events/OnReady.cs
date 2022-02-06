@@ -14,6 +14,7 @@ using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredLoveRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredPremiums;
 using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredPrivateRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredRoles;
+using Emmy.Services.Hangfire.BackgroundJobs.StartNewDay;
 using Emmy.Services.Hangfire.BackgroundJobs.VoiceStatistic;
 using Hangfire;
 using MediatR;
@@ -81,6 +82,9 @@ namespace Emmy.Services.Discord.Client.Events
                     x => x.Execute(),
                     Cron.Daily, _timeZoneInfo);
                 RecurringJob.AddOrUpdate<INotifyExpiredPremiumsJob>("notify-expired-premiums",
+                    x => x.Execute(),
+                    Cron.Daily, _timeZoneInfo);
+                RecurringJob.AddOrUpdate<IStartNewDayJob>("start-new-day",
                     x => x.Execute(),
                     Cron.Daily, _timeZoneInfo);
 

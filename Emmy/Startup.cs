@@ -14,6 +14,7 @@ using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredLoveRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredPremiums;
 using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredPrivateRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredRoles;
+using Emmy.Services.Hangfire.BackgroundJobs.StartNewDay;
 using Emmy.Services.Hangfire.BackgroundJobs.VoiceStatistic;
 using Hangfire;
 using Hangfire.Dashboard;
@@ -89,6 +90,7 @@ namespace Emmy
             services.AddScoped<INotifyExpiredPrivateRoomsJob, NotifyExpiredPrivateRoomsJob>();
             services.AddScoped<INotifyExpiredPremiumsJob, NotifyExpiredPremiumsJob>();
             services.AddScoped<ICompleteFishingJob, CompleteFishingJob>();
+            services.AddScoped<IStartNewDayJob, StartNewDayJob>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
