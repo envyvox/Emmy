@@ -25,13 +25,13 @@ namespace Emmy.Services.Discord.Client.Events.Message
 
         public async Task<Unit> Handle(OnMessageDeleted request, CancellationToken ct)
         {
-            var msg = await request.DeletedMessage.GetOrDownloadAsync();
             var channels = DiscordRepository.Channels;
             var communityDescChannels = channels.GetCommunityDescChannels();
 
             if (communityDescChannels.Contains(request.MessageChannel.Id))
             {
-                await _mediator.Send(new DeleteContentMessageCommand((long) request.MessageChannel.Id, (long) msg.Id));
+                await _mediator.Send(new DeleteContentMessageCommand(
+                    (long) request.MessageChannel.Id, (long) request.DeletedMessage.Id));
             }
 
             return Unit.Value;
