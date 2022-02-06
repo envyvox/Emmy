@@ -20,8 +20,11 @@ namespace Emmy.Data.Enums.Discord
 
         GenderMale,
         GenderFemale,
-        
+
         LocationNeutral,
+        LocationRedRose,
+        LocationWhiteCrow,
+        LocationGoldenShark,
 
         GenshinImpact,
         LeagueOfLegends,
@@ -62,8 +65,11 @@ namespace Emmy.Data.Enums.Discord
 
                 Role.GenderMale => "Оками",
                 Role.GenderFemale => "Китсунэ",
-                
-                Role.LocationNeutral => "Нейтральная зона",
+
+                Role.LocationNeutral => Location.Neutral.Localize(),
+                Role.LocationRedRose => Location.RedRose.Localize(),
+                Role.LocationWhiteCrow => Location.WhiteCrow.Localize(),
+                Role.LocationGoldenShark => Location.GoldenShark.Localize(),
 
                 Role.GenshinImpact => "Genshin Impact",
                 Role.LeagueOfLegends => "League of Legends",
