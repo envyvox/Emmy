@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Emmy.Data.Enums;
 using Emmy.Data.Util;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,14 @@ namespace Emmy.Data.Entities
             builder.Property(x => x.Rarity).IsRequired();
             builder.Property(x => x.CatchWeather).IsRequired();
             builder.Property(x => x.CatchTimesDay).IsRequired();
-            builder.Property(x => x.CatchSeasons).IsRequired();
+
+            builder
+                .Property(x => x.CatchSeasons)
+                .IsRequired()
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, null),
+                    v => JsonSerializer.Deserialize<List<Season>>(v, null));
+
             builder.Property(x => x.Price).IsRequired();
         }
     }

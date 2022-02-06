@@ -18,6 +18,8 @@
         FishFailChanceRare = 14,
         FishFailChanceEpic = 15,
         FishFailChanceMythical = 16,
-        FishFailChanceLegendary = 17
+        FishFailChanceLegendary = 17,
+        FishingDefaultDurationInMinutes = 18,
+        XpFishing = 19
     }
 }

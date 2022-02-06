@@ -5,6 +5,7 @@ using Emmy.Services.Discord.Extensions;
 using Emmy.Services.Game.Localization;
 using Emmy.Services.Game.Localization.Impl;
 using Emmy.Services.Hangfire.BackgroundJobs.ActivityReward;
+using Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing;
 using Emmy.Services.Hangfire.BackgroundJobs.GenerateDynamicShopBanner;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPremiums;
@@ -87,6 +88,7 @@ namespace Emmy
             services.AddScoped<INotifyExpiredLoveRoomsJob, NotifyExpiredLoveRoomsJob>();
             services.AddScoped<INotifyExpiredPrivateRoomsJob, NotifyExpiredPrivateRoomsJob>();
             services.AddScoped<INotifyExpiredPremiumsJob, NotifyExpiredPremiumsJob>();
+            services.AddScoped<ICompleteFishingJob, CompleteFishingJob>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

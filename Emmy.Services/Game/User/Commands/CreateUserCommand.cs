@@ -59,7 +59,7 @@ namespace Emmy.Services.Game.User.Commands
                 Location = Location.Neutral,
                 Title = Title.Newbie,
                 Gender = Gender.None,
-                Cube = Cube.D6,
+                CubeType = CubeType.D6,
                 CommandColor = EmbedBuilderExtensions.DefaultEmbedColor,
                 IsPremium = false,
                 OnGuild = true,

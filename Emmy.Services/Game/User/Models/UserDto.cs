@@ -13,7 +13,7 @@ namespace Emmy.Services.Game.User.Models
         Location Location,
         Title Title,
         Gender Gender,
-        Cube Cube,
+        CubeType CubeType,
         string CommandColor,
         bool IsPremium,
         bool OnGuild,

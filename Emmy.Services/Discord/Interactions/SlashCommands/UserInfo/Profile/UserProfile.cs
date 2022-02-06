@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
@@ -9,8 +10,11 @@ using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Banner.Queries;
 using Emmy.Services.Game.Relationship.Queries;
+using Emmy.Services.Game.Transit.Queries;
 using Emmy.Services.Game.User.Queries;
 using MediatR;
+using Humanizer;
+using StringExtensions = Emmy.Services.Extensions.StringExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Profile
 {
@@ -48,11 +52,33 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Profile
                 var partner = relationship.User1.Id == user.Id ? relationship.User2 : relationship.User1;
                 var socketPartner = await _mediator.Send(new GetSocketGuildUserQuery((ulong) partner.Id));
 
-                relationshipString = $"В отношениях с {socketPartner.Mention.AsGameMention(partner.Title)}";
+                relationshipString = $"В отношениях с {socketPartner!.Mention.AsGameMention(partner.Title)}";
             }
             else
             {
                 relationshipString = "Не состоит в отношениях";
+            }
+
+            string locationString;
+            switch (user.Location)
+            {
+                case Location.WorkOnContract:
+
+                    locationString = "";
+                    break;
+                case Location.Fishing:
+                case Location.FieldWatering:
+
+                    var userMovement = await _mediator.Send(new GetUserMovementQuery(user.Id));
+
+                    locationString =
+                        $"**{user.Location.Localize()}**, еще " +
+                        $"{userMovement.Arrival.Subtract(DateTimeOffset.UtcNow).Humanize(1, new CultureInfo("ru-RU"))}";
+
+                    break;
+                default:
+                    locationString = $"{emotes.GetEmote(user.Location.ToString())} **{user.Location.Localize()}**";
+                    break;
             }
 
             var embed = new EmbedBuilder()
@@ -71,7 +97,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Profile
                 .AddField("Фракция",
                     $"{emotes.GetEmote(user.Fraction.EmoteName())} {user.Fraction.Localize()}")
                 .AddField("Текущая локация",
-                    $"{emotes.GetEmote(user.Location.ToString())} **{user.Location.Localize()}**" +
+                    locationString +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Уровень",
                     $"{emotes.GetEmote("Level")} {user.Level} уровень, {emotes.GetEmote("Xp")} {user.Xp} ед. опыта" +

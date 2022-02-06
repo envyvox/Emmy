@@ -16,7 +16,7 @@ namespace Emmy.Data.Entities.User
         public Location Location { get; set; }
         public Title Title { get; set; }
         public Gender Gender { get; set; }
-        public Cube Cube { get; set; }
+        public CubeType CubeType { get; set; }
         public string CommandColor { get; set; }
         public bool IsPremium { get; set; }
         public bool OnGuild { get; set; }
@@ -39,7 +39,7 @@ namespace Emmy.Data.Entities.User
             builder.Property(x => x.Location).IsRequired();
             builder.Property(x => x.Title).IsRequired();
             builder.Property(x => x.Gender).IsRequired();
-            builder.Property(x => x.Cube).IsRequired();
+            builder.Property(x => x.CubeType).IsRequired();
             builder.Property(x => x.CommandColor).IsRequired();
             builder.Property(x => x.IsPremium).IsRequired();
             builder.Property(x => x.OnGuild).IsRequired();
