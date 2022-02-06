@@ -3,15 +3,17 @@ using System;
 using Emmy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Emmy.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220206050300_CreateSeedAndCropEntity")]
+    partial class CreateSeedAndCropEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -819,45 +821,6 @@ namespace Emmy.Data.Migrations
                     b.ToTable("user_cooldowns");
                 });
 
-            modelBuilder.Entity("Emmy.Data.Entities.User.UserCrop", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<long>("Amount")
-                        .HasColumnType("bigint")
-                        .HasColumnName("amount");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<Guid>("CropId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("crop_id");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_user_crops");
-
-                    b.HasIndex("CropId")
-                        .HasDatabaseName("ix_user_crops_crop_id");
-
-                    b.HasIndex("UserId", "CropId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_user_crops_user_id_crop_id");
-
-                    b.ToTable("user_crops");
-                });
-
             modelBuilder.Entity("Emmy.Data.Entities.User.UserCurrency", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1107,45 +1070,6 @@ namespace Emmy.Data.Migrations
                         .HasDatabaseName("ix_user_premiums_user_id");
 
                     b.ToTable("user_premiums");
-                });
-
-            modelBuilder.Entity("Emmy.Data.Entities.User.UserSeed", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<long>("Amount")
-                        .HasColumnType("bigint")
-                        .HasColumnName("amount");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<Guid>("SeedId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("seed_id");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_user_seeds");
-
-                    b.HasIndex("SeedId")
-                        .HasDatabaseName("ix_user_seeds_seed_id");
-
-                    b.HasIndex("UserId", "SeedId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_user_seeds_user_id_seed_id");
-
-                    b.ToTable("user_seeds");
                 });
 
             modelBuilder.Entity("Emmy.Data.Entities.User.UserStatistic", b =>
@@ -1430,27 +1354,6 @@ namespace Emmy.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Emmy.Data.Entities.User.UserCrop", b =>
-                {
-                    b.HasOne("Emmy.Data.Entities.Crop", "Crop")
-                        .WithMany()
-                        .HasForeignKey("CropId")
-                        .HasConstraintName("fk_user_crops_crops_crop_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Emmy.Data.Entities.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("fk_user_crops_users_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Crop");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Emmy.Data.Entities.User.UserCurrency", b =>
                 {
                     b.HasOne("Emmy.Data.Entities.User.User", "User")
@@ -1549,27 +1452,6 @@ namespace Emmy.Data.Migrations
                         .HasConstraintName("fk_user_premiums_users_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Emmy.Data.Entities.User.UserSeed", b =>
-                {
-                    b.HasOne("Emmy.Data.Entities.Seed", "Seed")
-                        .WithMany()
-                        .HasForeignKey("SeedId")
-                        .HasConstraintName("fk_user_seeds_seeds_seed_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Emmy.Data.Entities.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("fk_user_seeds_users_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Seed");
 
                     b.Navigation("User");
                 });

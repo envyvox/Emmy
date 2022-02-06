@@ -22,6 +22,12 @@ namespace Emmy.Controllers.Seeder
             return Ok(await _mediator.Send(new SeedBannersCommand()));
         }
 
+        [HttpPost, Route("crops")]
+        public async Task<ActionResult<TotalAndAffectedCountDto>> SeedCrops()
+        {
+            return Ok(await _mediator.Send(new SeedCropsCommand()));
+        }
+
         [HttpPost, Route("fishes")]
         public async Task<ActionResult<TotalAndAffectedCountDto>> SeedFishes()
         {
@@ -38,6 +44,18 @@ namespace Emmy.Controllers.Seeder
         public async Task<ActionResult<TotalAndAffectedCountDto>> SeedLocalizations()
         {
             return Ok(await _mediator.Send(new SeedLocalizationsCommand()));
+        }
+
+        [HttpPost, Route("seeds")]
+        public async Task<ActionResult<TotalAndAffectedCountDto>> SeedSeeds()
+        {
+            return Ok(await _mediator.Send(new SeedSeedsCommand()));
+        }
+
+        [HttpPost, Route("transits")]
+        public async Task<ActionResult<TotalAndAffectedCountDto>> SeedTransits()
+        {
+            return Ok(await _mediator.Send(new SeedTransitsCommand()));
         }
 
         [HttpPost, Route("world-properties")]

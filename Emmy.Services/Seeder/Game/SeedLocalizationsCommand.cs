@@ -5,7 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Emmy.Data.Enums;
 using Emmy.Data.Util;
+using Emmy.Services.Game.Crop.Queries;
+using Emmy.Services.Game.Fish.Queries;
 using Emmy.Services.Game.Localization.Commands;
+using Emmy.Services.Game.Seed.Queries;
 using MediatR;
 
 namespace Emmy.Services.Seeder.Game
@@ -69,12 +72,36 @@ namespace Emmy.Services.Seeder.Game
 
                         break;
                     case LocalizationCategory.Container:
-                        
+
                         commands.Add(new CreateLocalizationCommand(
                             category, Container.Token.ToString(), "контейнер с токенами", "контейнера с токенами", "контейнеров с токенами"));
                         commands.Add(new CreateLocalizationCommand(
                             category, Container.Supply.ToString(), "контейнер с припасами", "контейнера с припасами", "контейнеров с припасами"));
-                        
+
+                        break;
+                    case LocalizationCategory.Fish:
+
+                        var fishes = await _mediator.Send(new GetFishesQuery());
+
+                        commands.AddRange(fishes.Select(fish => new CreateLocalizationCommand(
+                            category, fish.Name, fish.Name, fish.Name, fish.Name)));
+
+                        break;
+                    case LocalizationCategory.Crop:
+
+                        var crops = await _mediator.Send(new GetCropsQuery());
+
+                        commands.AddRange(crops.Select(crop => new CreateLocalizationCommand(
+                            category, crop.Name, crop.Name, crop.Name, crop.Name)));
+
+                        break;
+                    case LocalizationCategory.Seed:
+
+                        var seeds = await _mediator.Send(new GetSeedsQuery());
+
+                        commands.AddRange(seeds.Select(seed => new CreateLocalizationCommand(
+                            category, seed.Name, seed.Name, seed.Name, seed.Name)));
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
