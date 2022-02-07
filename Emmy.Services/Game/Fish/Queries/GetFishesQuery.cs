@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -28,6 +29,7 @@ namespace Emmy.Services.Game.Fish.Queries
         {
             var entities = await _db.Fishes
                 .AsQueryable()
+                .OrderBy(x => x.Name)
                 .ToListAsync();
 
             return _mapper.Map<List<FishDto>>(entities);

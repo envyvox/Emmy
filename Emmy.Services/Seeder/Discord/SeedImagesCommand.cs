@@ -40,7 +40,7 @@ namespace Emmy.Services.Seeder.Discord
                 new(Image.Casino, "https://cdn.discordapp.com/attachments/929693044054294578/935233645717880852/Casino.png"),
                 new(Image.Contract, "https://cdn.discordapp.com/attachments/929693044054294578/935233645998907402/Contract.png"),
                 new(Image.UserRoles, "https://cdn.discordapp.com/attachments/929693044054294578/935233710226280448/UserRoles.png"),
-                new(Image.ShopFisher, "https://cdn.discordapp.com/attachments/929693044054294578/935233710448599140/ShopFisher.png"),
+                new(Image.Vendor, "https://cdn.discordapp.com/attachments/929693044054294578/940120669105045555/Vendor.png"),
                 new(Image.ShopKey, "https://cdn.discordapp.com/attachments/929693044054294578/935233710670888981/ShopKey.png"),
                 new(Image.ShopSeed, "https://cdn.discordapp.com/attachments/929693044054294578/935233711090307113/ShopSeed.png"),
                 new(Image.Transit, "https://cdn.discordapp.com/attachments/929693044054294578/935233711350362213/Transit.png"),

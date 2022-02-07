@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
@@ -35,12 +36,17 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
             var activeBanner = await _mediator.Send(new GetUserActiveBannerQuery(user.Id));
             var banners = await _mediator.Send(new GetUserBannersQuery(user.Id));
 
-            var components = new ComponentBuilder()
-                .WithButton("Назад", "user-banners-paginator:false", disabled: true)
-                .WithButton("Вперед", "user-banners-paginator:true", disabled: banners.Count <= 5);
-
             banners = banners
                 .Where(x => x.IsActive is false)
+                .ToList();
+
+            var maxPage = (int) Math.Ceiling(banners.Count / 5.0);
+
+            var components = new ComponentBuilder()
+                .WithButton("Назад", "user-banners-paginator:1", disabled: true)
+                .WithButton("Вперед", "user-banners-paginator:2", disabled: banners.Count <= 5);
+
+            banners = banners
                 .Take(5)
                 .ToList();
 
@@ -57,8 +63,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     $"{activeBanner.Rarity.Localize()} «{activeBanner.Name}»",
                     StringExtensions.EmptyChar)
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.UserBanners)))
-                .WithFooter("Страница 1");
-
+                .WithFooter($"Страница 1 из {maxPage}");
 
             var selectMenu = new SelectMenuBuilder()
                 .WithPlaceholder("Выбери баннер который хочешь установить в профиль")

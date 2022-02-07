@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Discord;
@@ -24,15 +25,11 @@ namespace Emmy.Services.Discord.Interactions.Components.UserBanners
         }
 
         [ComponentInteraction("user-banners-paginator:*")]
-        public async Task USerBannersPaginatorTask(string isForwardString)
+        public async Task USerBannersPaginatorTask(string pageString)
         {
             await Context.Interaction.DeferAsync(true);
 
-            var isForward = bool.Parse(isForwardString);
-            var originalResponse = await Context.Interaction.GetOriginalResponseAsync();
-            var messageEmbed = originalResponse.Embeds.First();
-            var currentPage = int.Parse(Regex.Match(messageEmbed.Footer?.Text!, @"\d+").Value);
-            var newPage = isForward ? currentPage + 1 : currentPage - 1;
+            var page = int.Parse(pageString);
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
@@ -43,16 +40,16 @@ namespace Emmy.Services.Discord.Interactions.Components.UserBanners
                 .Where(x => x.IsActive is false)
                 .ToList();
 
-            var maxPages = banners.Count / 5;
+            var maxPage = (int) Math.Ceiling(banners.Count / 5.0);
 
             banners = banners
-                .Skip(newPage > 1 ? newPage * 5 : 0)
+                .Skip(page > 1 ? (page - 1) * 5 : 0)
                 .Take(5)
                 .ToList();
 
             var components = new ComponentBuilder()
-                .WithButton("Назад", "user-banners-paginator:false", disabled: newPage <= 1)
-                .WithButton("Вперед", "user-banners-paginator:true", disabled: newPage >= maxPages);
+                .WithButton("Назад", $"user-banners-paginator:{page - 1}", disabled: page <= 1)
+                .WithButton("Вперед", $"user-banners-paginator:{page + 1}", disabled: page >= maxPage);
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
@@ -67,7 +64,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserBanners
                     $"{activeBanner.Rarity.Localize()} «{activeBanner.Name}»",
                     StringExtensions.EmptyChar)
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.UserBanners)))
-                .WithFooter($"Страница {newPage}");
+                .WithFooter($"Страница {page} из {maxPage}");
 
             var selectMenu = new SelectMenuBuilder()
                 .WithPlaceholder("Выбери баннер который хочешь установить в профиль")

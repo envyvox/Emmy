@@ -5,7 +5,7 @@
         Placeholder = 0,
         ShopBanner = 1,
         ShopRole = 2,
-        ShopFisher = 3,
+        Vendor = 3,
         ShopSeed = 4,
         UserInventory = 5,
         Fishing = 6,
