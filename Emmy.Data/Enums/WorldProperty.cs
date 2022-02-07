@@ -20,6 +20,22 @@
         FishFailChanceMythical = 16,
         FishFailChanceLegendary = 17,
         FishingDefaultDurationInMinutes = 18,
-        XpFishing = 19
+        XpFishing = 19,
+        DailyRewardMondayAmountWithoutPremium = 20,
+        DailyRewardMondayAmountPremium = 21,
+        DailyRewardTuesdayAmountWithoutPremium = 22,
+        DailyRewardTuesdayAmountPremium = 23,
+        DailyRewardWednesdayAmountWithoutPremium = 24,
+        DailyRewardWednesdayAmountPremium = 25,
+        DailyRewardThursdayAmountWithoutPremium = 26,
+        DailyRewardThursdayAmountPremium = 27,
+        DailyRewardFridayAmountWithoutPremium = 28,
+        DailyRewardFridayAmountPremium = 29,
+        DailyRewardSaturdayAmountWithoutPremium = 30,
+        DailyRewardSaturdayAmountPremium = 31,
+        DailyRewardSundayAmountWithoutPremium = 32,
+        DailyRewardSundayAmountPremium = 33,
+        DailyRewardBonusAmountWithoutPremium = 34,
+        DailyRewardBonusAmountPremium = 35
     }
 }

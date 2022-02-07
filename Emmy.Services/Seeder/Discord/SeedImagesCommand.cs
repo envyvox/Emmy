@@ -39,7 +39,6 @@ namespace Emmy.Services.Seeder.Discord
                 new(Image.ShopBanner, "https://cdn.discordapp.com/attachments/929693044054294578/935233645269114900/ShopBanner.png"),
                 new(Image.Casino, "https://cdn.discordapp.com/attachments/929693044054294578/935233645717880852/Casino.png"),
                 new(Image.Contract, "https://cdn.discordapp.com/attachments/929693044054294578/935233645998907402/Contract.png"),
-                new(Image.DailyReward, "https://cdn.discordapp.com/attachments/929693044054294578/935233646258970624/DailyReward.png"),
                 new(Image.UserRoles, "https://cdn.discordapp.com/attachments/929693044054294578/935233710226280448/UserRoles.png"),
                 new(Image.ShopFisher, "https://cdn.discordapp.com/attachments/929693044054294578/935233710448599140/ShopFisher.png"),
                 new(Image.ShopKey, "https://cdn.discordapp.com/attachments/929693044054294578/935233710670888981/ShopKey.png"),
@@ -58,7 +57,9 @@ namespace Emmy.Services.Seeder.Discord
                 new(Image.PremiumInfoWardrobe, "https://cdn.discordapp.com/attachments/931165008262492160/935632606446354483/PremiumInfoWardrobe.png"),
                 new(Image.PremiumInfoCommandColor, "https://cdn.discordapp.com/attachments/931165008262492160/935632606005973002/PremiumInfoCommandColor.png"),
                 new(Image.Rating, "https://cdn.discordapp.com/attachments/929693044054294578/935676150636748830/Rating.png"),
-                new(Image.DonateInfo, "https://cdn.discordapp.com/attachments/931165008262492160/935671070017613834/DonateInfo.png")
+                new(Image.DonateInfo, "https://cdn.discordapp.com/attachments/931165008262492160/935671070017613834/DonateInfo.png"),
+                new(Image.DailyReward, "https://cdn.discordapp.com/attachments/931165008262492160/940068963134631997/DailyReward.png"),
+                new(Image.DailyRewardPremium, "https://cdn.discordapp.com/attachments/931165008262492160/940068963348537364/DailyRewardPremium.png")
             };
             
             foreach (var createImageCommand in commands)

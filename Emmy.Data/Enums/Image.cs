@@ -39,6 +39,7 @@
         PremiumInfoWardrobe = 34,
         PremiumInfoCommandColor = 35,
         Rating = 36,
-        DonateInfo = 37
+        DonateInfo = 37,
+        DailyRewardPremium = 38
     }
 }

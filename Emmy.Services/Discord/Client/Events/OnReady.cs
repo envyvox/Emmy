@@ -6,6 +6,7 @@ using Emmy.Services.Discord.Emote.Commands;
 using Emmy.Services.Discord.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
 using Emmy.Services.Hangfire.BackgroundJobs.ActivityReward;
+using Emmy.Services.Hangfire.BackgroundJobs.DeleteDailyRewards;
 using Emmy.Services.Hangfire.BackgroundJobs.GenerateDynamicShopBanner;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPremiums;
@@ -89,6 +90,9 @@ namespace Emmy.Services.Discord.Client.Events
                     Cron.Daily, _timeZoneInfo);
 
                 RecurringJob.AddOrUpdate<IActivityRewardJob>("activity-reward",
+                    x => x.Execute(),
+                    Cron.Weekly, _timeZoneInfo);
+                RecurringJob.AddOrUpdate<IDeleteDailyRewardsJob>("delete-daily-rewards",
                     x => x.Execute(),
                     Cron.Weekly, _timeZoneInfo);
 

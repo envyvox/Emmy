@@ -53,6 +53,7 @@ namespace Emmy.Data
         public DbSet<UserCooldown> UserCooldowns { get; set; }
         public DbSet<UserCrop> UserCrops { get; set; }
         public DbSet<UserCurrency> UserCurrencies { get; set; }
+        public DbSet<UserDailyReward> UserDailyRewards { get; set; }
         public DbSet<UserDonation> UserDonations { get; set; }
         public DbSet<UserFish> UserFishes { get; set; }
         public DbSet<UserHangfireJob> UserHangfireJobs { get; set; }
