@@ -54,17 +54,17 @@ namespace Emmy.Services.Discord.Interactions.Components.CubeDrop
             var drop1CubeEmote = emotes.GetEmote(user.CubeType.EmoteName(drop1));
             var drop2CubeEmote = emotes.GetEmote(user.CubeType.EmoteName(drop2));
             var drop3CubeEmote = emotes.GetEmote(user.CubeType.EmoteName(drop3));
-            var finalValue = drop1 + drop2 + drop3;
+            var cubeDrop = drop1 + drop2 + drop3;
             var fishingTime = await _mediator.Send(new GetWorldPropertyValueQuery(
                 WorldProperty.FishingDefaultDurationInMinutes));
             var duration = await _mediator.Send(new GetActionTimeQuery(
-                TimeSpan.FromMinutes(fishingTime), finalValue));
+                TimeSpan.FromMinutes(fishingTime), cubeDrop));
 
             await _mediator.Send(new UpdateUserLocationCommand(user.Id, Location.Fishing));
             await _mediator.Send(new CreateUserMovementCommand(user.Id, Location.Fishing, Location.Neutral, duration));
 
             var jobId = BackgroundJob.Schedule<ICompleteFishingJob>(
-                x => x.Execute(user.Id),
+                x => x.Execute(user.Id, cubeDrop),
                 duration);
 
             await _mediator.Send(new CreateUserHangfireJobCommand(user.Id, HangfireJobType.Fishing, jobId, duration));

@@ -4,6 +4,6 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
 {
     public interface ICompleteFishingJob
     {
-        Task Execute(long userId);
+        Task Execute(long userId, uint cubeDrop);
     }
 }

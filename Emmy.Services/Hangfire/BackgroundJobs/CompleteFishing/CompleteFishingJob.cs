@@ -5,6 +5,7 @@ using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Calculation;
 using Emmy.Services.Game.Collection.Commands;
 using Emmy.Services.Game.Fish.Commands;
 using Emmy.Services.Game.Fish.Queries;
@@ -37,7 +38,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
             _local = local;
         }
 
-        public async Task Execute(long userId)
+        public async Task Execute(long userId, uint cubeDrop)
         {
             _logger.LogInformation(
                 "Complete fishing job executed for user {UserId}",
@@ -48,7 +49,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
             var timesDay = await _mediator.Send(new GetCurrentTimesDayQuery());
             var weather = await _mediator.Send(new GetWeatherTodayQuery());
             var season = await _mediator.Send(new GetCurrentSeasonQuery());
-            var rarity = await _mediator.Send(new GetRandomFishRarityQuery());
+            var rarity = await _mediator.Send(new GetRandomFishRarityQuery(cubeDrop));
             var fish = await _mediator.Send(new GetRandomFishWithParamsQuery(rarity, weather, timesDay, season));
             var success = await _mediator.Send(new CheckFishingSuccessQuery(fish.Rarity));
             var fishingXp = await _mediator.Send(new GetWorldPropertyValueQuery(
