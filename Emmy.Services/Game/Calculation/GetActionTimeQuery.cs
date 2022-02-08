@@ -16,12 +16,12 @@ namespace Emmy.Services.Game.Calculation
             var dict = new Dictionary<uint, double>
             {
                 {3, request.Duration.TotalMinutes + request.Duration.TotalMinutes * 45 / 100},
-                {9, request.Duration.TotalMinutes + request.Duration.TotalMinutes * 30 / 100},
-                {15, request.Duration.TotalMinutes + request.Duration.TotalMinutes * 15 / 100},
-                {21, request.Duration.TotalMinutes},
-                {27, request.Duration.TotalMinutes - request.Duration.TotalMinutes * 15 / 100},
-                {33, request.Duration.TotalMinutes - request.Duration.TotalMinutes * 30 / 100},
-                {39, request.Duration.TotalMinutes - request.Duration.TotalMinutes * 45 / 100}
+                {8, request.Duration.TotalMinutes + request.Duration.TotalMinutes * 30 / 100},
+                {13, request.Duration.TotalMinutes + request.Duration.TotalMinutes * 15 / 100},
+                {18, request.Duration.TotalMinutes},
+                {22, request.Duration.TotalMinutes - request.Duration.TotalMinutes * 15 / 100},
+                {26, request.Duration.TotalMinutes - request.Duration.TotalMinutes * 30 / 100},
+                {32, request.Duration.TotalMinutes - request.Duration.TotalMinutes * 45 / 100}
             };
 
             return await Task.FromResult(TimeSpan.FromMinutes(dict[dict.Keys.Where(x => x <= request.CubeDrop).Max()]));
