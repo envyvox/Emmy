@@ -109,7 +109,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для создания собственного любовного гнезда необходимо выполнить несколько простых шагов:" +
-                    $"\n\n{_emotes.GetEmote("List")} Находится в отношениях." +
+                    $"\n\n{_emotes.GetEmote("List")} Находиться в отношениях." +
                     $"\n\n{_emotes.GetEmote("List")} Приобрести {_emotes.GetEmote(KeyType.LoveRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.LoveRoom.ToString())} в {_emotes.GetEmote("SlashCommand")} `/магазин-ключей`." +
                     $"\n\n{_emotes.GetEmote("List")} Нажать кнопку **Создать любовное гнездо** под этим сообщением." +
                     $"\n{_emotes.GetEmote("Arrow")} Комната на сервере будет создана автоматически на 30 дней." +
