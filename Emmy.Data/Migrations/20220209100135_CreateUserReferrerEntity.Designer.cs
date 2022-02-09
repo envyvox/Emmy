@@ -3,15 +3,17 @@ using System;
 using Emmy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Emmy.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220209100135_CreateUserReferrerEntity")]
+    partial class CreateUserReferrerEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1239,34 +1241,6 @@ namespace Emmy.Data.Migrations
                     b.ToTable("user_statistics");
                 });
 
-            modelBuilder.Entity("Emmy.Data.Entities.User.UserTitle", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("smallint")
-                        .HasColumnName("type");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_user_titles");
-
-                    b.HasIndex("UserId", "Type")
-                        .IsUnique()
-                        .HasDatabaseName("ix_user_titles_user_id_type");
-
-                    b.ToTable("user_titles");
-                });
-
             modelBuilder.Entity("Emmy.Data.Entities.WorldProperty", b =>
                 {
                     b.Property<byte>("Type")
@@ -1696,18 +1670,6 @@ namespace Emmy.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("fk_user_statistics_users_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Emmy.Data.Entities.User.UserTitle", b =>
-                {
-                    b.HasOne("Emmy.Data.Entities.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("fk_user_titles_users_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

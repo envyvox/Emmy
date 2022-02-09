@@ -60,7 +60,9 @@ namespace Emmy.Data
         public DbSet<UserKey> UserKeys { get; set; }
         public DbSet<UserMovement> UserMovements { get; set; }
         public DbSet<UserPremium> UserPremiums { get; set; }
+        public DbSet<UserReferrer> UserReferrers { get; set; }
         public DbSet<UserSeed> UserSeeds { get; set; }
         public DbSet<UserStatistic> UserStatistics { get; set; }
+        public DbSet<UserTitle> UserTitles { get; set; }
     }
 }

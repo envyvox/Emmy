@@ -40,6 +40,8 @@
         PremiumInfoCommandColor = 35,
         Rating = 36,
         DonateInfo = 37,
-        DailyRewardPremium = 38
+        DailyRewardPremium = 38,
+        Referral = 39,
+        ReferralRewards = 40
     }
 }

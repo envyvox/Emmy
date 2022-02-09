@@ -11,7 +11,7 @@ namespace Emmy.Services.Game.User.Models
         uint Xp,
         Fraction Fraction,
         Location Location,
-        Title Title,
+        Data.Enums.Title Title,
         Gender Gender,
         CubeType CubeType,
         string CommandColor,

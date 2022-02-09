@@ -59,7 +59,9 @@ namespace Emmy.Services.Seeder.Discord
                 new(Image.Rating, "https://cdn.discordapp.com/attachments/929693044054294578/935676150636748830/Rating.png"),
                 new(Image.DonateInfo, "https://cdn.discordapp.com/attachments/931165008262492160/935671070017613834/DonateInfo.png"),
                 new(Image.DailyReward, "https://cdn.discordapp.com/attachments/931165008262492160/940068963134631997/DailyReward.png"),
-                new(Image.DailyRewardPremium, "https://cdn.discordapp.com/attachments/931165008262492160/940068963348537364/DailyRewardPremium.png")
+                new(Image.DailyRewardPremium, "https://cdn.discordapp.com/attachments/931165008262492160/940068963348537364/DailyRewardPremium.png"),
+                new(Image.ReferralRewards, "https://cdn.discordapp.com/attachments/931165008262492160/940939305516408842/ReferralRewards.png"),
+                new(Image.Referral, "https://cdn.discordapp.com/attachments/929693044054294578/940939388387467325/Referral.png")
             };
             
             foreach (var createImageCommand in commands)

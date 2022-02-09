@@ -57,7 +57,7 @@ namespace Emmy.Services.Game.User.Commands
                 Xp = 0,
                 Fraction = Fraction.Undefined,
                 Location = Location.Neutral,
-                Title = Title.Newbie,
+                Title = Data.Enums.Title.Newbie,
                 Gender = Gender.None,
                 CubeType = CubeType.D6,
                 CommandColor = EmbedBuilderExtensions.DefaultEmbedColor,
