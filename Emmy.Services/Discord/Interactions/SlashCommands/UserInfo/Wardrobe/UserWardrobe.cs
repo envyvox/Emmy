@@ -2,12 +2,14 @@
 using Discord;
 using Discord.Interactions;
 using Emmy.Services.Discord.Embed;
+using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Discord.Role.Queries;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.User.Queries;
 using MediatR;
+using static Discord.Emote;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
 {
@@ -28,6 +30,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
         {
             await Context.Interaction.DeferAsync(true);
 
+            var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var hasPersonalRole = await _mediator.Send(new CheckUserHasPersonalRoleQuery(user.Id));
 
@@ -56,10 +59,12 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
                     .WithCustomId("user-wardrobe-qa")
                     .AddOption(
                         $"{Context.Client.CurrentUser.Username}, как мне создать собственную роль?",
-                        "user-wardrobe-create")
+                        "user-wardrobe-create",
+                        emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
                         $"{Context.Client.CurrentUser.Username}, как мне обновить собственную роль?",
-                        "user-wardrobe-update"))
+                        "user-wardrobe-update",
+                        emote: Parse(emotes.GetEmote("DiscordHelp"))))
                 .Build();
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components));

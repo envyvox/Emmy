@@ -82,7 +82,8 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                         .AddComponent(new ButtonBuilder(
                                 "Узнать о преимуществах премиум статуса",
                                 "user-premium-info:1",
-                                ButtonStyle.Secondary)
+                                ButtonStyle.Secondary,
+                                emote: Parse(emotes.GetEmote("DiscordHelp")))
                             .Build()),
 
                     new ActionRowBuilder()

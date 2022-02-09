@@ -51,7 +51,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
             {
                 throw new GameUserExpectedException(
                     "у тебя нет собственной роли чтобы ее обновлять. " +
-                    $"Если ты хотел создать ее, то тебе необходимо написать {emotes.GetEmote("SlashCommand")} `/гардеробная-создать`.");
+                    $"Если ты хотел создать ее, то тебе необходимо написать {emotes.GetEmote("DiscordSlashCommand")} `/гардеробная-создать`.");
             }
 
             var personalRole = await _mediator.Send(new GetUserPersonalRoleQuery(user.Id));

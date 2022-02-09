@@ -57,7 +57,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно создал собственную роль {createdRoleId.ToMention(MentionType.Role)}. " +
-                    $"Она была добавлена в твои {emotes.GetEmote("SlashCommand")} `/роли` а так же автоматически надета на сервере.")
+                    $"Она была добавлена в твои {emotes.GetEmote("DiscordSlashCommand")} `/роли` а так же автоматически надета на сервере.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Wardrobe)));
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));

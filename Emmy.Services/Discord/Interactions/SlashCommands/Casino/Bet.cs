@@ -19,6 +19,7 @@ using Emmy.Services.Game.User.Queries;
 using Emmy.Services.Game.World.Queries;
 using Humanizer;
 using MediatR;
+using static Discord.Emote;
 using static Emmy.Services.Extensions.ExceptionExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.Casino
@@ -146,7 +147,11 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Casino
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Casino)));
 
             var components = new ComponentBuilder()
-                .WithButton("Узнать как работают ставки", "casino-bet-how-works", ButtonStyle.Secondary)
+                .WithButton(
+                    "Узнать как работают ставки",
+                    "casino-bet-how-works",
+                    ButtonStyle.Secondary,
+                    Parse(emotes.GetEmote("DiscordHelp")))
                 .Build();
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components));

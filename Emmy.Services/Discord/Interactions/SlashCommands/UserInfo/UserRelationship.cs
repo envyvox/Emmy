@@ -4,6 +4,7 @@ using Discord;
 using Discord.Interactions;
 using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
+using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.LoveRoom.Queries;
@@ -12,6 +13,7 @@ using Emmy.Services.Game.Relationship.Queries;
 using Emmy.Services.Game.User.Queries;
 using Humanizer;
 using MediatR;
+using static Discord.Emote;
 using StringExtensions = Emmy.Services.Extensions.StringExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
@@ -32,6 +34,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
         {
             await Context.Interaction.DeferAsync(true);
 
+            var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var hasRelationship = await _mediator.Send(new CheckUserHasRelationshipQuery(user.Id));
 
@@ -66,14 +69,15 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                 {
                     loveRoomString =
                         "У вашей пары еще нет любовного гнезда, чтобы это исправить, **выбери из меню** под этим " +
-                        $"сообщением диалог «{Context.Client.CurrentUser.Username}, как мне создать любовное гнездо?»";
+                        $"сообщением диалог {emotes.GetEmote("DiscordHelp")} «{Context.Client.CurrentUser.Username}, как мне создать любовное гнездо?»";
                 }
             }
             else
             {
                 relationshipString =
-                    "Ты не состоишь в отношениях. Для того чтобы это исправить, **выбери из меню** под этим " +
-                    $"сообщением диалог «{Context.Client.CurrentUser.Username}, как мне начать отношения?»";
+                    "Ты не состоишь в отношениях." +
+                    $"\n{emotes.GetEmote("Arrow")} Для того чтобы это исправить, **выбери из меню** под этим " +
+                    $"сообщением диалог {emotes.GetEmote("DiscordHelp")} «{Context.Client.CurrentUser.Username}, как мне начать отношения?»";
                 loveRoomString =
                     "Ты не состоишь в отношениях, соответственно у тебя не может быть любовного гнезда";
             }
@@ -97,16 +101,20 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     .WithCustomId("relationship-qa")
                     .AddOption(
                         $"{Context.Client.CurrentUser.Username}, как мне начать отношения?",
-                        "relationship-start")
+                        "relationship-start",
+                        emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
                         $"{Context.Client.CurrentUser.Username}, как мне закончить отношения?",
-                        "relationship-end")
+                        "relationship-end",
+                        emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
                         $"{Context.Client.CurrentUser.Username}, как мне создать любовное гнездо?",
-                        "relationship-love-room-create")
+                        "relationship-love-room-create",
+                        emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
                         $"{Context.Client.CurrentUser.Username}, как мне продлить любовное гнездо?",
-                        "relationship-love-room-update"));
+                        "relationship-love-room-update",
+                        emote: Parse(emotes.GetEmote("DiscordHelp"))));
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components.Build()));
         }

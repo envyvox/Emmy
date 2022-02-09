@@ -52,7 +52,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
                 .WithDescription(
                     $"{mentionedUser.Mention.AsGameMention(user.Title)}, " +
                     "перед тобой появляется голограмма неизвестного божества и сообщает что в " +
-                    $"твой {emotes.GetEmote("SlashCommand")} `/инвентарь` " +
+                    $"твой {emotes.GetEmote("DiscordSlashCommand")} `/инвентарь` " +
                     $"добавлено {emotes.GetEmote(currency.ToString())} {amount} " +
                     $"{_local.Localize(LocalizationCategory.Currency, currency.ToString(), amount)}.");
 
@@ -81,7 +81,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
                     "перед тобой появляется голограмма неизвестного божества и сообщает что твоя поддержка " +
                     $"в размере {emotes.GetEmote("Ruble")} {amount} " +
                     $"{_local.Localize(LocalizationCategory.Basic, "Ruble", amount)} была засчитана и в " +
-                    $"твой {emotes.GetEmote("SlashCommand")} `/инвентарь` " +
+                    $"твой {emotes.GetEmote("DiscordSlashCommand")} `/инвентарь` " +
                     $"добавлено {emotes.GetEmote(Currency.Lobbs.ToString())} {amount} " +
                     $"{_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), amount)}.");
 
@@ -292,7 +292,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
                 .WithDescription(
                     "Ты можешь делиться с нами своими любимыми изображениями в каналах доски сообщества." +
                     $"\n\n{emotes.GetEmote("Arrow")} Напиши в канал {channels[Channel.Commands].Id.ToMention(MentionType.Channel)} " +
-                    $"{emotes.GetEmote("SlashCommand")}`/доска-сообщества` чтобы посмотреть информацию о своем участии." +
+                    $"{emotes.GetEmote("DiscordSlashCommand")}`/доска-сообщества` чтобы посмотреть информацию о своем участии." +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Каналы доски",
                     $"{emotes.GetEmote("List")} {channels[Channel.Photos].Id.ToMention(MentionType.Channel)} - Красивые ~~котики~~ фотографии.\n" +
@@ -379,14 +379,15 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
                     $"\n{emotes.GetEmote("Premium")} премиум на 365 дней стоит {emotes.GetEmote(Currency.Lobbs.ToString())} ~~{premium365daysFullPrice}~~ {premium365daysPrice} {_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), premium365daysPrice)}" +
                     $"\n{emotes.GetEmote("Arrow")} Экономия {emotes.GetEmote(Currency.Lobbs.ToString())} {premium365daysFullPrice - premium365daysPrice} {_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), premium365daysFullPrice - premium365daysPrice)}")
                 .AddField(StringExtensions.EmptyChar,
-                    $"Для того чтобы приобрести, продлить или проверить свою подписку на статус {emotes.GetEmote("Premium")} премиум загляни в {emotes.GetEmote("SlashCommand")} `/премиум`.")
+                    $"Для того чтобы приобрести, продлить или проверить свою подписку на статус {emotes.GetEmote("Premium")} премиум загляни в {emotes.GetEmote("DiscordSlashCommand")} `/премиум`.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.GetPremium)));
 
             var components = new ComponentBuilder()
                 .WithButton(
                     "Узнать о преимуществах премиум статуса",
                     "user-premium-info:0",
-                    ButtonStyle.Secondary)
+                    ButtonStyle.Secondary,
+                    Parse(emotes.GetEmote("DiscordHelp")))
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed.Build(), components: components);

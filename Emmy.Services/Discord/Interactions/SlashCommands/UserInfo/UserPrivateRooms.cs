@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
 using Emmy.Services.Discord.Embed;
+using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.PrivateRoom.Queries;
@@ -11,6 +12,7 @@ using Emmy.Services.Extensions;
 using Emmy.Services.Game.User.Queries;
 using Humanizer;
 using MediatR;
+using static Discord.Emote;
 using StringExtensions = Emmy.Services.Extensions.StringExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
@@ -31,6 +33,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
         {
             await Context.Interaction.DeferAsync(true);
 
+            var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var familyRooms = await _mediator.Send(new GetUserPrivateRoomsQuery(user.Id));
 
@@ -67,10 +70,12 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     .WithCustomId("private-room-qa")
                     .AddOption(
                         $"{Context.Client.CurrentUser.Username}, как мне создать приватный сектор?",
-                        "private-room-create")
+                        "private-room-create",
+                        emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
                         $"{Context.Client.CurrentUser.Username}, как мне продлить приватный сектор?",
-                        "private-room-update"));
+                        "private-room-update",
+                        emote: Parse(emotes.GetEmote("DiscordHelp"))));
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components.Build()));
         }
