@@ -18,6 +18,7 @@ using Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing;
 using Emmy.Services.Hangfire.Commands;
 using Hangfire;
 using MediatR;
+using static Discord.Emote;
 using static Emmy.Services.Extensions.ExceptionExtensions;
 using StringExtensions = Emmy.Services.Extensions.StringExtensions;
 
@@ -86,7 +87,11 @@ namespace Emmy.Services.Discord.Interactions.Components.CubeDrop
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Fishing)));
 
             var components = new ComponentBuilder()
-                .WithButton("Узнать как работают кубики", "cube-drop-how-works", ButtonStyle.Secondary);
+                .WithButton(
+                    "Узнать как работают кубики",
+                    "cube-drop-how-works",
+                    ButtonStyle.Secondary,
+                    Parse(emotes.GetEmote("DiscordHelp")));
 
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
             {
