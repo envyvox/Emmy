@@ -4,6 +4,7 @@ using Discord;
 using Discord.Interactions;
 using Emmy.Data.Enums;
 using Emmy.Data.Enums.Discord;
+using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
 using Emmy.Services.Discord.Image.Queries;
@@ -13,6 +14,7 @@ using Emmy.Services.Game.Currency.Commands;
 using Emmy.Services.Game.Donate.Commands;
 using Emmy.Services.Game.Localization;
 using Emmy.Services.Game.User.Commands;
+using Emmy.Services.Game.User.Queries;
 using Emmy.Services.Game.World.Queries;
 using MediatR;
 using static Discord.Emote;
@@ -36,20 +38,60 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
         }
 
         [SlashCommand("add-currency", "Add currency to user")]
-        public async Task AdmAddCurrencyToUserTask(IUser user, Currency currency, uint amount)
+        public async Task AdmAddCurrencyToUserTask(IUser mentionedUser, Currency currency, uint amount)
         {
             await Context.Interaction.DeferAsync(true);
-            await _mediator.Send(new AddCurrencyToUserCommand((long) user.Id, currency, amount));
-            await Context.Interaction.FollowupAsync("Ok");
+
+            var emotes = DiscordRepository.Emotes;
+            var user = await _mediator.Send(new GetUserQuery((long) mentionedUser.Id));
+
+            await _mediator.Send(new AddCurrencyToUserCommand(user.Id, currency, amount));
+
+            var embed = new EmbedBuilder()
+                .WithUserColor(user.CommandColor)
+                .WithDescription(
+                    $"{mentionedUser.Mention.AsGameMention(user.Title)}, " +
+                    "перед тобой появляется голограмма неизвестного божества и сообщает что в " +
+                    $"твой {emotes.GetEmote("SlashCommand")} `/инвентарь` " +
+                    $"добавлено {emotes.GetEmote(currency.ToString())} {amount} " +
+                    $"{_local.Localize(LocalizationCategory.Currency, currency.ToString(), amount)}.");
+
+            await _mediator.Send(new SendEmbedToUserCommand(mentionedUser.Id, embed));
+
+            await Context.Interaction.FollowupAsync(
+                $"Пользователю {mentionedUser.Mention} выдано {emotes.GetEmote(currency.ToString())} {amount} " +
+                $"{_local.Localize(LocalizationCategory.Currency, currency.ToString(), amount)}.");
         }
 
         [SlashCommand("add-donate", "Add donate to user")]
-        public async Task AdmAddDonateToUserTask(IUser user, uint amount)
+        public async Task AdmAddDonateToUserTask(IUser mentionedUser, uint amount)
         {
             await Context.Interaction.DeferAsync(true);
-            await _mediator.Send(new AddDonateToUserCommand((long) user.Id, amount));
-            await _mediator.Send(new AddCurrencyToUserCommand((long) user.Id, Currency.Lobbs, amount));
-            await Context.Interaction.FollowupAsync("Ok");
+
+            var emotes = DiscordRepository.Emotes;
+            var user = await _mediator.Send(new GetUserQuery((long) mentionedUser.Id));
+
+            await _mediator.Send(new AddDonateToUserCommand(user.Id, amount));
+            await _mediator.Send(new AddCurrencyToUserCommand(user.Id, Currency.Lobbs, amount));
+
+            var embed = new EmbedBuilder()
+                .WithUserColor(user.CommandColor)
+                .WithDescription(
+                    $"{mentionedUser.Mention.AsGameMention(user.Title)}, " +
+                    "перед тобой появляется голограмма неизвестного божества и сообщает что твоя поддержка " +
+                    $"в размере {emotes.GetEmote("Ruble")} {amount} " +
+                    $"{_local.Localize(LocalizationCategory.Basic, "Ruble", amount)} была засчитана и в " +
+                    $"твой {emotes.GetEmote("SlashCommand")} `/инвентарь` " +
+                    $"добавлено {emotes.GetEmote(Currency.Lobbs.ToString())} {amount} " +
+                    $"{_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), amount)}.");
+
+            await _mediator.Send(new SendEmbedToUserCommand(mentionedUser.Id, embed));
+
+            await Context.Interaction.FollowupAsync(
+                $"Пользователю {mentionedUser.Mention} было засчитано {emotes.GetEmote("Ruble")} {amount} " +
+                $"{_local.Localize(LocalizationCategory.Basic, "Ruble", amount)} " +
+                $"доната и выдано {emotes.GetEmote(Currency.Lobbs.ToString())} {amount} " +
+                $"{_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), amount)}.");
         }
 
         [SlashCommand("add-role", "Add a role to user")]
@@ -250,7 +292,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
                 .WithDescription(
                     "Ты можешь делиться с нами своими любимыми изображениями в каналах доски сообщества." +
                     $"\n\n{emotes.GetEmote("Arrow")} Напиши в канал {channels[Channel.Commands].Id.ToMention(MentionType.Channel)} " +
-                    "`/доска-сообщества` чтобы посмотреть информацию о своем участии." +
+                    $"{emotes.GetEmote("SlashCommand")}`/доска-сообщества` чтобы посмотреть информацию о своем участии." +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Каналы доски",
                     $"{emotes.GetEmote("List")} {channels[Channel.Photos].Id.ToMention(MentionType.Channel)} - Красивые ~~котики~~ фотографии.\n" +
@@ -337,7 +379,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
                     $"\n{emotes.GetEmote("Premium")} премиум на 365 дней стоит {emotes.GetEmote(Currency.Lobbs.ToString())} ~~{premium365daysFullPrice}~~ {premium365daysPrice} {_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), premium365daysPrice)}" +
                     $"\n{emotes.GetEmote("Arrow")} Экономия {emotes.GetEmote(Currency.Lobbs.ToString())} {premium365daysFullPrice - premium365daysPrice} {_local.Localize(LocalizationCategory.Currency, Currency.Lobbs.ToString(), premium365daysFullPrice - premium365daysPrice)}")
                 .AddField(StringExtensions.EmptyChar,
-                    $"Для того чтобы приобрести, продлить или проверить свою подписку на статус {emotes.GetEmote("Premium")} премиум загляни в `/премиум`.")
+                    $"Для того чтобы приобрести, продлить или проверить свою подписку на статус {emotes.GetEmote("Premium")} премиум загляни в {emotes.GetEmote("SlashCommand")} `/премиум`.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.GetPremium)));
 
             var components = new ComponentBuilder()
