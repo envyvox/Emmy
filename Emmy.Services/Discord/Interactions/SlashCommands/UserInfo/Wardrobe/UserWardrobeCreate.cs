@@ -2,6 +2,7 @@
 using Discord;
 using Discord.Interactions;
 using Emmy.Services.Discord.Embed;
+using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
@@ -34,6 +35,8 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
         {
             await Context.Interaction.DeferAsync();
 
+            var emotes = DiscordRepository.Emotes;
+
             if (roleName.Length > 100)
             {
                 throw new GameUserExpectedException(
@@ -54,7 +57,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно создал собственную роль {createdRoleId.ToMention(MentionType.Role)}. " +
-                    "Она была добавлена в твои `/роли` а так же автоматически надета на сервере.")
+                    $"Она была добавлена в твои {emotes.GetEmote("SlashCommand")} `/роли` а так же автоматически надета на сервере.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Wardrobe)));
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));

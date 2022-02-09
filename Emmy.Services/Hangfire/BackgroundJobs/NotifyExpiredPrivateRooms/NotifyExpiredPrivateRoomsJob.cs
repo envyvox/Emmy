@@ -53,7 +53,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPrivateRooms
                     .WithDescription(
                         $"{socketUser.Mention.AsGameMention(user.Title)}, " +
                         $"твой приватный сектор {entity.ChannelId.ToMention(MentionType.Channel)} исстекает **через 3 дня**." +
-                        $"\n\n{emotes.GetEmote("Arrow")} Не забудь заглянуть в `/приватные-секторы` чтобы продлить его.")
+                        $"\n\n{emotes.GetEmote("Arrow")} Не забудь заглянуть в {emotes.GetEmote("SlashCommand")} `/приватные-секторы` чтобы продлить его.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.PrivateRoom)));
 
                 await _mediator.Send(new SendEmbedToUserCommand(socketUser.Id, embed));

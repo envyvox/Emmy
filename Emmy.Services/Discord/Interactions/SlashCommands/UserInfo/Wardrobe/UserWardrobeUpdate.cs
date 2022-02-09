@@ -2,6 +2,7 @@
 using Discord;
 using Discord.Interactions;
 using Emmy.Services.Discord.Embed;
+using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
@@ -42,6 +43,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
 
             roleColor = roleColor.Replace("#", "");
 
+            var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var hasPersonalRole = await _mediator.Send(new CheckUserHasPersonalRoleQuery(user.Id));
 
@@ -49,7 +51,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
             {
                 throw new GameUserExpectedException(
                     "у тебя нет собственной роли чтобы ее обновлять. " +
-                    "Если ты хотел создать ее, то тебе необходимо написать `/гардеробная-создать`.");
+                    $"Если ты хотел создать ее, то тебе необходимо написать {emotes.GetEmote("SlashCommand")} `/гардеробная-создать`.");
             }
 
             var personalRole = await _mediator.Send(new GetUserPersonalRoleQuery(user.Id));

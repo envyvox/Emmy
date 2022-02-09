@@ -77,7 +77,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredLoveRooms
                     .WithDescription(
                         $"{socketUser1.Mention.AsGameMention(entity.Relationship.User1.Title)}, " +
                         $"твое любовное гнездо с {socketUser2.Mention.AsGameMention(entity.Relationship.User2.Title)} было удалено, так как вы его не продлили." +
-                        $"\n\n{emotes.GetEmote("Arrow")} Вы можете заново создать любовное гнездо заглянув в `/отношения`.")
+                        $"\n\n{emotes.GetEmote("Arrow")} Вы можете заново создать любовное гнездо заглянув в {emotes.GetEmote("SlashCommand")} `/отношения`.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.Relationship)));
 
                 var notify2 = new EmbedBuilder()
@@ -86,7 +86,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredLoveRooms
                     .WithDescription(
                         $"{socketUser2.Mention.AsGameMention(entity.Relationship.User2.Title)}, " +
                         $"твое любовное гнездо с {socketUser1.Mention.AsGameMention(entity.Relationship.User1.Title)} было удалено, так как вы его не продлили." +
-                        $"\n\n{emotes.GetEmote("Arrow")} Вы можете заново создать любовное гнездо заглянув в `/отношения`.")
+                        $"\n\n{emotes.GetEmote("Arrow")} Вы можете заново создать любовное гнездо заглянув в {emotes.GetEmote("SlashCommand")} `/отношения`.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.Relationship)));
 
                 await _mediator.Send(new SendEmbedToUserCommand(socketUser1.Id, notify1));

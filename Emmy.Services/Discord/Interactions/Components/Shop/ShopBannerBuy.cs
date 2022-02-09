@@ -77,7 +77,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                     $"{banner.Rarity.Localize().ToLower()} баннер «{banner.Name}» за " +
                     $"{emotes.GetEmote(currency.ToString())} {bannerPrice} " +
                     $"{_local.Localize(LocalizationCategory.Currency, currency.ToString(), bannerPrice)}." +
-                    $"\n{emotes.GetEmote("Arrow")} Найти приобретенный баннер можно в `/баннеры`.")
+                    $"\n{emotes.GetEmote("Arrow")} Найти приобретенный баннер можно в {emotes.GetEmote("SlashCommand")} `/баннеры`.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.ShopBanner)));
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));

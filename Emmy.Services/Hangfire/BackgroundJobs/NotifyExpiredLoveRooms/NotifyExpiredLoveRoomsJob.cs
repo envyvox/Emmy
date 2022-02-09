@@ -56,7 +56,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms
                     .WithDescription(
                         $"{socketUser1.Mention.AsGameMention(entity.Relationship.User1.Title)}, " +
                         $"твое любовное гнездо с {socketUser2.Mention.AsGameMention(entity.Relationship.User2.Title)} исстекает **через 3 дня**." +
-                        $"\n\n{emotes.GetEmote("Arrow")} Не забудьте заглянуть в `/отношения` чтобы продлить его.")
+                        $"\n\n{emotes.GetEmote("Arrow")} Не забудьте заглянуть в {emotes.GetEmote("SlashCommand")} `/отношения` чтобы продлить его.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.Relationship)));
 
                 await _mediator.Send(new SendEmbedToUserCommand(socketUser1.Id, embed1));
@@ -67,7 +67,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms
                     .WithDescription(
                         $"{socketUser2.Mention.AsGameMention(entity.Relationship.User2.Title)}, " +
                         $"твое любовное гнездо с {socketUser1.Mention.AsGameMention(entity.Relationship.User1.Title)} исстекает **через 3 дня**." +
-                        $"\n\n{emotes.GetEmote("Arrow")} Не забудьте заглянуть в `/отношения` чтобы продлить его.")
+                        $"\n\n{emotes.GetEmote("Arrow")} Не забудьте заглянуть {emotes.GetEmote("SlashCommand")} в `/отношения` чтобы продлить его.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.Relationship)));
 
                 await _mediator.Send(new SendEmbedToUserCommand(socketUser2.Id, embed2));

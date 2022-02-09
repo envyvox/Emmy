@@ -48,7 +48,7 @@ namespace Emmy.Services.Discord.Interactions.Components.PrivateRoom
                     $"у тебя нет в наличии {emotes.GetEmote(KeyType.PrivateRoom.EmoteName())} " +
                     $"{_local.Localize(LocalizationCategory.Key, KeyType.PrivateRoom.ToString(), 2)} " +
                     "для продления приватного сектора." +
-                    $"\n\n{emotes.GetEmote("Arrow")} Приобрести его можно в `/магазин-ключей`.");
+                    $"\n\n{emotes.GetEmote("Arrow")} Приобрести его можно в {emotes.GetEmote("SlashCommand")} `/магазин-ключей`.");
             }
 
             await _mediator.Send(new RemoveKeyFromUserCommand(user.Id, KeyType.PrivateRoom));

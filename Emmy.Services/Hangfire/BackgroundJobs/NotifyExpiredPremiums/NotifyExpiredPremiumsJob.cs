@@ -53,7 +53,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPremiums
                     .WithDescription(
                         $"{socketUser.Mention.AsGameMention(user.Title)}, " +
                         $"твоя подписка на статус {emotes.GetEmote("Premium")} премиум исстекает **через 3 дня**." +
-                        $"\n\n{emotes.GetEmote("Arrow")} Не забудь заглянуть в `/премиум` чтобы продлить ее.")
+                        $"\n\n{emotes.GetEmote("Arrow")} Не забудь заглянуть в {emotes.GetEmote("SlashCommand")} `/премиум` чтобы продлить ее.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.GetPremium)));
 
                 await _mediator.Send(new SendEmbedToUserCommand(socketUser.Id, embed));

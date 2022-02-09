@@ -196,7 +196,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             return str.Length > 0
                 ? str.Length > 1024
-                    ? "У тебя слишком много рыбы, напиши `/инвентарь рыба` чтобы посмотреть ее"
+                    ? $"У тебя слишком много рыбы, напиши {_emotes.GetEmote("SlashCommand")} `/инвентарь рыба` чтобы посмотреть ее"
                     : str.RemoveFromEnd(2)
                 : "У тебя нет ни одного предмета этого типа";
         }
@@ -209,7 +209,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             return str.Length > 0
                 ? str.Length > 1024
-                    ? "У тебя слишком много рыбы, напиши `/инвентарь семена` чтобы посмотреть ее"
+                    ? $"У тебя слишком много рыбы, напиши {_emotes.GetEmote("SlashCommand")} `/инвентарь семена` чтобы посмотреть ее"
                     : str.RemoveFromEnd(2)
                 : "У тебя нет ни одного предмета этого типа";
         }
@@ -222,7 +222,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             return str.Length > 0
                 ? str.Length > 1024
-                    ? "У тебя слишком много рыбы, напиши `/инвентарь урожай` чтобы посмотреть ее"
+                    ? $"У тебя слишком много рыбы, напиши {_emotes.GetEmote("SlashCommand")} `/инвентарь урожай` чтобы посмотреть ее"
                     : str.RemoveFromEnd(2)
                 : "У тебя нет ни одного предмета этого типа";
         }

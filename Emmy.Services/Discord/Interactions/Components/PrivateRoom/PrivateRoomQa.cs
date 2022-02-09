@@ -63,7 +63,7 @@ namespace Emmy.Services.Discord.Interactions.Components.PrivateRoom
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для создания собственного приватного сектора необходимо выполнить несколько простых шагов:" +
-                    $"\n\n{_emotes.GetEmote("List")} Приобрести {_emotes.GetEmote(KeyType.PrivateRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.PrivateRoom.ToString())} в `/магазин-ключей`." +
+                    $"\n\n{_emotes.GetEmote("List")} Приобрести {_emotes.GetEmote(KeyType.PrivateRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.PrivateRoom.ToString())} в {_emotes.GetEmote("SlashCommand")} `/магазин-ключей`." +
                     $"\n\n{_emotes.GetEmote("List")} Нажать кнопку **Создать приватный сектор** под этим сообщением." +
                     $"\n{_emotes.GetEmote("Arrow")} Комната на сервере будет создана автоматически и записана на твое имя на 30 дней." +
                     $"\n{_emotes.GetEmote("Arrow")} Ты получишь все необходимые права для управления созданной комнатой." +
@@ -92,7 +92,7 @@ namespace Emmy.Services.Discord.Interactions.Components.PrivateRoom
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для продения собственного приватного сектора еще на 30 дней необходимо выполнить несколько простых шагов:" +
-                    $"\n\n{_emotes.GetEmote("List")} Приобрести новый {_emotes.GetEmote(KeyType.PrivateRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.PrivateRoom.ToString())} в `/магазин-ключей`." +
+                    $"\n\n{_emotes.GetEmote("List")} Приобрести новый {_emotes.GetEmote(KeyType.PrivateRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.PrivateRoom.ToString())} в {_emotes.GetEmote("SlashCommand")} `/магазин-ключей`." +
                     $"\n\n{_emotes.GetEmote("List")} Выбрать необходимый сектор из списка под этим сообщением." +
                     $"\n{_emotes.GetEmote("Arrow")} Комната автоматически будет продлена на 30 дней.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.PrivateRoom)));
