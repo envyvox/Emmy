@@ -70,7 +70,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                     $"ты успешно приобрел роль {socketRole.Mention} на 30 дней за " +
                     $"{emotes.GetEmote(currency.ToString())} {rolePrice} " +
                     $"{_local.Localize(LocalizationCategory.Currency, currency.ToString(), rolePrice)}." +
-                    $"\n{emotes.GetEmote("Arrow")} Найти приобретенную роль можно в {emotes.GetEmote("SlashCommand")} `/роли`.")
+                    $"\n{emotes.GetEmote("Arrow")} Найти приобретенную роль можно в {emotes.GetEmote("DiscordSlashCommand")} `/роли`.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.ShopRole)));
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));

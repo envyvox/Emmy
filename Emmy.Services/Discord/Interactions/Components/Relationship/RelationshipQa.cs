@@ -74,7 +74,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
                     "для того чтобы начать отношения необходимо выполнить несколько простых шагов:" +
                     $"\n\n{_emotes.GetEmote("List")} У тебя и у твоего партнера должен быть подтвержденный {_emotes.GetEmote(Gender.None.EmoteName())} пол." +
                     $"\n{_emotes.GetEmote("Arrow")} Отправить запрос на подтверждение пола можно в {_channels[Channel.GetRoles].Id.ToMention(MentionType.Channel)}." +
-                    $"\n\n{_emotes.GetEmote("List")} Один из вас должен написать {_emotes.GetEmote("SlashCommand")} `/предложить-отношения`, а второй принять предложение нажав на кнопку в **личных сообщениях** с ботом.")
+                    $"\n\n{_emotes.GetEmote("List")} Один из вас должен написать {_emotes.GetEmote("DiscordSlashCommand")} `/предложить-отношения`, а второй принять предложение нажав на кнопку в **личных сообщениях** с ботом.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Relationship)));
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, Ephemeral: true));
@@ -110,7 +110,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для создания собственного любовного гнезда необходимо выполнить несколько простых шагов:" +
                     $"\n\n{_emotes.GetEmote("List")} Находиться в отношениях." +
-                    $"\n\n{_emotes.GetEmote("List")} Приобрести {_emotes.GetEmote(KeyType.LoveRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.LoveRoom.ToString())} в {_emotes.GetEmote("SlashCommand")} `/магазин-ключей`." +
+                    $"\n\n{_emotes.GetEmote("List")} Приобрести {_emotes.GetEmote(KeyType.LoveRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.LoveRoom.ToString())} в {_emotes.GetEmote("DiscordSlashCommand")} `/магазин-ключей`." +
                     $"\n\n{_emotes.GetEmote("List")} Нажать кнопку **Создать любовное гнездо** под этим сообщением." +
                     $"\n{_emotes.GetEmote("Arrow")} Комната на сервере будет создана автоматически на 30 дней." +
                     $"\n{_emotes.GetEmote("Arrow")} Ты и твой партнер получите все необходимые права для общения.")
@@ -134,7 +134,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для продления собственного любовного гнезда необходимо выполнить несколько простых шагов:" +
-                    $"\n\n{_emotes.GetEmote("List")} Приобрести новый {_emotes.GetEmote(KeyType.LoveRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.LoveRoom.ToString())} в {_emotes.GetEmote("SlashCommand")} `/магазин-ключей`." +
+                    $"\n\n{_emotes.GetEmote("List")} Приобрести новый {_emotes.GetEmote(KeyType.LoveRoom.EmoteName())} {_local.Localize(LocalizationCategory.Key, KeyType.LoveRoom.ToString())} в {_emotes.GetEmote("DiscordSlashCommand")} `/магазин-ключей`." +
                     $"\n\n{_emotes.GetEmote("List")} Нажать кнопку **Продлить любовное гнездо** под этим сообщением." +
                     $"\n{_emotes.GetEmote("Arrow")} Комната автоматически будет продлена на 30 дней.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Relationship)));

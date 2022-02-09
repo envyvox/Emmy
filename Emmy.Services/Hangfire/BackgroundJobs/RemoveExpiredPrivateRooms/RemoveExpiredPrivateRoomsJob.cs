@@ -74,7 +74,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredPrivateRooms
                     .WithDescription(
                         $"{socketUser.Mention.AsGameMention(entity.User.Title)}, " +
                         "твой приватный сектор был удален, так как ты его не продлил." +
-                        $"\n\n{emotes.GetEmote("Arrow")} Ты можешь заново создать приватный сектор заглянув в {emotes.GetEmote("SlashCommand")} `/приватные-секторы`.")
+                        $"\n\n{emotes.GetEmote("Arrow")} Ты можешь заново создать приватный сектор заглянув в {emotes.GetEmote("DiscordSlashCommand")} `/приватные-секторы`.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.PrivateRoom)));
 
                 await _mediator.Send(new SendEmbedToUserCommand(socketUser.Id, notify));

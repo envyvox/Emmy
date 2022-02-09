@@ -56,7 +56,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Wardrobe
                 .WithAuthor("Гардеробная")
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
-                    $"для создания собственной роли напиши {_emotes.GetEmote("SlashCommand")} `/гардеробная-создать` и укажи желаемые название и цвет роли." +
+                    $"для создания собственной роли напиши {_emotes.GetEmote("DiscordSlashCommand")} `/гардеробная-создать` и укажи желаемые название и цвет роли." +
                     $"\n\n{_emotes.GetEmote("Arrow")} Указать цвет необходимо в HEX формате, получить который можно например [в google color picker](https://www.google.com/search?q=colorpicker).")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Wardrobe)));
 
@@ -70,7 +70,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Wardrobe
                 .WithAuthor("Гардеробная")
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
-                    $"для обновления собственной роли напиши {_emotes.GetEmote("SlashCommand")} `/гардеробная-обновить` и укажи новые название и цвет роли." +
+                    $"для обновления собственной роли напиши {_emotes.GetEmote("DiscordSlashCommand")} `/гардеробная-обновить` и укажи новые название и цвет роли." +
                     $"\n\n{_emotes.GetEmote("Arrow")} Указать цвет необходимо в HEX формате, получить который можно например [в google color picker](https://www.google.com/search?q=colorpicker).")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Wardrobe)));
 

@@ -31,7 +31,7 @@ namespace Emmy.Services.Discord.Interactions.Attributes
                 ? PreconditionResult.FromSuccess()
                 : PreconditionResult.FromError(
                     $"это действие доступно лишь в **{_requiredLocation.Localize(true)}**, напиши " +
-                    $"{emotes.GetEmote("SlashCommand")} `/отправления` и выбери соответствующую локацию.");
+                    $"{emotes.GetEmote("DiscordSlashCommand")} `/отправления` и выбери соответствующую локацию.");
         }
     }
 }
