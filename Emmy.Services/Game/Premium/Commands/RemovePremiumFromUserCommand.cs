@@ -2,9 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Emmy.Data;
+using Emmy.Data.Enums;
 using Emmy.Data.Enums.Discord;
 using Emmy.Data.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
+using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Role.Commands;
 using Emmy.Services.Discord.Role.Queries;
 using Emmy.Services.Extensions;
@@ -63,6 +65,12 @@ namespace Emmy.Services.Game.Premium.Commands
 
                 await _mediator.Send(new DeleteSocketRoleFromGuildCommand((ulong) personalRole.RoleId));
             }
+
+            var hasBoost = await _mediator.Send(new CheckGuildUserHasRoleByTypeQuery(
+                (ulong) request.UserId, Role.NitroBoost));
+
+            await _mediator.Send(new UpdateUserCubeTypeCommand(
+                request.UserId, hasBoost ? CubeType.D8 : CubeType.D6));
 
             return Unit.Value;
         }

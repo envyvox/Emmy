@@ -67,6 +67,7 @@ namespace Emmy.Services.Discord.Client
             _socketClient.UserVoiceStateUpdated += ClientOnUserVoiceStateUpdated;
             _socketClient.UserJoined += ClientOnUserJoined;
             _socketClient.UserLeft += ClientOnUserLeft;
+            _socketClient.GuildMemberUpdated += ClientOnGuildMemberUpdated;
             _socketClient.GuildScheduledEventStarted += ClientOnGuildScheduledEventStarted;
             _socketClient.GuildScheduledEventCreated += ClientOnGuildScheduledEventCreated;
             _socketClient.GuildScheduledEventCancelled += ClientOnGuildScheduledEventCancelled;
@@ -75,6 +76,12 @@ namespace Emmy.Services.Discord.Client
             _socketClient.GuildScheduledEventUserAdd += ClientOnGuildScheduledEventUserAdd;
             _socketClient.GuildScheduledEventUserRemove += ClientOnGuildScheduledEventUserRemove;
             _interactionService.Log += ClientOnLog;
+        }
+
+        private async Task ClientOnGuildMemberUpdated(Cacheable<SocketGuildUser, ulong> oldSocketGuildUser,
+            SocketGuildUser newSocketGuildUser)
+        {
+            await _mediator.Send(new OnGuildMemberUpdated(oldSocketGuildUser, newSocketGuildUser));
         }
 
         public async Task<DiscordSocketClient> GetSocketClient()

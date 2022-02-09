@@ -11,7 +11,7 @@ namespace Emmy.Data.Enums.Discord
 
         Premium,
         Streamer,
-        Nitro, // роль нитро-буста создается дискордом автоматически, нам нужно лишь получить ее
+        NitroBoost, // роль нитро-буста создается дискордом автоматически, нам нужно лишь получить ее
         Creative,
         Friends,
 
@@ -56,7 +56,7 @@ namespace Emmy.Data.Enums.Discord
 
                 Role.Premium => "Премиум",
                 Role.Streamer => "Стримеры",
-                Role.Nitro => "Поддержка сервера",
+                Role.NitroBoost => "Поддержка сервера",
                 Role.Creative => "Креативный вклад",
                 Role.Friends => "Друзья проекта",
 
@@ -98,7 +98,7 @@ namespace Emmy.Data.Enums.Discord
                 Role.Administration => "ffc7f5",
                 Role.EventManager => "e99edb",
                 Role.Moderator => "c072b2",
-                Role.Nitro => "f47fff",
+                Role.NitroBoost => "f47fff",
                 Role.ContentProvider => "6fffc4",
                 Role.Premium => "ffb71d",
                 Role.GenderMale => "5ca5f9",

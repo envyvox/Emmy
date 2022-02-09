@@ -3,8 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Emmy.Data;
 using Emmy.Data.Entities.User;
+using Emmy.Data.Enums;
 using Emmy.Data.Enums.Discord;
 using Emmy.Data.Extensions;
+using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Role.Commands;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.User.Commands;
@@ -56,6 +58,12 @@ namespace Emmy.Services.Game.Premium.Commands
 
                 await _mediator.Send(new UpdateUserPremiumCommand(request.UserId, true));
                 await _mediator.Send(new AddRoleToUserCommand(request.UserId, (long) roles[Role.Premium].Id, null));
+
+                var hasBoost = await _mediator.Send(new CheckGuildUserHasRoleByTypeQuery(
+                    (ulong) request.UserId, Role.NitroBoost));
+
+                await _mediator.Send(new UpdateUserCubeTypeCommand(
+                    request.UserId, hasBoost ? CubeType.D12 : CubeType.D8));
             }
             else
             {
