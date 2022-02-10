@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Emmy.Services.Discord.Client.Events.ScheduledEvent
 {
@@ -13,9 +14,19 @@ namespace Emmy.Services.Discord.Client.Events.ScheduledEvent
 
     public class OnGuildScheduledEventUpdatedHandler : IRequestHandler<OnGuildScheduledEventUpdated>
     {
+        private readonly ILogger<OnGuildScheduledEventUpdatedHandler> _logger;
+
+        public OnGuildScheduledEventUpdatedHandler(ILogger<OnGuildScheduledEventUpdatedHandler> logger)
+        {
+            _logger = logger;
+        }
+
         public async Task<Unit> Handle(OnGuildScheduledEventUpdated request, CancellationToken ct)
         {
-            // ignored
+            _logger.LogInformation(
+                "[ScheduledEvent] Event updated from {@OldEvent} to {@NewEvent}",
+                request.OldSocketGuildEvent.GetOrDownloadAsync(), request.NewSocketGuildEvent);
+
             return await Task.FromResult(Unit.Value);
         }
     }

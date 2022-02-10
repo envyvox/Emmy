@@ -73,9 +73,8 @@ namespace Emmy.Services.Discord.Client
             var slashCmd = (SocketSlashCommand) interactionContext.Interaction;
 
             _logger.LogInformation(
-                "User {Username} ({UserId}) executed a slash command /{CommandName} with options {@Options}",
-                slashCmd.User.Username, slashCmd.User.Id, slashCmd.Data.Name, slashCmd.Data.Options);
-
+                "User {Username} ({UserId}) executed a slash command /{SlashCommandName}",
+                slashCmd.User.Username, slashCmd.User.Id, slashCmd.Data.Name);
 
             if (result.IsSuccess is false)
             {

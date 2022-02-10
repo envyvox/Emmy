@@ -1,8 +1,12 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 
 namespace Emmy
 {
@@ -10,13 +14,15 @@ namespace Emmy
     {
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .AddEnvironmentVariables("Emmy_")
-                .Build();
-
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .Destructure.ToMaximumDepth(2)
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.Seq("http://localhost:8081")
+                .Destructure.ToMaximumDepth(3)
+                .Destructure.With<IgnoreNullablePropertiesDestructuringPolicy>()
                 .CreateLogger();
 
             try
@@ -40,6 +46,23 @@ namespace Emmy
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
                 .ConfigureAppConfiguration(x => x.AddEnvironmentVariables("Emmy_"));
+        }
+
+        private class IgnoreNullablePropertiesDestructuringPolicy : IDestructuringPolicy
+        {
+            public bool TryDestructure(object value, ILogEventPropertyValueFactory propertyValueFactory,
+                out LogEventPropertyValue result)
+            {
+                var properties = value
+                    .GetType().GetTypeInfo().DeclaredProperties
+                    .Where(x => x.GetValue(value) is not null)
+                    .Select(x =>
+                        new LogEventProperty(x.Name, propertyValueFactory.CreatePropertyValue(x.GetValue(value))));
+
+                result = new StructureValue(properties);
+
+                return true;
+            }
         }
     }
 }
