@@ -10,6 +10,7 @@ using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
+using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Localization;
 using Emmy.Services.Game.User.Queries;
@@ -20,6 +21,7 @@ using StringExtensions = Emmy.Services.Extensions.StringExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands
 {
+    [RequireCommandChannel]
     [Group("рейтинг", "Просматривай серверные и игровые рейтинги")]
     public class WorldRating : InteractionModuleBase<SocketInteractionContext>
     {

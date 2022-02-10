@@ -12,6 +12,7 @@ using MediatR;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands
 {
+    [RequireCommandChannel]
     [RequireLocation(Location.Neutral)]
     public class Fishing : InteractionModuleBase<SocketInteractionContext>
     {

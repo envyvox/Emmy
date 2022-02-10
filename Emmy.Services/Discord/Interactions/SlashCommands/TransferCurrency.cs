@@ -5,6 +5,7 @@ using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
+using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Currency.Commands;
 using Emmy.Services.Game.Currency.Queries;
@@ -16,6 +17,7 @@ using static Emmy.Services.Extensions.ExceptionExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands
 {
+    [RequireCommandChannel]
     public class TransferCurrency : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;

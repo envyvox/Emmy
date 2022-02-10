@@ -7,6 +7,7 @@ using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
+using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Collection.Queries;
 using Emmy.Services.Game.Crop.Queries;
@@ -17,6 +18,7 @@ using MediatR;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 {
+    [RequireCommandChannel]
     public class UserCollection : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;

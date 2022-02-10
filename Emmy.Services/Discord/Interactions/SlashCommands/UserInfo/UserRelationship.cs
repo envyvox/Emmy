@@ -7,6 +7,7 @@ using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
+using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Discord.LoveRoom.Queries;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Relationship.Queries;
@@ -18,6 +19,7 @@ using StringExtensions = Emmy.Services.Extensions.StringExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 {
+    [RequireCommandChannel]
     public class UserRelationship : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;

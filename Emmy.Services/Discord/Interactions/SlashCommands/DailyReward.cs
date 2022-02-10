@@ -5,6 +5,7 @@ using Discord.Interactions;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
+using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.DailyReward.Queries;
 using Emmy.Services.Game.User.Queries;
@@ -12,6 +13,7 @@ using MediatR;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands
 {
+    [RequireCommandChannel]
     public class DailyReward : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;

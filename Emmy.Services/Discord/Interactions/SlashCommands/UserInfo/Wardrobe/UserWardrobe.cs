@@ -13,6 +13,7 @@ using static Discord.Emote;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
 {
+    [RequireCommandChannel]
     [RequirePremium]
     public class UserWardrobe : InteractionModuleBase<SocketInteractionContext>
     {

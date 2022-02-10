@@ -6,6 +6,7 @@ using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
+using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Relationship.Queries;
 using Emmy.Services.Game.User.Queries;
@@ -15,6 +16,7 @@ using static Emmy.Services.Extensions.ExceptionExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands
 {
+    [RequireCommandChannel]
     public class RelationshipProposition : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;

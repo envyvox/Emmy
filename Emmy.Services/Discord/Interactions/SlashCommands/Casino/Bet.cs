@@ -24,6 +24,7 @@ using static Emmy.Services.Extensions.ExceptionExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.Casino
 {
+    [RequireCommandChannel]
     [RequireLocation(Location.Neutral)]
     public class Bet : InteractionModuleBase<SocketInteractionContext>
     {

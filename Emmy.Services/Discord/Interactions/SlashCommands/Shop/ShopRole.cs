@@ -16,6 +16,7 @@ using static Discord.Emote;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.Shop
 {
+    [RequireCommandChannel]
     [RequireLocation(Location.Neutral)]
     public class ShopRole : InteractionModuleBase<SocketInteractionContext>
     {
