@@ -20,7 +20,7 @@ namespace Emmy.Services.Discord.Client.Events.ScheduledEvent
         public async Task<Unit> Handle(OnGuildScheduledEventCancelled request, CancellationToken ct)
         {
             _logger.LogInformation(
-                "[ScheduledEvent] event {@Event} was cancelled",
+                "[ScheduledEvent] Event {@Event} was cancelled",
                 request.SocketGuildEvent);
 
             return await Task.FromResult(Unit.Value);
