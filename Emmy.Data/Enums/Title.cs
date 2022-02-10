@@ -15,9 +15,7 @@ namespace Emmy.Data.Enums
         WineSamurai = 9,
         DescendantOcean = 10,
         ResourcefulCatcher = 11,
-        Lucky = 12,
-
-        Wanderer = 255 // титул для бота
+        Lucky = 12
     }
 
     public static class TitleHelper
@@ -38,7 +36,6 @@ namespace Emmy.Data.Enums
                 Title.DescendantOcean => "Потомок океана",
                 Title.ResourcefulCatcher => "Находчивый ловец",
                 Title.Lucky => "Приносящий удачу",
-                Title.Wanderer => "Странница",
                 _ => throw new ArgumentOutOfRangeException(nameof(title), title, null)
             };
         }
