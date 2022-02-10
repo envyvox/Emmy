@@ -9,6 +9,7 @@ using Emmy.Data.Extensions;
 using Emmy.Services.Game.Banner.Commands;
 using Emmy.Services.Game.Banner.Queries;
 using Emmy.Services.Game.Currency.Commands;
+using Emmy.Services.Game.Title.Commands;
 using Emmy.Services.Game.User.Models;
 using Emmy.Services.Game.World.Queries;
 using MediatR;
@@ -72,8 +73,8 @@ namespace Emmy.Services.Game.User.Commands
             var currencyAmount = await _mediator.Send(new GetWorldPropertyValueQuery(
                 WorldProperty.EconomyStartupCapital));
 
-            await _mediator.Send(new AddBannerToUserCommand(
-                request.UserId, banner.Id, true));
+            await _mediator.Send(new AddTitleToUserCommand(request.UserId, Data.Enums.Title.Newbie));
+            await _mediator.Send(new AddBannerToUserCommand(request.UserId, banner.Id, true));
             await _mediator.Send(new AddCurrencyToUserCommand(
                 request.UserId, Data.Enums.Currency.Token, currencyAmount));
 

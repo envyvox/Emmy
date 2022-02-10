@@ -2,32 +2,39 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Emmy.Data;
+using Emmy.Services.Game.Title.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Emmy.Services.Game.Title.Queries
 {
-    public record GetUserTitlesQuery(long UserId) : IRequest<List<Emmy.Data.Enums.Title>>;
+    public record GetUserTitlesQuery(long UserId) : IRequest<List<UserTitleDto>>;
 
-    public class GetUserTitlesHandler : IRequestHandler<GetUserTitlesQuery, List<Emmy.Data.Enums.Title>>
+    public class GetUserTitlesHandler : IRequestHandler<GetUserTitlesQuery, List<UserTitleDto>>
     {
+        private readonly IMapper _mapper;
         private readonly AppDbContext _db;
 
-        public GetUserTitlesHandler(DbContextOptions options)
+        public GetUserTitlesHandler(
+            DbContextOptions options,
+            IMapper mapper)
         {
+            _mapper = mapper;
             _db = new AppDbContext(options);
         }
 
-        public async Task<List<Data.Enums.Title>> Handle(GetUserTitlesQuery request, CancellationToken ct)
+        public async Task<List<UserTitleDto>> Handle(GetUserTitlesQuery request,
+            CancellationToken ct)
         {
             var entities = await _db.UserTitles
                 .AsQueryable()
+                .OrderByDescending(x => x.CreatedAt)
                 .Where(x => x.UserId == request.UserId)
-                .Select(x => x.Type)
                 .ToListAsync();
 
-            return entities;
+            return _mapper.Map<List<UserTitleDto>>(entities);
         }
     }
 }

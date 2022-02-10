@@ -5,7 +5,19 @@ namespace Emmy.Data.Enums
     public enum Title : byte
     {
         Newbie = 1,
-        Yatagarasu = 2
+        Yatagarasu = 2,
+        HarbingerOfSummer = 3,
+        FirstSamurai = 4,
+        BelievingInLuck = 5,
+        KingExcitement = 6,
+        Toxic = 7,
+        StockyFarmer = 8,
+        WineSamurai = 9,
+        DescendantOcean = 10,
+        ResourcefulCatcher = 11,
+        Lucky = 12,
+
+        Wanderer = 255 // титул для бота
     }
 
     public static class TitleHelper
@@ -16,6 +28,17 @@ namespace Emmy.Data.Enums
             {
                 Title.Newbie => "Новичок",
                 Title.Yatagarasu => "Ятагарасу",
+                Title.HarbingerOfSummer => "Предвестник лета",
+                Title.FirstSamurai => "Первый самурай",
+                Title.BelievingInLuck => "Верящий в удачу",
+                Title.KingExcitement => "Король азарта",
+                Title.Toxic => "Токсичный",
+                Title.StockyFarmer => "Запасливый фермер",
+                Title.WineSamurai => "Винный самурай",
+                Title.DescendantOcean => "Потомок океана",
+                Title.ResourcefulCatcher => "Находчивый ловец",
+                Title.Lucky => "Приносящий удачу",
+                Title.Wanderer => "Странница",
                 _ => throw new ArgumentOutOfRangeException(nameof(title), title, null)
             };
         }
