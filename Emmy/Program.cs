@@ -14,13 +14,12 @@ namespace Emmy
     {
         public static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .AddEnvironmentVariables("Emmy_")
+                .Build();
+
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("System", LogEventLevel.Warning)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.Seq("http://localhost:8081")
+                .ReadFrom.Configuration(configuration)
                 .Destructure.ToMaximumDepth(3)
                 .Destructure.With<IgnoreNullablePropertiesDestructuringPolicy>()
                 .CreateLogger();
