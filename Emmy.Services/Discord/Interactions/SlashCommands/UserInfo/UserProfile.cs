@@ -13,11 +13,11 @@ using Emmy.Services.Game.Banner.Queries;
 using Emmy.Services.Game.Relationship.Queries;
 using Emmy.Services.Game.Transit.Queries;
 using Emmy.Services.Game.User.Queries;
-using MediatR;
 using Humanizer;
+using MediatR;
 using StringExtensions = Emmy.Services.Extensions.StringExtensions;
 
-namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Profile
+namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 {
     [RequireCommandChannel]
     public class UserProfile : InteractionModuleBase<SocketInteractionContext>
@@ -110,7 +110,14 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Profile
                     user.About ?? "Тут пока что ничего не указано, но я уверена что это отличный пользователь.")
                 .WithImageUrl(banner.Url);
 
-            await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
+            var components = new ComponentBuilder();
+
+            if (mentionedUser is null)
+            {
+                components.WithButton("Обновить информацию", "user-profile-update-about");
+            }
+
+            await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components.Build()));
         }
     }
 }

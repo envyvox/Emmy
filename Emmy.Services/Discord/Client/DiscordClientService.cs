@@ -49,7 +49,10 @@ namespace Emmy.Services.Discord.Client
                     GatewayIntents.GuildVoiceStates |
                     GatewayIntents.GuildScheduledEvents
             });
-            _interactionService = new InteractionService(_socketClient.Rest);
+            _interactionService = new InteractionService(_socketClient.Rest, new InteractionServiceConfig
+            {
+                UseCompiledLambda = true
+            });
 
             await _serviceProvider.GetRequiredService<CommandHandler>()
                 .InitializeAsync(_socketClient, _interactionService, _serviceProvider);
