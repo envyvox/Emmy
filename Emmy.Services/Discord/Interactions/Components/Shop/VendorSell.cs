@@ -73,7 +73,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                             $"{emotes.GetEmote(fish.Name)} {amount} " +
                             $"{_local.Localize(LocalizationCategory.Fish, fish.Name, amount)} " +
                             $"за {emotes.GetEmote(Currency.Token.ToString())} {currencyAmount} " +
-                            $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString(), currencyAmount)}";
+                            $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString(), currencyAmount)}\n";
                     }
 
                     break;
@@ -100,7 +100,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                             $"{emotes.GetEmote(crop.Name)} {amount} " +
                             $"{_local.Localize(LocalizationCategory.Crop, crop.Name, amount)} " +
                             $"за {emotes.GetEmote(Currency.Token.ToString())} {currencyAmount} " +
-                            $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString(), currencyAmount)}";
+                            $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString(), currencyAmount)}\n";
                     }
 
                     break;
