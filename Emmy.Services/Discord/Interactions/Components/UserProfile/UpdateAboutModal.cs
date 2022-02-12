@@ -5,7 +5,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserProfile
 {
     public class UpdateAboutModal : IModal
     {
-        public string Title => "Обновление информации профиля";
+        public string Title => "Изменение информации профиля";
 
         [InputLabel("Информация")]
         [ModalTextInput("user-about", TextInputStyle.Paragraph,

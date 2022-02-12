@@ -114,7 +114,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             if (mentionedUser is null)
             {
-                components.WithButton("Обновить информацию", "user-profile-update-about");
+                components.WithButton("Изменить информацию", "user-profile-update-about");
             }
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components.Build()));

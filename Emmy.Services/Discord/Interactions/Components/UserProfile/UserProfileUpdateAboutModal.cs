@@ -32,7 +32,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserProfile
                 .WithAuthor("Профиль")
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
-                    "информация в твоем профиле была успешно обновлена.");
+                    "информация в твоем профиле была успешно изменена.");
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
         }
