@@ -166,7 +166,7 @@ namespace Emmy.Services.Discord.Interactions.Components
 
                     rewardString =
                         $"{emotes.GetEmote(randomSeed.Name)} {amount} " +
-                        $"{_local.Localize(LocalizationCategory.Fish, randomSeed.Name, amount)}";
+                        $"{_local.Localize(LocalizationCategory.Seed, randomSeed.Name, amount)}";
 
                     break;
                 }
