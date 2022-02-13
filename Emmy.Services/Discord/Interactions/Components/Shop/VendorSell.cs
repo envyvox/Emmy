@@ -121,7 +121,8 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Отчетность о продаже",
                     descString.Length > 1024
-                        ? $"\n\nИтоговая прибыль {emotes.GetEmote(Currency.Token.ToString())} {totalCurrencyAmount} " +
+                        ? "Отчестность была такой длинной, что ты решил сразу взглянуть на самое важное" +
+                          $"\n\nИтоговая прибыль {emotes.GetEmote(Currency.Token.ToString())} {totalCurrencyAmount} " +
                           $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString(), totalCurrencyAmount)}"
                         : descString);
 
