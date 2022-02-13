@@ -28,13 +28,16 @@ namespace Emmy.Services.Discord.Interactions.Components
     {
         private readonly IMediator _mediator;
         private readonly ILocalizationService _local;
+        private readonly TimeZoneInfo _timeZoneInfo;
 
         public DailyReward(
             IMediator mediator,
-            ILocalizationService local)
+            ILocalizationService local,
+            TimeZoneInfo timeZoneInfo)
         {
             _mediator = mediator;
             _local = local;
+            _timeZoneInfo = timeZoneInfo;
         }
 
         [ComponentInteraction("daily-reward:*")]
@@ -50,12 +53,11 @@ namespace Emmy.Services.Discord.Interactions.Components
                     "эта кнопка не для тебя!");
             }
 
-            var timeNow = DateTimeOffset.UtcNow;
+            var timeNow = TimeZoneInfo.ConvertTime(DateTimeOffset.UtcNow, _timeZoneInfo);
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var hasTodayReward = await _mediator.Send(new CheckUserDailyRewardQuery(
                 user.Id, timeNow.DayOfWeek));
-
 
             if (hasTodayReward)
             {

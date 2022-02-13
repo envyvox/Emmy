@@ -17,10 +17,14 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
     public class DailyReward : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;
+        private readonly TimeZoneInfo _timeZoneInfo;
 
-        public DailyReward(IMediator mediator)
+        public DailyReward(
+            IMediator mediator,
+            TimeZoneInfo timeZoneInfo)
         {
             _mediator = mediator;
+            _timeZoneInfo = timeZoneInfo;
         }
 
         [SlashCommand(
@@ -30,10 +34,11 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
         {
             await Context.Interaction.DeferAsync();
 
+            var timeNow = TimeZoneInfo.ConvertTime(DateTimeOffset.UtcNow, _timeZoneInfo);
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var hasTodayReward = await _mediator.Send(new CheckUserDailyRewardQuery(
-                user.Id, DateTimeOffset.UtcNow.DayOfWeek));
+                user.Id, timeNow.DayOfWeek));
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
