@@ -48,8 +48,8 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
                     "получай награду за ежедневную активность в игровом мире." +
                     $"\n\n{emotes.GetEmote("Arrow")} Ежедневная награда сбрасывается в 00:00 игрового времени.")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(user.IsPremium
-                    ? Data.Enums.Image.DailyReward
-                    : Data.Enums.Image.DailyRewardPremium)));
+                    ? Data.Enums.Image.DailyRewardPremium
+                    : Data.Enums.Image.DailyReward)));
 
             var components = new ComponentBuilder()
                 .WithButton("Получить награду", $"daily-reward:{user.Id}", disabled: hasTodayReward)
