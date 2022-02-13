@@ -58,7 +58,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображается информация о текущем состоянии мира:")
                 .AddField(StringExtensions.EmptyChar,
-                    $"Сейчас {timeNow.ToString("HH:mm tt", new CultureInfo("ru-RU"))}, " +
+                    $"Сейчас {timeNow.ToString("HH:mm", new CultureInfo("ru-RU"))}, " +
                     $"{emotes.GetEmote(currentTimesDay.ToString())} **{currentTimesDay.Localize()}**")
                 .AddField(StringExtensions.EmptyChar,
                     $"Погода сегодня будет {emotes.GetEmote(weatherToday.EmoteName())} **{weatherToday.Localize()}**")
