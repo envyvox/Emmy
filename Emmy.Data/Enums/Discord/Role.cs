@@ -5,43 +5,43 @@ namespace Emmy.Data.Enums.Discord
 {
     public enum Role : byte
     {
-        Administration,
-        EventManager,
-        Moderator,
+        Administration = 1,
+        EventManager = 2,
+        Moderator = 3,
 
-        Premium,
-        Streamer,
-        NitroBoost, // роль нитро-буста создается дискордом автоматически, нам нужно лишь получить ее
-        Creative,
-        Friends,
+        Premium = 4,
+        Streamer = 5,
+        NitroBoost = 6, // роль нитро-буста создается дискордом автоматически, нам нужно лишь получить ее
+        Creative = 7,
+        Friends = 8,
 
-        ContentProvider,
-        Active,
+        ContentProvider = 9,
+        Active = 10,
 
-        GenderMale,
-        GenderFemale,
+        GenderMale = 11,
+        GenderFemale = 12,
 
-        LocationNeutral,
-        LocationRedRose,
-        LocationWhiteCrow,
-        LocationGoldenShark,
+        LocationNeutral = 13,
+        LocationRedRose = 14,
+        LocationWhiteCrow = 15,
+        LocationGoldenShark = 16,
 
-        GenshinImpact,
-        LeagueOfLegends,
-        TeamfightTactics,
-        Valorant,
-        Tarkov,
-        DeadByDaylight,
-        ApexLegends,
-        Dota,
-        Minecraft,
-        Osu,
-        AmongUs,
-        Rust,
-        CsGo,
-        MobileGaming,
+        GenshinImpact = 17,
+        LeagueOfLegends = 18,
+        TeamfightTactics = 19,
+        Valorant = 20,
+        Tarkov = 21,
+        DeadByDaylight = 22,
+        ApexLegends = 23,
+        Dota = 24,
+        Minecraft = 25,
+        Osu = 26,
+        AmongUs = 27,
+        Rust = 28,
+        CsGo = 29,
+        MobileGaming = 30,
 
-        InVoice
+        InVoice = 31
     }
 
     public static class RoleHelper
