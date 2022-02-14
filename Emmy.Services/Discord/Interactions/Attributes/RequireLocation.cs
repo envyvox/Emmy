@@ -30,8 +30,13 @@ namespace Emmy.Services.Discord.Interactions.Attributes
             return user.Location == _requiredLocation
                 ? PreconditionResult.FromSuccess()
                 : PreconditionResult.FromError(
-                    $"это действие доступно лишь в **{_requiredLocation.Localize(true)}**, напиши " +
-                    $"{emotes.GetEmote("DiscordSlashCommand")} `/отправления` и выбери соответствующую локацию.");
+                    user.Location switch
+                    {
+                        Location.Fishing => "сперва необходимо закончить с рыбалкой, или ты собрался бросить удочку и прыгнуть в воду?",
+                        Location.FieldWatering => "сперва необходимо закончить поливать семена, или ты собрался бросить лейку и оставить свой будущий урожай умирать без воды?",
+                        Location.WorkOnContract => "по условиям рабочего контракта ты обязан сперва закончить над ним работу, а затем будешь волен делать что твоей душе угодно",
+                        _ => $"это действие доступно лишь в **{_requiredLocation.Localize(true)}**, напиши {emotes.GetEmote("DiscordSlashCommand")} `/отправления` и выбери соответствующую локацию."
+                    });
         }
     }
 }
