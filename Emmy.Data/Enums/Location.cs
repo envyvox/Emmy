@@ -5,6 +5,7 @@ namespace Emmy.Data.Enums
 {
     public enum Location : byte
     {
+        InTransit = 0,
         Neutral = 1,
         RedRose = 2,
         WhiteCrow = 3,

@@ -6,6 +6,7 @@ using Emmy.Services.Game.Localization;
 using Emmy.Services.Game.Localization.Impl;
 using Emmy.Services.Hangfire.BackgroundJobs.ActivityReward;
 using Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing;
+using Emmy.Services.Hangfire.BackgroundJobs.CompleteTransit;
 using Emmy.Services.Hangfire.BackgroundJobs.DeleteDailyRewards;
 using Emmy.Services.Hangfire.BackgroundJobs.GenerateDynamicShopBanner;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms;
@@ -93,6 +94,7 @@ namespace Emmy
             services.AddScoped<ICompleteFishingJob, CompleteFishingJob>();
             services.AddScoped<IStartNewDayJob, StartNewDayJob>();
             services.AddScoped<IDeleteDailyRewardsJob, DeleteDailyRewardsJob>();
+            services.AddScoped<ICompleteTransitJob, CompleteTransitJob>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

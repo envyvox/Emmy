@@ -64,23 +64,40 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
             string locationString;
             switch (user.Location)
             {
-                case Location.WorkOnContract:
+                case Location.InTransit:
+                {
+                    var userMovement = await _mediator.Send(new GetUserMovementQuery(user.Id));
 
+                    locationString =
+                        $"В пути из **{userMovement.Departure.Localize()}** в **{userMovement.Destination.Localize()}**, " +
+                        $"еще **{userMovement.Arrival.Subtract(DateTimeOffset.UtcNow).Humanize(1, new CultureInfo("ru-RU"))}**";
+
+                    break;
+                }
+
+                case Location.WorkOnContract:
+                {
                     locationString = "";
                     break;
+                }
+
                 case Location.Fishing:
                 case Location.FieldWatering:
-
+                {
                     var userMovement = await _mediator.Send(new GetUserMovementQuery(user.Id));
 
                     locationString =
                         $"**{user.Location.Localize()}**, еще " +
-                        $"{userMovement.Arrival.Subtract(DateTimeOffset.UtcNow).Humanize(1, new CultureInfo("ru-RU"))}";
+                        $"**{userMovement.Arrival.Subtract(DateTimeOffset.UtcNow).Humanize(1, new CultureInfo("ru-RU"))}**";
 
                     break;
+                }
+
                 default:
+                {
                     locationString = $"{emotes.GetEmote(user.Location.ToString())} **{user.Location.Localize()}**";
                     break;
+                }
             }
 
             var embed = new EmbedBuilder()

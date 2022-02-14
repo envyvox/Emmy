@@ -5,6 +5,7 @@
         Messages = 1,
         MinutesInVoice = 2,
         CasinoBet = 3,
-        Fishing = 4
+        Fishing = 4,
+        Transit = 5
     }
 }
