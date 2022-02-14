@@ -45,6 +45,8 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.ActivityReward
 
                 foreach (var (type, userStatistic) in statistics)
                 {
+                    if (type is not Statistic.Messages && type is not Statistic.MinutesInVoice) continue;
+
                     activityTokens += userStatistic.Amount * type switch
                     {
                         Statistic.Messages => ActivityTokenPerMessage,
@@ -59,7 +61,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.ActivityReward
             }
 
             await _db.Database.ExecuteSqlRawAsync("truncate user_statistics;");
-            
+
             _logger.LogInformation(
                 "Deleted user statistics from db");
         }
