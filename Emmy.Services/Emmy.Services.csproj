@@ -20,6 +20,7 @@
       <Folder Include="Discord\Role" />
       <Folder Include="Game\Donate\Models" />
       <Folder Include="Game\Donate\Queries" />
+      <Folder Include="Game\Fraction\Commands" />
     </ItemGroup>
 
     <ItemGroup>

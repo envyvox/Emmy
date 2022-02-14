@@ -18,13 +18,13 @@ namespace Emmy.Data.Enums.Discord
         ContentProvider = 9,
         Active = 10,
 
+        FractionNeutral = 13,
+        FractionRedRose = 14,
+        FractionWhiteCrow = 15,
+        FractionGoldenShark = 16,
+
         GenderMale = 11,
         GenderFemale = 12,
-
-        LocationNeutral = 13,
-        LocationRedRose = 14,
-        LocationWhiteCrow = 15,
-        LocationGoldenShark = 16,
 
         GenshinImpact = 17,
         LeagueOfLegends = 18,
@@ -66,10 +66,10 @@ namespace Emmy.Data.Enums.Discord
                 Role.GenderMale => "Оками",
                 Role.GenderFemale => "Китсунэ",
 
-                Role.LocationNeutral => Location.Neutral.Localize(),
-                Role.LocationRedRose => Location.RedRose.Localize(),
-                Role.LocationWhiteCrow => Location.WhiteCrow.Localize(),
-                Role.LocationGoldenShark => Location.GoldenShark.Localize(),
+                Role.FractionNeutral => Fraction.Neutral.Localize(),
+                Role.FractionRedRose => Fraction.RedRose.Localize().Replace("«", "").Replace("»", ""),
+                Role.FractionWhiteCrow => Fraction.WhiteCrow.Localize().Replace("«", "").Replace("»", ""),
+                Role.FractionGoldenShark => Fraction.GoldenShark.Localize().Replace("«", "").Replace("»", ""),
 
                 Role.GenshinImpact => "Genshin Impact",
                 Role.LeagueOfLegends => "League of Legends",
@@ -103,6 +103,9 @@ namespace Emmy.Data.Enums.Discord
                 Role.Premium => "ffb71d",
                 Role.GenderMale => "5ca5f9",
                 Role.GenderFemale => "ff7799",
+                Role.FractionRedRose => "dd6363",
+                Role.FractionWhiteCrow => "87799e",
+                Role.FractionGoldenShark => "f3ee4b",
                 // для всех остальных используем значение по-умолчанию (прозрачный цвет дискорда)
                 _ => "000000"
             };

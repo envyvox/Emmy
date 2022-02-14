@@ -37,6 +37,7 @@ namespace Emmy.Data
         public DbSet<Crop> Crops { get; set; }
         public DbSet<DynamicShopBanner> DynamicShopBanners { get; set; }
         public DbSet<Fish> Fishes { get; set; }
+        public DbSet<Fraction> Fractions { get; set; }
         public DbSet<Key> Keys { get; set; }
         public DbSet<Localization> Localizations { get; set; }
         public DbSet<Relationship> Relationships { get; set; }

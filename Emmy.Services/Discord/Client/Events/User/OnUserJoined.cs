@@ -36,16 +36,12 @@ namespace Emmy.Services.Discord.Client.Events.User
 
             var user = await _mediator.Send(new GetUserQuery((long) request.SocketGuildUser.Id));
 
+            await _mediator.Send(new AddRoleToGuildUserByRoleTypeCommand(
+                request.SocketGuildUser.Id, user.Fraction.Role()));
+
             if (user.OnGuild is false)
             {
                 await _mediator.Send(new UpdateUserOnGuildCommand(user.Id, true));
-            }
-
-            if (user.CreatedAt.Date != DateTimeOffset.UtcNow.Date &&
-                request.SocketGuildUser.Roles.All(x => x.Name != user.Location.Role().Name()))
-            {
-                await _mediator.Send(new AddRoleToGuildUserByRoleTypeCommand(
-                    request.SocketGuildUser.Id, user.Location.Role()));
             }
 
             if (user.IsPremium &&

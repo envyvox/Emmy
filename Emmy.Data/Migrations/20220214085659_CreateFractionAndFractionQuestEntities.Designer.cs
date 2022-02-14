@@ -3,15 +3,17 @@ using System;
 using Emmy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Emmy.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220214085659_CreateFractionAndFractionQuestEntities")]
+    partial class CreateFractionAndFractionQuestEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -437,6 +439,37 @@ namespace Emmy.Data.Migrations
                         .HasDatabaseName("ix_fractions_type");
 
                     b.ToTable("fractions");
+                });
+
+            modelBuilder.Entity("Emmy.Data.Entities.FractionQuest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<byte>("FractionType")
+                        .HasColumnType("smallint")
+                        .HasColumnName("fraction_type");
+
+                    b.Property<long>("Progress")
+                        .HasColumnType("bigint")
+                        .HasColumnName("progress");
+
+                    b.Property<byte>("Quest")
+                        .HasColumnType("smallint")
+                        .HasColumnName("quest");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_fraction_quests");
+
+                    b.HasIndex("FractionType")
+                        .HasDatabaseName("ix_fraction_quests_fraction_type");
+
+                    b.ToTable("fraction_quests");
                 });
 
             modelBuilder.Entity("Emmy.Data.Entities.Key", b =>
@@ -1457,6 +1490,18 @@ namespace Emmy.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Banner");
+                });
+
+            modelBuilder.Entity("Emmy.Data.Entities.FractionQuest", b =>
+                {
+                    b.HasOne("Emmy.Data.Entities.Fraction", "Fraction")
+                        .WithMany()
+                        .HasForeignKey("FractionType")
+                        .HasConstraintName("fk_fraction_quests_fractions_fraction_type")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Fraction");
                 });
 
             modelBuilder.Entity("Emmy.Data.Entities.Relationship", b =>

@@ -31,6 +31,10 @@
         DailyRewardSundayAmountWithoutPremium = 32,
         DailyRewardSundayAmountPremium = 33,
         DailyRewardBonusAmountWithoutPremium = 34,
-        DailyRewardBonusAmountPremium = 35
+        DailyRewardBonusAmountPremium = 35,
+        FractionAllowableCountAdvantage = 36,
+        FractionGiftPrice = 37,
+        FractionGiftCooldownDurationInHours = 38,
+        FractionRaidCooldownDurationInHours = 39
     }
 }

@@ -9,6 +9,7 @@ using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.User.Queries;
 using MediatR;
+using static Emmy.Services.Extensions.ExceptionExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands
 {
@@ -32,6 +33,16 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
+
+            if (user.Fraction is Data.Enums.Fraction.Neutral)
+            {
+                throw new GameUserExpectedException(
+                    "хоть это место и зовется **Нейтральной зоной**, местные не очень " +
+                    $"доверяют {emotes.GetEmote(Data.Enums.Fraction.Neutral.EmoteName())} **нейтралам** и " +
+                    "не хотят отдавать свою рыбацкую лодку и снаряжение, даже на время." +
+                    "\n\nТебе необходимо заручиться поддержкой фракции, ведь даже простое упоминание их имен открывает множество дверей." +
+                    $"\n\n{emotes.GetEmote("Arrow")} Чтобы вступить во фракцию, напиши {emotes.GetEmote("DiscordSlashCommand")} `/фракция`.");
+            }
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)

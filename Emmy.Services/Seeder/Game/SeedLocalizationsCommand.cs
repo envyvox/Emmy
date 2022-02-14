@@ -45,6 +45,8 @@ namespace Emmy.Services.Seeder.Game
                             category, "Post", "публикация", "публикации", "публикаций"));
                         commands.Add(new CreateLocalizationCommand(
                             category, "Ruble", "рубль", "рубля", "рублей"));
+                        commands.Add(new CreateLocalizationCommand(
+                            category, "FractionPoints", "очко прогресса", "очка прогресса", "очков прогресса"));
 
                         break;
                     case LocalizationCategory.Vote:

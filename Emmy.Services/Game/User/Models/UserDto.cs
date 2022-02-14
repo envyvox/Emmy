@@ -9,7 +9,7 @@ namespace Emmy.Services.Game.User.Models
         string About,
         uint Level,
         uint Xp,
-        Fraction Fraction,
+        Emmy.Data.Enums.Fraction Fraction,
         Location Location,
         Data.Enums.Title Title,
         Gender Gender,

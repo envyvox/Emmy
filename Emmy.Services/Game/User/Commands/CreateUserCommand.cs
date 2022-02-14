@@ -56,7 +56,7 @@ namespace Emmy.Services.Game.User.Commands
                 About = null,
                 Level = 1,
                 Xp = 0,
-                Fraction = Fraction.Undefined,
+                Fraction = Emmy.Data.Enums.Fraction.Neutral,
                 Location = Location.Neutral,
                 Title = Data.Enums.Title.Newbie,
                 Gender = Gender.None,

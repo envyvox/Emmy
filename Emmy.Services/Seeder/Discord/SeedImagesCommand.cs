@@ -61,7 +61,9 @@ namespace Emmy.Services.Seeder.Discord
                 new(Image.DailyReward, "https://cdn.discordapp.com/attachments/931165008262492160/940068963134631997/DailyReward.png"),
                 new(Image.DailyRewardPremium, "https://cdn.discordapp.com/attachments/931165008262492160/940068963348537364/DailyRewardPremium.png"),
                 new(Image.ReferralRewards, "https://cdn.discordapp.com/attachments/931165008262492160/940939305516408842/ReferralRewards.png"),
-                new(Image.Referral, "https://cdn.discordapp.com/attachments/929693044054294578/940939388387467325/Referral.png")
+                new(Image.Referral, "https://cdn.discordapp.com/attachments/929693044054294578/940939388387467325/Referral.png"),
+                new(Image.NotExpectedException, "https://cdn.discordapp.com/attachments/929693044054294578/942788475466428476/NotExpectedException.gif"),
+                new(Image.ExpectedException, "https://cdn.discordapp.com/attachments/929693044054294578/942794923432878160/Error.png")
             };
             
             foreach (var createImageCommand in commands)

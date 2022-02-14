@@ -12,7 +12,7 @@ namespace Emmy.Data.Entities.User
         public string About { get; set; }
         public uint Level { get; set; }
         public uint Xp { get; set; }
-        public Fraction Fraction { get; set; }
+        public Emmy.Data.Enums.Fraction Fraction { get; set; }
         public Location Location { get; set; }
         public Title Title { get; set; }
         public Gender Gender { get; set; }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
+using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
@@ -10,6 +11,7 @@ using Emmy.Services.Extensions;
 using Emmy.Services.Game.DailyReward.Queries;
 using Emmy.Services.Game.User.Queries;
 using MediatR;
+using static Emmy.Services.Extensions.ExceptionExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands
 {
@@ -37,6 +39,16 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
             var timeNow = TimeZoneInfo.ConvertTime(DateTimeOffset.UtcNow, _timeZoneInfo);
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
+
+            if (user.Fraction is Data.Enums.Fraction.Neutral)
+            {
+                throw new GameUserExpectedException(
+                    $"боюсь что будучи {emotes.GetEmote(Data.Enums.Fraction.Neutral.EmoteName())} " +
+                    "**нейтралом** ты не сможешь найти ни одного поставщика, готового наградить тебя за ежедневную активность." +
+                    "\n\nТебе необходимо заручиться поддержкой фракции, ведь даже простое упоминание их имен открывает множество дверей." +
+                    $"\n\n{emotes.GetEmote("Arrow")} Чтобы вступить во фракцию, напиши {emotes.GetEmote("DiscordSlashCommand")} `/фракция`.");
+            }
+
             var hasTodayReward = await _mediator.Send(new CheckUserDailyRewardQuery(
                 user.Id, timeNow.DayOfWeek));
 

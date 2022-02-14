@@ -43,6 +43,17 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
+
+            if (user.Fraction is Data.Enums.Fraction.Neutral)
+            {
+                throw new GameUserExpectedException(
+                    "хоть это место и зовется **Нейтральной зоной**, местные не очень " +
+                    $"доверяют {emotes.GetEmote(Data.Enums.Fraction.Neutral.EmoteName())} **нейтралам** и " +
+                    "не собираются продавать труднополучаемые в это нелегкое время семена неизвестному фермеру." +
+                    "\n\nТебе необходимо заручиться поддержкой фракции, ведь даже простое упоминание их имен открывает множество дверей." +
+                    $"\n\n{emotes.GetEmote("Arrow")} Чтобы вступить во фракцию, напиши {emotes.GetEmote("DiscordSlashCommand")} `/фракция`.");
+            }
+
             var seed = await _mediator.Send(new GetSeedQuery(seedId));
             var userCurrency = await _mediator.Send(new GetUserCurrencyQuery(user.Id, Currency.Token));
 

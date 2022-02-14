@@ -12,6 +12,7 @@ using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Fraction.Queries;
 using Emmy.Services.Game.Localization;
 using Emmy.Services.Game.User.Queries;
 using Humanizer;
@@ -225,6 +226,37 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
             {
                 embed.AddField(StringExtensions.EmptyChar,
                     "В этом рейтинге еще никого нет, самое время тебе стать первым!");
+            }
+
+            await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
+        }
+
+        [SlashCommand("фракций", "Рейтинг фракций по количество накопленных очков")]
+        public async Task RatingFractionTask()
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            var emotes = DiscordRepository.Emotes;
+            var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
+
+            var fractions = await _db.Fractions
+                .AsQueryable()
+                .OrderByDescending(x => x.Points)
+                .ToListAsync();
+
+            var embed = new EmbedBuilder()
+                .WithUserColor(user.CommandColor)
+                .WithAuthor("Рейтинг фракций")
+                .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Rating)));
+
+            for (var i = 1; i <= fractions.Count; i++)
+            {
+                var current = fractions[i - 1];
+
+                embed.AddField(StringExtensions.EmptyChar,
+                    $"{i.AsPositionEmote()} `{i}` {emotes.GetEmote(current.Type.EmoteName())} " +
+                    $"**{current.Type.Localize()}** {emotes.GetEmote("Arrow")} {emotes.GetEmote("FractionPoints")} " +
+                    $"{current.Points} {_local.Localize(LocalizationCategory.Basic, "FractionPoints", current.Points)}");
             }
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
