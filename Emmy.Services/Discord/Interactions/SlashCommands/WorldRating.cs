@@ -181,7 +181,6 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
                     "В этом рейтинге еще никого нет, самое время тебе стать первым!");
             }
 
-
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
         }
 
@@ -226,6 +225,41 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
             {
                 embed.AddField(StringExtensions.EmptyChar,
                     "В этом рейтинге еще никого нет, самое время тебе стать первым!");
+            }
+
+            await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
+        }
+
+        [SlashCommand("опыта", "Рейтинг пользователей по количеству полученного опыта")]
+        public async Task RatingExpTask()
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            var emotes = DiscordRepository.Emotes;
+            var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
+
+            var entities = await _db.Users
+                .AsQueryable()
+                .OrderByDescending(x => x.Xp)
+                .ToListAsync();
+
+            var embed = new EmbedBuilder()
+                .WithUserColor(user.CommandColor)
+                .WithAuthor("Рейтинг по опыту")
+                .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Rating)));
+
+            for (var i = 1; i <= entities.Count; i++)
+            {
+                var current = entities[i - 1];
+                var socketUser = await _mediator.Send(new GetSocketGuildUserQuery((ulong) current.Id));
+
+                if (socketUser is null) continue;
+
+                var currentUser = await _mediator.Send(new GetUserQuery(current.Id));
+
+                embed.AddField(StringExtensions.EmptyChar,
+                    $"{i.AsPositionEmote()} `{i}` {socketUser.Mention.AsGameMention(currentUser.Title)} " +
+                    $"{emotes.GetEmote("Arrow")} {current.Level.AsLevelEmote()} {current.Level} уровень, {emotes.GetEmote("Xp")} {current.Xp} ед. опыта");
             }
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));

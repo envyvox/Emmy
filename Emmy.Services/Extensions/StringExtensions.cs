@@ -1,4 +1,6 @@
-﻿using Emmy.Data.Enums;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Emmy.Data.Enums;
 using Emmy.Services.Discord.Emote.Extensions;
 
 namespace Emmy.Services.Extensions
@@ -31,6 +33,24 @@ namespace Emmy.Services.Extensions
                 3 => emotes.GetEmote("CupBronze"),
                 _ => emotes.GetEmote("List")
             };
+        }
+
+        public static string AsLevelEmote(this uint level)
+        {
+            var emotes = DiscordRepository.Emotes;
+            var dict = new Dictionary<uint, string>
+            {
+                {1, emotes.GetEmote("Level1")},
+                {5, emotes.GetEmote("Level5")},
+                {10, emotes.GetEmote("Level10")},
+                {20, emotes.GetEmote("Level20")},
+                {30, emotes.GetEmote("Level30")},
+                {50, emotes.GetEmote("Level50")},
+                {80, emotes.GetEmote("Level80")},
+                {100, emotes.GetEmote("Level100")}
+            };
+
+            return dict[dict.Keys.Where(x => x <= level).Max()];
         }
     }
 }

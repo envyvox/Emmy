@@ -119,7 +119,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     locationString +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Уровень",
-                    $"{emotes.GetEmote("Level")} {user.Level} уровень, {emotes.GetEmote("Xp")} {user.Xp} ед. опыта" +
+                    $"{user.Level.AsLevelEmote()} {user.Level} уровень, {emotes.GetEmote("Xp")} {user.Xp} ед. опыта" +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Дата присоединения",
                     user.CreatedAt.ToString("dd MMMM yyy", new CultureInfo("ru-RU")))
