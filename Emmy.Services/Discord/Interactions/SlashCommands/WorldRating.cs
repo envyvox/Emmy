@@ -12,7 +12,6 @@ using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
-using Emmy.Services.Game.Fraction.Queries;
 using Emmy.Services.Game.Localization;
 using Emmy.Services.Game.User.Queries;
 using Humanizer;
@@ -240,7 +239,9 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var entities = await _db.Users
                 .AsQueryable()
+                .Where(x => x.OnGuild)
                 .OrderByDescending(x => x.Xp)
+                .Take(10)
                 .ToListAsync();
 
             var embed = new EmbedBuilder()
