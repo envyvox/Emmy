@@ -21,5 +21,11 @@ namespace Emmy.Controllers
         {
             return Ok(await _mediator.Send(request));
         }
+
+        [HttpGet("fishing")]
+        public async Task<ActionResult<CycleEmulateFishingResult>> EmulateFishing(EmulateFishing request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
     }
 }
