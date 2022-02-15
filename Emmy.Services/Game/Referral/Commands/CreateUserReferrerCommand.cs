@@ -105,7 +105,7 @@ namespace Emmy.Services.Game.Referral.Commands
                 case 5:
 
                     var banners = await _mediator.Send(new GetBannersQuery());
-                    var banner = banners.Single(x => x.Name == "");
+                    var banner = banners.Single(x => x.Name == "Биба и Боба");
 
                     await _mediator.Send(new AddContainerToUserCommand(referrerId, Data.Enums.Container.Token, 5));
                     await _mediator.Send(new AddBannerToUserCommand(referrerId, banner.Id));
