@@ -26,6 +26,7 @@ using Emmy.Services.Game.Seed.Models;
 using Emmy.Services.Game.Seed.Queries;
 using Emmy.Services.Game.User.Queries;
 using MediatR;
+using static Discord.Emote;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 {
@@ -64,6 +65,8 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                 .WithAuthor("Инвентарь")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.UserInventory)));
 
+            var components = new ComponentBuilder();
+
             var desc = string.Empty;
             if (category is null)
             {
@@ -98,6 +101,20 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                 {
                     embed.AddField("Урожай", DisplayUserCrops(userCrops));
                 }
+
+                components
+                    .WithButton(
+                        "Открыть контейнеры с токенами",
+                        $"container-open:{Container.Token.GetHashCode()}",
+                        emote: Parse(_emotes.GetEmote(Container.Token.EmoteName())),
+                        disabled: (userContainers.ContainsKey(Container.Token) &&
+                                   userContainers[Container.Token].Amount > 0) is false)
+                    .WithButton(
+                        "Открыть контейнеры с припасами",
+                        $"container-open:{Container.Supply.GetHashCode()}",
+                        emote: Parse(_emotes.GetEmote(Container.Supply.EmoteName())),
+                        // todo включить когда будет функционал
+                        disabled: true);
             }
             else
             {
@@ -152,7 +169,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
             embed.WithDescription(
                 $"{Context.User.Mention.AsGameMention(user.Title)}, " + desc + $"\n{StringExtensions.EmptyChar}");
 
-            await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
+            await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components.Build()));
         }
 
         private string DisplayUserCurrencies(IReadOnlyDictionary<Currency, UserCurrencyDto> userCurrencies)

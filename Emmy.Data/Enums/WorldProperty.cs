@@ -35,6 +35,8 @@
         FractionAllowableCountAdvantage = 36,
         FractionGiftPrice = 37,
         FractionGiftCooldownDurationInHours = 38,
-        FractionRaidCooldownDurationInHours = 39
+        FractionRaidCooldownDurationInHours = 39,
+        ContainerTokenMinAmount = 40,
+        ContainerTokenMaxAmount = 41
     }
 }
