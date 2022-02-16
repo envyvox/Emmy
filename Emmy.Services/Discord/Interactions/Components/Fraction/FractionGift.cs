@@ -7,6 +7,7 @@ using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
+using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Container.Commands;
 using Emmy.Services.Game.Cooldown.Commands;
@@ -23,6 +24,7 @@ using static Emmy.Services.Extensions.ExceptionExtensions;
 
 namespace Emmy.Services.Discord.Interactions.Components.Fraction
 {
+    [RequireLocation(Location.Neutral)]
     public class FractionGift : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;
@@ -43,15 +45,6 @@ namespace Emmy.Services.Discord.Interactions.Components.Fraction
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
-
-            if (user.Location != user.Fraction.Location())
-            {
-                throw new GameUserExpectedException(
-                    $"для того чтобы отправить {emotes.GetEmote(Container.Token.EmoteName())}{emotes.GetEmote(Container.Supply.EmoteName())} " +
-                    $"припасы случайному пользователю своей фракции необходимо находится в **{user.Fraction.Location().Localize(true)}**." +
-                    $"\n\n{emotes.GetEmote("Arrow")} Напиши {emotes.GetEmote("DiscordSlashCommand")} `/отправления` и выбери соответствующую локацию.");
-            }
-
             var userCooldown = await _mediator.Send(new GetUserCooldownQuery(user.Id, Cooldown.FractionGift));
 
             if (userCooldown.Expiration > DateTimeOffset.UtcNow)

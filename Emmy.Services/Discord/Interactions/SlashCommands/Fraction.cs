@@ -128,9 +128,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
                         "припасы случайному пользователю своей фракции." +
                         $"\nНо не чаще чем раз в **{fractionGiftCooldownInHours.Hours().Humanize(culture: new CultureInfo("ru-RU"))}**, " +
                         "у нас не так много свободных курьеров." +
-                        $"\n\n{emotes.GetEmote("Arrow")} Для отправки припасов нажми на кнопку **Отправить припасы**.")
-                    .WithFooter(
-                        $"Для всех действий с фракцией необходимо находится в локации своей фракции - {user.Fraction.Location().Localize()}.");
+                        $"\n\n{emotes.GetEmote("Arrow")} Для отправки припасов нажми на кнопку **Отправить припасы**.");
 
                 var components = new ComponentBuilder()
                     .WithButton(
