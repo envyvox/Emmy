@@ -63,6 +63,32 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Administration
                 $"{_local.Localize(LocalizationCategory.Currency, currency.ToString(), amount)}.");
         }
 
+        [SlashCommand("take-currency", "Take currency from user")]
+        public async Task AdmTakeCurrencyFromUserTask(IUser mentionedUser, Currency currency, uint amount)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            var emotes = DiscordRepository.Emotes;
+            var user = await _mediator.Send(new GetUserQuery((long) mentionedUser.Id));
+
+            await _mediator.Send(new RemoveCurrencyFromUserCommand(user.Id, currency, amount));
+
+            var embed = new EmbedBuilder()
+                .WithUserColor(user.CommandColor)
+                .WithDescription(
+                    $"{mentionedUser.Mention.AsGameMention(user.Title)}, " +
+                    "перед тобой появляется голограмма неизвестного божества и сообщает что с " +
+                    $"твоего {emotes.GetEmote("DiscordSlashCommand")} `/инвентарь` " +
+                    $"забрано {emotes.GetEmote(currency.ToString())} {amount} " +
+                    $"{_local.Localize(LocalizationCategory.Currency, currency.ToString(), amount)}.");
+
+            await _mediator.Send(new SendEmbedToUserCommand(mentionedUser.Id, embed));
+
+            await Context.Interaction.FollowupAsync(
+                $"У пользователя {mentionedUser.Mention} забрано {emotes.GetEmote(currency.ToString())} {amount} " +
+                $"{_local.Localize(LocalizationCategory.Currency, currency.ToString(), amount)}.");
+        }
+
         [SlashCommand("add-donate", "Add donate to user")]
         public async Task AdmAddDonateToUserTask(IUser mentionedUser, uint amount)
         {
