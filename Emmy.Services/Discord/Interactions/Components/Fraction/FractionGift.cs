@@ -43,15 +43,6 @@ namespace Emmy.Services.Discord.Interactions.Components.Fraction
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
-
-            if (user.Location != user.Fraction.Location())
-            {
-                throw new GameUserExpectedException(
-                    $"для того чтобы отправить {emotes.GetEmote(Container.Token.EmoteName())}{emotes.GetEmote(Container.Supply.EmoteName())} " +
-                    $"припасы случайному пользователю своей фракции необходимо находится в **{user.Fraction.Location().Localize(true)}**." +
-                    $"\n\n{emotes.GetEmote("Arrow")} Напиши {emotes.GetEmote("DiscordSlashCommand")} `/отправления` и выбери соответствующую локацию.");
-            }
-
             var userCooldown = await _mediator.Send(new GetUserCooldownQuery(user.Id, Cooldown.FractionGift));
 
             if (userCooldown.Expiration > DateTimeOffset.UtcNow)
