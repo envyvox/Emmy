@@ -8,7 +8,6 @@ using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
-using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Banner.Queries;
 using Emmy.Services.Game.Localization;
@@ -16,16 +15,14 @@ using Emmy.Services.Game.User.Queries;
 using MediatR;
 using static Discord.Emote;
 
-namespace Emmy.Services.Discord.Interactions.SlashCommands.Shop
+namespace Emmy.Services.Discord.Interactions.Components.Shop
 {
-    [RequireCommandChannel]
-    [RequireLocation(Location.Neutral)]
-    public class ShopBanner : InteractionModuleBase<SocketInteractionContext>
+    public class ShopBannerPaginator : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;
         private readonly ILocalizationService _local;
 
-        public ShopBanner(
+        public ShopBannerPaginator(
             IMediator mediator,
             ILocalizationService local)
         {
@@ -33,12 +30,13 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Shop
             _local = local;
         }
 
-        [SlashCommand(
-            "магазин-баннеров",
-            "Приобретай различные баннеры для своего профиля")]
-        public async Task ShopBannerTask()
+        [ComponentInteraction("shop-banner-paginator:*,*")]
+        public async Task Execute(string currencyHashcode, string pageString)
         {
             await Context.Interaction.DeferAsync(true);
+
+            var currency = (Currency) int.Parse(currencyHashcode);
+            var page = int.Parse(pageString);
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
@@ -54,6 +52,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Shop
             var maxPages = (int) Math.Ceiling(banners.Count / 5.0);
 
             banners = banners
+                .Skip(page > 1 ? (page - 1) * 5 : 0)
                 .Take(5)
                 .ToList();
 
@@ -66,11 +65,11 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Shop
                     $"\n\n{emotes.GetEmote("Arrow")} Для приобретения баннера, **выбери его** из списка под этим сообщением." +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField(
-                    $"Текущая валюта для оплаты {emotes.GetEmote("Arrow")} {emotes.GetEmote(Currency.Token.ToString())} " +
-                    $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString())}",
+                    $"Текущая валюта для оплаты {emotes.GetEmote("Arrow")} {emotes.GetEmote(currency.ToString())} " +
+                    $"{_local.Localize(LocalizationCategory.Currency, currency.ToString())}",
                     StringExtensions.EmptyChar)
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.ShopBanner)))
-                .WithFooter($"Страница 1 из {maxPages}");
+                .WithFooter($"Страница {page} из {maxPages}");
 
             var components = new ComponentBuilder
             {
@@ -79,33 +78,35 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Shop
                     new ActionRowBuilder()
                         .AddComponent(new ButtonBuilder(
                                 "Назад",
-                                $"shop-banner-paginator:{Currency.Token.GetHashCode()},1",
-                                isDisabled: true)
+                                $"shop-banner-paginator:{currencyHashcode},{page - 1}",
+                                isDisabled: page <= 1)
                             .Build())
                         .AddComponent(new ButtonBuilder(
                                 "Вперед",
-                                $"shop-banner-paginator:{Currency.Token.GetHashCode()},2")
+                                $"shop-banner-paginator:{currencyHashcode},{page + 1}",
+                                isDisabled: page >= maxPages)
                             .Build()),
 
                     new ActionRowBuilder()
                         .AddComponent(new ButtonBuilder(
                                 "Оплата токенами",
-                                $"shop-banner-select-currency:{Currency.Token.GetHashCode()},1",
+                                $"shop-banner-select-currency:{Currency.Token.GetHashCode()},{pageString}",
                                 ButtonStyle.Primary,
                                 emote: Parse(emotes.GetEmote(Currency.Token.ToString())),
-                                isDisabled: true)
+                                isDisabled: currency is Currency.Token)
                             .Build())
                         .AddComponent(new ButtonBuilder(
                                 "Оплата лоббсами",
-                                $"shop-banner-select-currency:{Currency.Lobbs.GetHashCode()},1",
+                                $"shop-banner-select-currency:{Currency.Lobbs.GetHashCode()},{pageString}",
                                 ButtonStyle.Primary,
-                                emote: Parse(emotes.GetEmote(Currency.Lobbs.ToString())))
+                                emote: Parse(emotes.GetEmote(Currency.Lobbs.ToString())),
+                                isDisabled: currency is Currency.Lobbs)
                             .Build())
                 }
             };
 
             var selectMenu = new SelectMenuBuilder()
-                .WithCustomId($"shop-banner-buy-currency:{Currency.Token.GetHashCode()}")
+                .WithCustomId($"shop-banner-buy-currency:{currencyHashcode}")
                 .WithPlaceholder("Выбери баннер который хочешь приобрести");
 
             foreach (var banner in banners)
@@ -122,10 +123,11 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Shop
                     emote: Parse(emotes.GetEmote(banner.Rarity.EmoteName())));
             }
 
-            await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed,
-                components
-                    .WithSelectMenu(selectMenu)
-                    .Build()));
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            {
+                x.Embed = embed.Build();
+                x.Components = components.WithSelectMenu(selectMenu).Build();
+            });
         }
     }
 }

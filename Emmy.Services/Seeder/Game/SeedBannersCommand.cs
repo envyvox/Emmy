@@ -45,7 +45,18 @@ namespace Emmy.Services.Seeder.Game
                 var messages = await channel.GetMessagesAsync().FlattenAsync();
 
                 commands.AddRange(messages.Select(message => new CreateBannerCommand(
-                    message.Content.Replace("`", ""), rarity, 9999, message.Attachments.First().Url)));
+                    Name: message.Content.Replace("`", ""),
+                    Rarity: rarity,
+                    Price: rarity switch
+                    {
+                        BannerRarity.Common => 3150,
+                        BannerRarity.Rare => 4800,
+                        BannerRarity.Animated => 7200,
+                        BannerRarity.Limited => 9999,
+                        BannerRarity.Custom => 9999,
+                        _ => throw new ArgumentOutOfRangeException()
+                    },
+                    Url: message.Attachments.First().Url)));
             }
 
             foreach (var createBannerCommand in commands)

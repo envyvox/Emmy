@@ -7,7 +7,6 @@ using Emmy.Services.Discord.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
 using Emmy.Services.Hangfire.BackgroundJobs.ActivityReward;
 using Emmy.Services.Hangfire.BackgroundJobs.DeleteDailyRewards;
-using Emmy.Services.Hangfire.BackgroundJobs.GenerateDynamicShopBanner;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPremiums;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPrivateRooms;
@@ -61,9 +60,6 @@ namespace Emmy.Services.Discord.Client.Events
                     x => x.Execute(),
                     Cron.Minutely, _timeZoneInfo);
 
-                RecurringJob.AddOrUpdate<IGenerateDynamicShopBannerJob>("generate-dynamic-shop-banners",
-                    x => x.Execute(),
-                    Cron.Daily, _timeZoneInfo);
                 RecurringJob.AddOrUpdate<IRemoveExpiredRolesJob>("remove-expired-roles",
                     x => x.Execute(),
                     Cron.Daily, _timeZoneInfo);

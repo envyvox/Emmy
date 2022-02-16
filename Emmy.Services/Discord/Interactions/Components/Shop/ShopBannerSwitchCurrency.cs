@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
 using Emmy.Data.Enums;
@@ -28,16 +31,31 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
             _local = local;
         }
 
-        [ComponentInteraction("shop-banner-select-currency:*")]
-        public async Task ShopBannerSwitchCurrencyTask(string currencyHashcode)
+        [ComponentInteraction("shop-banner-select-currency:*,*")]
+        public async Task ShopBannerSwitchCurrencyTask(string currencyHashcode, string pageString)
         {
             await Context.Interaction.DeferAsync(true);
 
             var currency = (Currency) int.Parse(currencyHashcode);
+            var page = int.Parse(pageString);
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
-            var banners = await _mediator.Send(new GetDynamicShopBannersQuery());
+            var banners = await _mediator.Send(new GetBannersQuery());
+
+            banners = banners
+                .Where(x =>
+                    x.Rarity is BannerRarity.Common
+                        or BannerRarity.Rare
+                        or BannerRarity.Animated)
+                .ToList();
+
+            var maxPages = (int) Math.Ceiling(banners.Count / 5.0);
+
+            banners = banners
+                .Skip(page > 1 ? (page - 1) * 5 : 0)
+                .Take(5)
+                .ToList();
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
@@ -46,27 +64,50 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображаются баннеры:" +
                     $"\n\n{emotes.GetEmote("Arrow")} Для приобретения баннера, **выбери его** из списка под этим сообщением." +
-                    $"\n\n{emotes.GetEmote("Arrow")} Это динамический магазин, товары которого обновляются каждый " +
-                    "день, не пропускай!" +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField(
                     $"Текущая валюта для оплаты {emotes.GetEmote("Arrow")} {emotes.GetEmote(currency.ToString())} " +
                     $"{_local.Localize(LocalizationCategory.Currency, currency.ToString())}",
                     StringExtensions.EmptyChar)
-                .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.ShopBanner)));
+                .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.ShopBanner)))
+                .WithFooter($"Страница {page} из {maxPages}");
 
-            var components = new ComponentBuilder()
-                .WithButton(
-                    "Оплата токенами", $"shop-banner-select-currency:{Currency.Token.GetHashCode()}",
-                    emote: Parse(emotes.GetEmote(Currency.Token.ToString())),
-                    disabled: currency is Currency.Token)
-                .WithButton(
-                    "Оплата лоббсами", $"shop-banner-select-currency:{Currency.Lobbs.GetHashCode()}",
-                    emote: Parse(emotes.GetEmote(Currency.Lobbs.ToString())),
-                    disabled: currency is Currency.Lobbs);
+            var components = new ComponentBuilder
+            {
+                ActionRows = new List<ActionRowBuilder>
+                {
+                    new ActionRowBuilder()
+                        .AddComponent(new ButtonBuilder(
+                                "Назад",
+                                $"shop-banner-paginator:{currencyHashcode},{page - 1}",
+                                isDisabled: page <= 1)
+                            .Build())
+                        .AddComponent(new ButtonBuilder(
+                                "Вперед",
+                                $"shop-banner-paginator:{currencyHashcode},{page + 1}",
+                                isDisabled: page >= maxPages)
+                            .Build()),
+
+                    new ActionRowBuilder()
+                        .AddComponent(new ButtonBuilder(
+                                "Оплата токенами",
+                                $"shop-banner-select-currency:{Currency.Token.GetHashCode()},{pageString}",
+                                ButtonStyle.Primary,
+                                emote: Parse(emotes.GetEmote(Currency.Token.ToString())),
+                                isDisabled: currency is Currency.Token)
+                            .Build())
+                        .AddComponent(new ButtonBuilder(
+                                "Оплата лоббсами",
+                                $"shop-banner-select-currency:{Currency.Lobbs.GetHashCode()},{pageString}",
+                                ButtonStyle.Primary,
+                                emote: Parse(emotes.GetEmote(Currency.Lobbs.ToString())),
+                                isDisabled: currency is Currency.Lobbs)
+                            .Build())
+                }
+            };
 
             var selectMenu = new SelectMenuBuilder()
-                .WithCustomId($"shop-banner-buy-currency:{currency.GetHashCode()}")
+                .WithCustomId($"shop-banner-buy-currency:{currencyHashcode}")
                 .WithPlaceholder("Выбери баннер который хочешь приобрести");
 
             foreach (var banner in banners)

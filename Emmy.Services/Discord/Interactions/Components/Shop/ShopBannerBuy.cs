@@ -44,7 +44,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
-            var banner = await _mediator.Send(new GetDynamicShopBannerQuery(bannerId));
+            var banner = await _mediator.Send(new GetBannerQuery(bannerId));
             var hasBanner = await _mediator.Send(new CheckUserHasBannerQuery(user.Id, banner.Id));
             var userCurrency = await _mediator.Send(new GetUserCurrencyQuery(user.Id, currency));
             var bannerPrice = currency is Currency.Token ? banner.Price : banner.Price.ConvertTokensToLobbs();

@@ -8,7 +8,6 @@ using Emmy.Services.Hangfire.BackgroundJobs.ActivityReward;
 using Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing;
 using Emmy.Services.Hangfire.BackgroundJobs.CompleteTransit;
 using Emmy.Services.Hangfire.BackgroundJobs.DeleteDailyRewards;
-using Emmy.Services.Hangfire.BackgroundJobs.GenerateDynamicShopBanner;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPremiums;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPrivateRooms;
@@ -82,7 +81,6 @@ namespace Emmy
             services.AddSingleton<ILocalizationService, LocalizationService>();
 
             services.AddScoped<IVoiceStatisticJob, VoiceStatisticJob>();
-            services.AddScoped<IGenerateDynamicShopBannerJob, GenerateDynamicShopBannerJob>();
             services.AddScoped<IActivityRewardJob, ActivityRewardJob>();
             services.AddScoped<IRemoveExpiredRolesJob, RemoveExpiredRolesJob>();
             services.AddScoped<IRemoveExpiredLoveRoomsJob, RemoveExpiredLoveRoomsJob>();

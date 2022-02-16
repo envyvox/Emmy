@@ -29,7 +29,7 @@ namespace Emmy.Services.Game.Banner.Queries
         {
             var entities = await _db.Banners
                 .AsQueryable()
-                .OrderBy(x => x.Id)
+                .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
 
             return _mapper.Map<List<BannerDto>>(entities);

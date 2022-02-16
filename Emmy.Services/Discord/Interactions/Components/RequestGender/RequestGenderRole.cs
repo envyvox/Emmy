@@ -73,25 +73,29 @@ namespace Emmy.Services.Discord.Interactions.Components.RequestGender
                 {
                     new ActionRowBuilder()
                         .AddComponent(new ButtonBuilder(
-                            "Написал(а) ему",
-                            $"gender-request-mark:{user.Id}",
-                            ButtonStyle.Success,
-                            emote: Parse(emotes.GetEmote("Checkmark"))).Build())
+                                "Написал(а) ему",
+                                $"gender-request-mark:{user.Id}",
+                                ButtonStyle.Success,
+                                emote: Parse(emotes.GetEmote("Checkmark")))
+                            .Build())
                         .AddComponent(new ButtonBuilder(
-                            "Не отвечает",
-                            $"gender-request-delete:{user.Id}",
-                            ButtonStyle.Danger,
-                            emote: Parse(emotes.GetEmote("Crossmark"))).Build()),
+                                "Не отвечает",
+                                $"gender-request-delete:{user.Id}",
+                                ButtonStyle.Danger,
+                                emote: Parse(emotes.GetEmote("Crossmark")))
+                            .Build()),
 
                     new ActionRowBuilder()
                         .AddComponent(new ButtonBuilder(
-                            "Подтвердить мужской пол",
-                            $"gender-request-update:{user.Id},{Gender.Male.GetHashCode()}",
-                            emote: Parse(emotes.GetEmote(Gender.Male.EmoteName()))).Build())
+                                "Подтвердить мужской пол",
+                                $"gender-request-update:{user.Id},{Gender.Male.GetHashCode()}",
+                                emote: Parse(emotes.GetEmote(Gender.Male.EmoteName())))
+                            .Build())
                         .AddComponent(new ButtonBuilder(
-                            "Подтвердить женский пол",
-                            $"gender-request-update:{user.Id},{Gender.Female.GetHashCode()}",
-                            emote: Parse(emotes.GetEmote(Gender.Female.EmoteName()))).Build())
+                                "Подтвердить женский пол",
+                                $"gender-request-update:{user.Id},{Gender.Female.GetHashCode()}",
+                                emote: Parse(emotes.GetEmote(Gender.Female.EmoteName())))
+                            .Build())
                 }
             };
 
