@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Emmy.Data;
 using Emmy.Data.Enums;
 using Emmy.Data.Extensions;
-using Emmy.Services.Game.World.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -21,17 +20,14 @@ namespace Emmy.Services.Game.Farm.Commands
     public class PlantUserFarmsHandler : IRequestHandler<PlantUserFarmsCommand>
     {
         private readonly ILogger<PlantUserFarmsHandler> _logger;
-        private readonly IMediator _mediator;
         private readonly AppDbContext _db;
 
         public PlantUserFarmsHandler(
             DbContextOptions options,
-            ILogger<PlantUserFarmsHandler> logger,
-            IMediator mediator)
+            ILogger<PlantUserFarmsHandler> logger)
         {
             _db = new AppDbContext(options);
             _logger = logger;
-            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(PlantUserFarmsCommand request, CancellationToken ct)
@@ -49,22 +45,17 @@ namespace Emmy.Services.Game.Farm.Commands
                     $"user {request.UserId} doesnt have farms with numbers {request.Numbers}");
             }
 
-            var weather = await _mediator.Send(new GetWeatherTodayQuery());
-            var state = weather == Weather.Clear
-                ? FieldState.Planted
-                : FieldState.Watered;
-
             foreach (var entity in entities)
             {
                 entity.UpdatedAt = DateTimeOffset.UtcNow;
                 entity.SeedId = request.SeedId;
-                entity.State = state;
+                entity.State = FieldState.Planted;
 
                 await _db.UpdateEntity(entity);
 
                 _logger.LogInformation(
                     "Planted user {UserId} farm {Number} with seed {SeedId} and state {State}",
-                    request.UserId, entity.Number, request.SeedId, state.ToString());
+                    request.UserId, entity.Number, request.SeedId, FieldState.Planted.ToString());
             }
 
             return Unit.Value;

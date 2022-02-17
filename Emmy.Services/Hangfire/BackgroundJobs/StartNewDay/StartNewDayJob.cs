@@ -29,16 +29,12 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.StartNewDay
             _logger.LogInformation(
                 "Start new day job executed");
 
+            await GenerateWeather();
             await _mediator.Send(new MoveAllFarmsProgressCommand());
-
-            var weatherToday = await GenerateWeather();
-
-            await _mediator.Send(new UpdateAllFarmsStateCommand(weatherToday == Weather.Rain
-                ? FieldState.Watered
-                : FieldState.Planted));
+            await _mediator.Send(new UpdateAllFarmsStateCommand(FieldState.Planted));
         }
 
-        private async Task<Weather> GenerateWeather()
+        private async Task GenerateWeather()
         {
             _logger.LogInformation(
                 "Generate weather executed");
@@ -57,8 +53,6 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.StartNewDay
 
             await _mediator.Send(new UpdateWeatherTodayCommand(newWeatherToday));
             await _mediator.Send(new UpdateWeatherTomorrowCommand(newWeatherTomorrow));
-
-            return newWeatherToday;
         }
     }
 }

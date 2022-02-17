@@ -70,7 +70,8 @@ namespace Emmy.Services.Discord.Interactions.Components.Farm
                 .WithAuthor("Ферма")
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
-                    $"теперь необходимо выбрать клетки на которые ты хочешь посадить {emotes.GetEmote(seed.Name)} {_local.Localize(LocalizationCategory.Seed, seed.Name, 5)}:" +
+                    $"теперь необходимо выбрать клетки на которые ты хочешь посадить {emotes.GetEmote(seed.Name)} " +
+                    $"{_local.Localize(LocalizationCategory.Seed, seed.Name, 5)}:" +
                     $"\n{StringExtensions.EmptyChar}")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Farm)));
 
