@@ -29,7 +29,7 @@ namespace Emmy.Data.Enums
                 Location.WorkOnContract => declension
                     ? "."
                     : "..", // Вместо названия локации выводится название контракта
-                Location.FarmWatering => declension ? "поливке участка земли" : "Поливка участка земли",
+                Location.FarmWatering => declension ? "поливке фермы" : "Поливка фермы",
                 _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
             };
         }
