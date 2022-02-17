@@ -31,7 +31,7 @@ namespace Emmy.Services.Seeder.Discord
                 new(Image.RequestGenderRole, "https://cdn.discordapp.com/attachments/931165008262492160/931166233519349830/unknown.png"),
                 new(Image.GetGameRoles, "https://cdn.discordapp.com/attachments/931165008262492160/931167023763980339/unknown.png"),
                 new(Image.Fishing, "https://cdn.discordapp.com/attachments/929693044054294578/935233643318738974/Fishing.png"),
-                new(Image.Harvesting, "https://cdn.discordapp.com/attachments/929693044054294578/935233643612368986/Harvesting.png"),
+                new(Image.Farm, "https://cdn.discordapp.com/attachments/929693044054294578/935233643612368986/Harvesting.png"),
                 new(Image.Container, "https://cdn.discordapp.com/attachments/929693044054294578/935233643851436122/OpenBox.png"),
                 new(Image.PrivateRoom, "https://cdn.discordapp.com/attachments/929693044054294578/935233644266668122/PrivateRoom.png"),
                 new(Image.Relationship, "https://cdn.discordapp.com/attachments/929693044054294578/935233644690284634/Relationship.png"),

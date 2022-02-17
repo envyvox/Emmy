@@ -49,6 +49,7 @@ namespace Emmy.Services.Discord.Interactions.Components.CubeDrop
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
+
             var drop1 = user.CubeType.DropCube();
             var drop2 = user.CubeType.DropCube();
             var drop3 = user.CubeType.DropCube();
@@ -56,6 +57,7 @@ namespace Emmy.Services.Discord.Interactions.Components.CubeDrop
             var drop2CubeEmote = emotes.GetEmote(user.CubeType.EmoteName(drop2));
             var drop3CubeEmote = emotes.GetEmote(user.CubeType.EmoteName(drop3));
             var cubeDrop = drop1 + drop2 + drop3;
+
             var fishingTime = await _mediator.Send(new GetWorldPropertyValueQuery(
                 WorldProperty.FishingDefaultDurationInMinutes));
             var duration = await _mediator.Send(new GetActionTimeQuery(

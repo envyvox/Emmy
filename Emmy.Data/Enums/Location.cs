@@ -12,7 +12,7 @@ namespace Emmy.Data.Enums
         GoldenShark = 4,
         Fishing = 5,
         WorkOnContract = 6,
-        FieldWatering = 7
+        FarmWatering = 7
     }
 
     public static class LocationHelper
@@ -29,7 +29,7 @@ namespace Emmy.Data.Enums
                 Location.WorkOnContract => declension
                     ? "."
                     : "..", // Вместо названия локации выводится название контракта
-                Location.FieldWatering => declension ? "поливке участка земли" : "Поливка участка земли",
+                Location.FarmWatering => declension ? "поливке участка земли" : "Поливка участка земли",
                 _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
             };
         }

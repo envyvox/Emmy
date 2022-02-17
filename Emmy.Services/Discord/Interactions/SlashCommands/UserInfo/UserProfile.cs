@@ -82,7 +82,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                 }
 
                 case Location.Fishing:
-                case Location.FieldWatering:
+                case Location.FarmWatering:
                 {
                     var userMovement = await _mediator.Send(new GetUserMovementQuery(user.Id));
 

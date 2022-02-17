@@ -59,11 +59,11 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
                     .WithPlaceholder("Выбери вопрос который тебя интересует")
                     .WithCustomId("user-wardrobe-qa")
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, как мне создать собственную роль?",
+                        "Как мне создать собственную роль?",
                         "user-wardrobe-create",
                         emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, как мне обновить собственную роль?",
+                        "Как мне обновить собственную роль?",
                         "user-wardrobe-update",
                         emote: Parse(emotes.GetEmote("DiscordHelp"))))
                 .Build();

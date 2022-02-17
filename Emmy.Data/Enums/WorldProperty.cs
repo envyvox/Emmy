@@ -37,6 +37,11 @@
         FractionGiftCooldownDurationInHours = 38,
         FractionRaidCooldownDurationInHours = 39,
         ContainerTokenMinAmount = 40,
-        ContainerTokenMaxAmount = 41
+        ContainerTokenMaxAmount = 41,
+        FarmPrice = 42,
+        FarmExpansionL1Price = 43,
+        FarmExpansionL2Price = 44,
+        FarmWateringTime = 45,
+        XpCropHarvesting = 46
     }
 }

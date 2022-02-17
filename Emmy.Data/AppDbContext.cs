@@ -48,6 +48,7 @@ namespace Emmy.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserBanner> UserBanners { get; set; }
+        public DbSet<UserBuilding> UserBuildings { get; set; }
         public DbSet<UserCollection> UserCollections { get; set; }
         public DbSet<UserContainer> UserContainers { get; set; }
         public DbSet<UserCooldown> UserCooldowns { get; set; }
@@ -55,6 +56,7 @@ namespace Emmy.Data
         public DbSet<UserCurrency> UserCurrencies { get; set; }
         public DbSet<UserDailyReward> UserDailyRewards { get; set; }
         public DbSet<UserDonation> UserDonations { get; set; }
+        public DbSet<UserFarm> UserFarms { get; set; }
         public DbSet<UserFish> UserFishes { get; set; }
         public DbSet<UserHangfireJob> UserHangfireJobs { get; set; }
         public DbSet<UserKey> UserKeys { get; set; }

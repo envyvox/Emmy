@@ -71,7 +71,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                 {
                     loveRoomString =
                         "У вашей пары еще нет любовного гнезда, чтобы это исправить, **выбери из меню** под этим " +
-                        $"сообщением диалог {emotes.GetEmote("DiscordHelp")} «{Context.Client.CurrentUser.Username}, как мне создать любовное гнездо?»";
+                        $"сообщением диалог {emotes.GetEmote("DiscordHelp")} «Как мне создать любовное гнездо?»";
                 }
             }
             else
@@ -79,7 +79,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                 relationshipString =
                     "Ты не состоишь в отношениях." +
                     $"\n{emotes.GetEmote("Arrow")} Для того чтобы это исправить, **выбери из меню** под этим " +
-                    $"сообщением диалог {emotes.GetEmote("DiscordHelp")} «{Context.Client.CurrentUser.Username}, как мне начать отношения?»";
+                    $"сообщением диалог {emotes.GetEmote("DiscordHelp")} «Как мне начать отношения?»";
                 loveRoomString =
                     "Ты не состоишь в отношениях, соответственно у тебя не может быть любовного гнезда";
             }
@@ -102,19 +102,19 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     .WithPlaceholder("Выбери вопрос который тебя интересует")
                     .WithCustomId("relationship-qa")
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, как мне начать отношения?",
+                        "Как мне начать отношения?",
                         "relationship-start",
                         emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, как мне закончить отношения?",
+                        "Как мне закончить отношения?",
                         "relationship-end",
                         emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, как мне создать любовное гнездо?",
+                        "Как мне создать любовное гнездо?",
                         "relationship-love-room-create",
                         emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, как мне продлить любовное гнездо?",
+                        "Как мне продлить любовное гнездо?",
                         "relationship-love-room-update",
                         emote: Parse(emotes.GetEmote("DiscordHelp"))));
 

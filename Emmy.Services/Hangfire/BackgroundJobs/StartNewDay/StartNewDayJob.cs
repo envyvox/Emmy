@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Emmy.Data.Enums;
+using Emmy.Services.Game.Farm.Commands;
 using Emmy.Services.Game.World.Commands;
 using Emmy.Services.Game.World.Queries;
 using MediatR;
@@ -28,11 +29,13 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.StartNewDay
             _logger.LogInformation(
                 "Start new day job executed");
 
-            // todo move all field progress
+            await _mediator.Send(new MoveAllFarmsProgressCommand());
 
             var weatherToday = await GenerateWeather();
 
-            // todo update all fields state
+            await _mediator.Send(new UpdateAllFarmsStateCommand(weatherToday == Weather.Rain
+                ? FieldState.Watered
+                : FieldState.Planted));
         }
 
         private async Task<Weather> GenerateWeather()

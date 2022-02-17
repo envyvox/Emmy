@@ -5,6 +5,6 @@
         Transit = 1,
         Fishing = 2,
         Contract = 3,
-        FieldWatering = 4
+        FarmWatering = 4
     }
 }

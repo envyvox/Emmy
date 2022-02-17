@@ -18,6 +18,7 @@
     <ItemGroup>
       <Folder Include="Discord\CommunityDesc" />
       <Folder Include="Discord\Role" />
+      <Folder Include="Game\Building\Models" />
       <Folder Include="Game\Donate\Models" />
       <Folder Include="Game\Donate\Queries" />
       <Folder Include="Game\Fraction\Commands" />

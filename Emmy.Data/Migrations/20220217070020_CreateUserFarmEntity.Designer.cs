@@ -3,15 +3,17 @@ using System;
 using Emmy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Emmy.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220217070020_CreateUserFarmEntity")]
+    partial class CreateUserFarmEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -721,34 +723,6 @@ namespace Emmy.Data.Migrations
                         .HasDatabaseName("ix_user_banners_user_id_banner_id");
 
                     b.ToTable("user_banners");
-                });
-
-            modelBuilder.Entity("Emmy.Data.Entities.User.UserBuilding", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<byte>("Building")
-                        .HasColumnType("smallint")
-                        .HasColumnName("building");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_user_buildings");
-
-                    b.HasIndex("UserId", "Building")
-                        .IsUnique()
-                        .HasDatabaseName("ix_user_buildings_user_id_building");
-
-                    b.ToTable("user_buildings");
                 });
 
             modelBuilder.Entity("Emmy.Data.Entities.User.UserCollection", b =>
@@ -1548,18 +1522,6 @@ namespace Emmy.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Banner");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Emmy.Data.Entities.User.UserBuilding", b =>
-                {
-                    b.HasOne("Emmy.Data.Entities.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("fk_user_buildings_users_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });

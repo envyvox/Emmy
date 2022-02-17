@@ -71,11 +71,11 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     .WithPlaceholder("Выбери вопрос который тебя интересует")
                     .WithCustomId("private-room-qa")
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, как мне создать приватный сектор?",
+                        "Как мне создать приватный сектор?",
                         "private-room-create",
                         emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, как мне продлить приватный сектор?",
+                        "Как мне продлить приватный сектор?",
                         "private-room-update",
                         emote: Parse(emotes.GetEmote("DiscordHelp"))));
 

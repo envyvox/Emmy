@@ -54,7 +54,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship.LoveRoom
             {
                 throw new GameUserExpectedException(
                     "у вашей пары уже есть любовное гнездо, если ты хочешь его продлить - то тебе необходимо " +
-                    $"выбрать диалог «{Context.Client.CurrentUser.Username}, как мне продлить любовное гнездо?».");
+                    $"выбрать диалог {emotes.GetEmote("DiscordHelp")} «Как мне продлить любовное гнездо?».");
             }
 
             var userKey = await _mediator.Send(new GetUserKeyQuery(user.Id, KeyType.LoveRoom));

@@ -76,15 +76,15 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
                     .WithPlaceholder("Выбери вопрос который тебя интересует")
                     .WithCustomId("world-info-qa")
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, на что влияет время суток?",
+                        "На что влияет время суток?",
                         "timesDay",
                         emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, на что влияет погода?",
+                        "На что влияет погода?",
                         "weather",
                         emote: Parse(emotes.GetEmote("DiscordHelp")))
                     .AddOption(
-                        $"{Context.Client.CurrentUser.Username}, на что влияет сезон?",
+                        "На что влияет сезон?",
                         "season",
                         emote: Parse(emotes.GetEmote("DiscordHelp"))))
                 .Build();

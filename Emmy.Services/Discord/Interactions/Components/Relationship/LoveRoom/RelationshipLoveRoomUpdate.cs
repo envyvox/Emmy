@@ -53,7 +53,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship.LoveRoom
             {
                 throw new ExceptionExtensions.GameUserExpectedException(
                     "у вашей пары нет любовного гнезда, если ты хочешь его создать - то тебе необходимо " +
-                    $"выбрать диалог «{Context.Client.CurrentUser.Username}, как мне создать любовное гнездо?».");
+                    $"выбрать диалог {emotes.GetEmote("DiscordHelp")} «Как мне создать любовное гнездо?».");
             }
 
             var userKey = await _mediator.Send(new GetUserKeyQuery(user.Id, KeyType.LoveRoom));

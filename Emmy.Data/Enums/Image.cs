@@ -9,7 +9,7 @@
         ShopSeed = 4,
         UserInventory = 5,
         Fishing = 6,
-        Harvesting = 7,
+        Farm = 7,
         NotExpectedException = 8,
         ExpectedException = 9,
         UserRoles = 10,
