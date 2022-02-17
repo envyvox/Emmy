@@ -40,6 +40,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
             var page = int.Parse(pageString);
 
             var emotes = DiscordRepository.Emotes;
+            var roles = DiscordRepository.Roles;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var banners = await _mediator.Send(new GetBannersQuery());
 
@@ -64,6 +65,9 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображаются баннеры:" +
                     $"\n\n{emotes.GetEmote("Arrow")} Для приобретения баннера, **выбери его** из списка под этим сообщением." +
+                    $"\n\n{emotes.GetEmote("Arrow")} Ты так же можешь заказать {emotes.GetEmote(BannerRarity.Custom.EmoteName())} " +
+                    $"{BannerRarity.Custom.Localize().ToLower()} баннер, для этого необходимо написать в **личные сообщения** " +
+                    $"{roles[Data.Enums.Discord.Role.Administration].Id.ToMention(MentionType.Role)}." +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField(
                     $"Текущая валюта для оплаты {emotes.GetEmote("Arrow")} {emotes.GetEmote(currency.ToString())} " +
