@@ -63,7 +63,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                 .WithAuthor("Магазин баннеров")
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
-                    "тут отображаются баннеры:" +
+                    "тут отображаются доступные для приобретения баннеры:" +
                     $"\n\n{emotes.GetEmote("Arrow")} Для приобретения баннера, **выбери его** из списка под этим сообщением." +
                     $"\n\n{emotes.GetEmote("Arrow")} Ты так же можешь заказать {emotes.GetEmote(BannerRarity.Custom.EmoteName())} " +
                     $"{BannerRarity.Custom.Localize().ToLower()} баннер, для этого необходимо написать в **личные сообщения** " +
