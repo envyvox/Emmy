@@ -4,6 +4,7 @@
     {
         CasinoBet = 1,
         FractionRaid = 2,
-        FractionGift = 3
+        FractionGift = 3,
+        Rename = 4
     }
 }

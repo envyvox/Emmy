@@ -35,6 +35,8 @@ namespace Emmy.Services.Discord.Client.Events.User
 
             var user = await _mediator.Send(new GetUserQuery((long) request.SocketGuildUser.Id));
 
+            await _mediator.Send(new RenameGuildUserCommand(
+                request.SocketGuildUser.Id, request.SocketGuildUser.Username));
             await _mediator.Send(new AddRoleToGuildUserByRoleTypeCommand(
                 request.SocketGuildUser.Id, user.Fraction.Role()));
 

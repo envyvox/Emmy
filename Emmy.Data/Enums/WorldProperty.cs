@@ -42,6 +42,7 @@
         FarmExpansionL1Price = 43,
         FarmExpansionL2Price = 44,
         FarmWateringTime = 45,
-        XpCropHarvesting = 46
+        XpCropHarvesting = 46,
+        RenameCooldownDurationInHours = 47
     }
 }

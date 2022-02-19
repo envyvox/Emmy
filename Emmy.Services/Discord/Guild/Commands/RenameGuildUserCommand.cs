@@ -28,7 +28,7 @@ namespace Emmy.Services.Discord.Guild.Commands
 
             try
             {
-                await socketGuildUser.ModifyAsync(x => x.Nickname = request.Nickname);
+                await socketGuildUser!.ModifyAsync(x => x.Nickname = request.Nickname);
 
                 _logger.LogInformation(
                     "Updated user {UserId} nickname to {Nickname}",
