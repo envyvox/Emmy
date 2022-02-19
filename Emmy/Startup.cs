@@ -5,6 +5,7 @@ using Emmy.Services.Discord.Extensions;
 using Emmy.Services.Game.Localization;
 using Emmy.Services.Game.Localization.Impl;
 using Emmy.Services.Hangfire.BackgroundJobs.ActivityReward;
+using Emmy.Services.Hangfire.BackgroundJobs.ChangeSeason;
 using Emmy.Services.Hangfire.BackgroundJobs.CompleteFarmWatering;
 using Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing;
 using Emmy.Services.Hangfire.BackgroundJobs.CompleteTransit;
@@ -95,6 +96,7 @@ namespace Emmy
             services.AddScoped<IDeleteDailyRewardsJob, DeleteDailyRewardsJob>();
             services.AddScoped<ICompleteTransitJob, CompleteTransitJob>();
             services.AddScoped<ICompleteFarmWateringJob, CompleteFarmWateringJob>();
+            services.AddScoped<IChangeSeasonJob, ChangeSeasonJob>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,6 +6,7 @@ using Emmy.Services.Discord.Emote.Commands;
 using Emmy.Services.Discord.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
 using Emmy.Services.Hangfire.BackgroundJobs.ActivityReward;
+using Emmy.Services.Hangfire.BackgroundJobs.ChangeSeason;
 using Emmy.Services.Hangfire.BackgroundJobs.DeleteDailyRewards;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms;
 using Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPremiums;
@@ -91,6 +92,10 @@ namespace Emmy.Services.Discord.Client.Events
                 RecurringJob.AddOrUpdate<IDeleteDailyRewardsJob>("delete-daily-rewards",
                     x => x.Execute(),
                     Cron.Weekly, _timeZoneInfo);
+
+                RecurringJob.AddOrUpdate<IChangeSeasonJob>("change-season",
+                    x => x.Execute(),
+                    Cron.Monthly, _timeZoneInfo);
 
                 _logger.LogInformation(
                     "Registering commands to guild {GuildId}",
