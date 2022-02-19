@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
-using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
-using Emmy.Services.Discord.Emote.Models;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Extensions;
-using Emmy.Services.Game.User.Models;
 using Emmy.Services.Game.User.Queries;
 using MediatR;
 

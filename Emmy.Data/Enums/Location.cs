@@ -1,5 +1,4 @@
 ﻿using System;
-using Emmy.Data.Enums.Discord;
 
 namespace Emmy.Data.Enums
 {
@@ -36,7 +35,8 @@ namespace Emmy.Data.Enums
 
         public static string EmoteName(this Location location)
         {
-            return location switch {
+            return location switch
+            {
                 Location.InTransit => "InTransit",
                 Location.Neutral => Fraction.Neutral.EmoteName(),
                 Location.RedRose => Fraction.RedRose.EmoteName(),

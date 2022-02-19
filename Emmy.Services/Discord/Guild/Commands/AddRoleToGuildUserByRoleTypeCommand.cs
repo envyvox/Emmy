@@ -31,7 +31,7 @@ namespace Emmy.Services.Discord.Guild.Commands
 
             try
             {
-                await user.AddRoleAsync(guild.GetRole(roles[request.Role].Id));
+                await user!.AddRoleAsync(guild.GetRole(roles[request.Role].Id));
 
                 _logger.LogInformation(
                     "Added role {Role} to user {UserId}",

@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Emmy.Data;
-using Emmy.Data.Enums;
 using Emmy.Data.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

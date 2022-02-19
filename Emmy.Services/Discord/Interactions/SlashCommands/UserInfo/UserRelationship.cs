@@ -51,7 +51,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                 var isStarted = relationship.User1.Id == user.Id;
 
                 relationshipString =
-                    $"Ты в отношениях с {socketPartner.Mention.AsGameMention(partner.Title)}, " +
+                    $"Ты в отношениях с {(socketPartner is null ? "Неизвестным пользователем" : socketPartner.Mention.AsGameMention(partner.Title))}, " +
                     (isStarted
                         ? $"ты {(user.Gender is Gender.Male ? "предложил" : "предложила")} {(partner.Gender is Gender.Male ? "ему" : "ей")} "
                         : $"{(partner.Gender is Gender.Male ? "он предложил" : "она предложила")} тебе ") +

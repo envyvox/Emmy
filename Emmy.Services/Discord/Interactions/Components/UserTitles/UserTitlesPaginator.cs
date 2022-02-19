@@ -11,7 +11,6 @@ using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Title.Queries;
 using Emmy.Services.Game.User.Queries;
-using Humanizer;
 using MediatR;
 using static Discord.Emote;
 using StringExtensions = Emmy.Services.Extensions.StringExtensions;

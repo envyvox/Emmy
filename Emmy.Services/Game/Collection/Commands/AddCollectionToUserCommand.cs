@@ -15,16 +15,13 @@ namespace Emmy.Services.Game.Collection.Commands
 
     public class AddCollectionToUserHandler : IRequestHandler<AddCollectionToUserCommand>
     {
-        private readonly IMediator _mediator;
         private readonly ILogger<AddCollectionToUserHandler> _logger;
         private readonly AppDbContext _db;
 
         public AddCollectionToUserHandler(
             DbContextOptions options,
-            IMediator mediator,
             ILogger<AddCollectionToUserHandler> logger)
         {
-            _mediator = mediator;
             _logger = logger;
             _db = new AppDbContext(options);
         }
