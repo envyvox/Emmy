@@ -50,7 +50,7 @@ namespace Emmy.Services.Game.Cooldown.Commands
             }
             else
             {
-                entity.Expiration = entity.Expiration.Add(request.Duration);
+                entity.Expiration = DateTimeOffset.UtcNow.Add(request.Duration);
                 entity.UpdatedAt = DateTimeOffset.UtcNow;
 
                 await _db.UpdateEntity(entity);
