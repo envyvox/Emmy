@@ -33,5 +33,20 @@ namespace Emmy.Data.Enums
                 _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
             };
         }
+
+        public static string EmoteName(this Location location)
+        {
+            return location switch {
+                Location.InTransit => "InTransit",
+                Location.Neutral => Fraction.Neutral.EmoteName(),
+                Location.RedRose => Fraction.RedRose.EmoteName(),
+                Location.WhiteCrow => Fraction.WhiteCrow.EmoteName(),
+                Location.GoldenShark => Fraction.GoldenShark.EmoteName(),
+                Location.Fishing => "Fishing",
+                Location.WorkOnContract => "WorkOnContract",
+                Location.FarmWatering => "FarmWatering",
+                _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
+            };
+        }
     }
 }

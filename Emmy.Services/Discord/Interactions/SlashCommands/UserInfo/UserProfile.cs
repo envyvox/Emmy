@@ -69,7 +69,8 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     var userMovement = await _mediator.Send(new GetUserMovementQuery(user.Id));
 
                     locationString =
-                        $"В пути из **{userMovement.Departure.Localize()}** в **{userMovement.Destination.Localize()}**, " +
+                        $"В пути из {emotes.GetEmote(userMovement.Departure.EmoteName())} **{userMovement.Departure.Localize()}**" +
+                        $" в {emotes.GetEmote(userMovement.Destination.EmoteName())} **{userMovement.Destination.Localize()}**, " +
                         $"еще **{userMovement.Arrival.Subtract(DateTimeOffset.UtcNow).Humanize(1, new CultureInfo("ru-RU"))}**";
 
                     break;
@@ -87,7 +88,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     var userMovement = await _mediator.Send(new GetUserMovementQuery(user.Id));
 
                     locationString =
-                        $"**{user.Location.Localize()}**, еще " +
+                        $"{emotes.GetEmote(user.Location.EmoteName())} **{user.Location.Localize()}**, еще " +
                         $"**{userMovement.Arrival.Subtract(DateTimeOffset.UtcNow).Humanize(1, new CultureInfo("ru-RU"))}**";
 
                     break;
@@ -95,7 +96,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
                 default:
                 {
-                    locationString = $"{emotes.GetEmote(user.Location.ToString())} **{user.Location.Localize()}**";
+                    locationString = $"{emotes.GetEmote(user.Location.EmoteName())} **{user.Location.Localize()}**";
                     break;
                 }
             }
