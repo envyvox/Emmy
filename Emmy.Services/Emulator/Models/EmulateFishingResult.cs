@@ -15,5 +15,6 @@
         public long LegendaryFishSuccess { get; set; }
         public long LegendaryFishFail { get; set; }
         public long FinalCurrency { get; set; }
+        public uint CubeDrop { get; set; }
     }
 }

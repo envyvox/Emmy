@@ -47,9 +47,9 @@ namespace Emmy.Services.Game.Calculation
         {
             return new Dictionary<uint, uint>
             {
-                {3, 50},
-                {8, 40},
-                {13, 35},
+                {3, 60},
+                {8, 53},
+                {13, 33},
                 {18, 30},
                 {22, 25},
                 {26, 20},
@@ -61,9 +61,9 @@ namespace Emmy.Services.Game.Calculation
         {
             return new Dictionary<uint, uint>
             {
-                {3, 40},
-                {8, 40},
-                {13, 35},
+                {3, 35},
+                {8, 37},
+                {13, 30},
                 {18, 30},
                 {22, 25},
                 {26, 20},
@@ -75,9 +75,9 @@ namespace Emmy.Services.Game.Calculation
         {
             return new Dictionary<uint, uint>
             {
-                {3, 10},
-                {8, 15},
-                {13, 15},
+                {3, 5},
+                {8, 7},
+                {13, 20},
                 {18, 20},
                 {22, 20},
                 {26, 20},
@@ -90,8 +90,8 @@ namespace Emmy.Services.Game.Calculation
             return new Dictionary<uint, uint>
             {
                 {3, 0},
-                {8, 5},
-                {13, 10},
+                {8, 3},
+                {13, 12},
                 {18, 10},
                 {22, 20},
                 {26, 25},

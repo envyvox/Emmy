@@ -65,6 +65,7 @@ namespace Emmy
 
             services.AddAutoMapper(typeof(IDiscordClientService).Assembly);
             services.AddMediatR(typeof(IDiscordClientService).Assembly);
+            services.AddMemoryCache();
 
             services
                 .AddControllers()

@@ -2,13 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Emmy.Data;
 using Emmy.Data.Enums;
-using Emmy.Data.Extensions;
 using Emmy.Services.Game.Fish.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Emmy.Services.Game.Fish.Queries
 {
@@ -21,22 +17,16 @@ namespace Emmy.Services.Game.Fish.Queries
 
     public class GetRandomFishWithParamsHandler : IRequestHandler<GetRandomFishWithParamsQuery, FishDto>
     {
-        private readonly IMapper _mapper;
-        private readonly AppDbContext _db;
+        private readonly IMediator _mediator;
 
-        public GetRandomFishWithParamsHandler(
-            DbContextOptions options,
-            IMapper mapper)
+        public GetRandomFishWithParamsHandler(IMediator mediator)
         {
-            _db = new AppDbContext(options);
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<FishDto> Handle(GetRandomFishWithParamsQuery request, CancellationToken ct)
         {
-            var entities = await _db.Fishes
-                .OrderByRandom()
-                .ToListAsync();
+            var entities = await _mediator.Send(new GetFishesQuery());
 
             var entity = entities.FirstOrDefault(x =>
                 x.Rarity == request.Rarity &&
@@ -55,7 +45,7 @@ namespace Emmy.Services.Game.Fish.Queries
                     "not found");
             }
 
-            return _mapper.Map<FishDto>(entity);
+            return entity;
         }
     }
 }

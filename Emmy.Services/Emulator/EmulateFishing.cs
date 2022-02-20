@@ -47,10 +47,12 @@ namespace Emmy.Services.Emulator
                     var drop3 = request.CubeType.DropCube();
                     var cubeDrop = drop1 + drop2 + drop3;
 
+                    result.CubeDrop = cubeDrop;
+
                     var rarity = await _mediator.Send(new GetRandomFishRarityQuery(cubeDrop));
                     var fish = await _mediator.Send(new GetRandomFishWithParamsQuery(rarity, request.Weather,
                         request.TimesDay, request.Season));
-                    var success = await _mediator.Send(new CheckFishingSuccessQuery(fish.Rarity));
+                    var success = await _mediator.Send(new CheckFishingSuccessQuery(fish.Rarity, cubeDrop));
 
                     if (success)
                     {
@@ -132,6 +134,7 @@ namespace Emmy.Services.Emulator
             cycleResult.AverageTotalSuccess = cycleResult.Results.Average(x => x.TotalSuccessCount);
             cycleResult.AverageTotalFail = cycleResult.Results.Average(x => x.TotalFailCount);
             cycleResult.AverageFinalCurrency = cycleResult.Results.Average(x => x.FinalCurrency);
+            cycleResult.AverageCubeDrop = cycleResult.Results.Average(x => x.CubeDrop);
 
             return cycleResult;
         }

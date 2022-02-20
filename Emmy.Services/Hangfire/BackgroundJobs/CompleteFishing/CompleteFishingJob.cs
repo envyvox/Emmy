@@ -51,7 +51,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
             var season = await _mediator.Send(new GetCurrentSeasonQuery());
             var rarity = await _mediator.Send(new GetRandomFishRarityQuery(cubeDrop));
             var fish = await _mediator.Send(new GetRandomFishWithParamsQuery(rarity, weather, timesDay, season));
-            var success = await _mediator.Send(new CheckFishingSuccessQuery(fish.Rarity));
+            var success = await _mediator.Send(new CheckFishingSuccessQuery(fish.Rarity, cubeDrop));
             var fishingXp = await _mediator.Send(new GetWorldPropertyValueQuery(
                 WorldProperty.XpFishing));
 
