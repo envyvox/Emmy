@@ -42,7 +42,7 @@ namespace Emmy.Services.Discord.Interactions.Components.CubeDrop
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
             var userFarms = await _mediator.Send(new GetUserFarmsQuery(user.Id));
-            var farmsToWater = userFarms.Count(x => x.State == FieldState.Planted);
+            var farmsToWater = (uint) userFarms.Count(x => x.State == FieldState.Planted);
 
             var drop1 = user.CubeType.DropCube();
             var drop2 = user.CubeType.DropCube();
@@ -62,7 +62,7 @@ namespace Emmy.Services.Discord.Interactions.Components.CubeDrop
                 user.Id, Location.FarmWatering, Location.Neutral, duration));
 
             var jobId = BackgroundJob.Schedule<ICompleteFarmWateringJob>(
-                x => x.Execute(user.Id),
+                x => x.Execute(user.Id, farmsToWater),
                 duration);
 
             await _mediator.Send(new CreateUserHangfireJobCommand(

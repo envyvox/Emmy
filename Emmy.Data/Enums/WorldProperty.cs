@@ -38,6 +38,9 @@
         FarmExpansionL2Price = 44,
         FarmWateringTime = 45,
         XpCropHarvesting = 46,
-        RenameCooldownDurationInHours = 47
+        RenameCooldownDurationInHours = 47,
+        XpFarmWatering = 48,
+        XpFractionGift = 49,
+        XpFractionRaid = 50
     }
 }
