@@ -8,6 +8,7 @@ namespace Emmy.Services.Extensions
         public const string FishesKey = "fishes";
         public const string FishesWithSeasonKey = "fishes_season_{0}";
         public const string FishKey = "fish_{0}";
+        public const string XpRequired = "level_{0}_required_xp";
 
         public static readonly MemoryCacheEntryOptions DefaultCacheOptions =
             new MemoryCacheEntryOptions()

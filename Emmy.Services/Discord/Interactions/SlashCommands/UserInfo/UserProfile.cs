@@ -10,6 +10,7 @@ using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Banner.Queries;
+using Emmy.Services.Game.Calculation;
 using Emmy.Services.Game.Relationship.Queries;
 using Emmy.Services.Game.Transit.Queries;
 using Emmy.Services.Game.User.Queries;
@@ -44,6 +45,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                 : await _mediator.Send(new GetUserQuery((long) mentionedUser.Id));
             var socketUser = mentionedUser ?? Context.User;
             var banner = await _mediator.Send(new GetUserActiveBannerQuery(user.Id));
+            var requiredXp = await _mediator.Send(new GetRequiredXpQuery(user.Level + 1));
 
             string relationshipString;
             var hasRelationship = await _mediator.Send(new CheckUserHasRelationshipQuery(user.Id));
@@ -121,6 +123,9 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Уровень",
                     $"{user.Level.AsLevelEmote()} {user.Level} уровень, {emotes.GetEmote("Xp")} {user.Xp} ед. опыта" +
+                    (user.Level < 100
+                        ? $" {emotes.GetEmote("Arrow")} до следующего уровня необходимо еще {emotes.GetEmote("Xp")} {requiredXp - user.Xp} ед. опыта"
+                        : "") +
                     $"\n{StringExtensions.EmptyChar}")
                 .AddField("Дата присоединения",
                     user.CreatedAt.ToString("dd MMMM yyy", new CultureInfo("ru-RU")))
