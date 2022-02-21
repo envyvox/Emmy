@@ -28,11 +28,13 @@ namespace Emmy.Services.Game.Fish.Queries
         {
             var entities = await _mediator.Send(new GetFishesQuery());
 
-            var entity = entities.FirstOrDefault(x =>
-                x.Rarity == request.Rarity &&
-                (x.CatchTimesDay == TimesDayType.Any || x.CatchTimesDay == request.TimesDay) &&
-                (x.CatchWeather == Weather.Any || x.CatchWeather == request.Weather) &&
-                (x.CatchSeasons.Contains(Season.Any) || x.CatchSeasons.Contains(request.Season)));
+            var entity = entities
+                .OrderBy(_ => Guid.NewGuid())
+                .FirstOrDefault(x =>
+                    x.Rarity == request.Rarity &&
+                    (x.CatchTimesDay == TimesDayType.Any || x.CatchTimesDay == request.TimesDay) &&
+                    (x.CatchWeather == Weather.Any || x.CatchWeather == request.Weather) &&
+                    (x.CatchSeasons.Contains(Season.Any) || x.CatchSeasons.Contains(request.Season)));
 
             if (entity is null)
             {

@@ -80,7 +80,8 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
                         "\nЕсть чем гордиться, понимаю, но рыбы в здешних водах еще полно, возвращайся за новым уловом поскорее!" +
                         $"\n{StringExtensions.EmptyChar}")
                     .AddField("Полученная награда",
-                        $"{emotes.GetEmote("Xp")} {fishingXp} ед. опыта и {emotes.GetEmote(fish.Name)} {_local.Localize(LocalizationCategory.Fish, fish.Name)}");
+                        $"{emotes.GetEmote("Xp")} {fishingXp} ед. опыта и {emotes.GetEmote(fish.Name)} " +
+                        $"{_local.Localize(LocalizationCategory.Fish, fish.Name)}");
             }
             else
             {
