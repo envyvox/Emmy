@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Discord;
 using Emmy.Data;
 using Emmy.Data.Enums;
+using Emmy.Data.Enums.Discord;
 using Emmy.Data.Extensions;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
@@ -79,6 +80,7 @@ namespace Emmy.Services.Game.User.Commands
                     user.Id, user.Level);
 
                 await AddLevelUpReward(user);
+                await CheckFirstUserWithLevel(user);
             }
         }
 
@@ -173,6 +175,26 @@ namespace Emmy.Services.Game.User.Commands
                     $"до {user.Level.AsLevelEmote()} {user.Level} и в качестве награды ты получаешь {rewardString}");
 
             await _mediator.Send(new SendEmbedToUserCommand(socketUser!.Id, embed));
+        }
+
+        private async Task CheckFirstUserWithLevel(Data.Entities.User.User user)
+        {
+            var currentOrGreaterLevelCount = await _db.Users
+                .AsQueryable()
+                .CountAsync(x => x.Level >= user.Level);
+
+            if (currentOrGreaterLevelCount is 1)
+            {
+                var socketUser = await _mediator.Send(new GetSocketGuildUserQuery((ulong) user.Id));
+
+                var embed = new EmbedBuilder()
+                    .WithGoldColor()
+                    .WithDescription(
+                        $"{socketUser?.Mention.AsGameMention(user.Title)} стал первым путешественником " +
+                        $"достигшим {user.Level.AsLevelEmote()} {user.Level} уровня!");
+
+                await _mediator.Send(new SendEmbedToChannelCommand(Channel.Chat, embed));
+            }
         }
     }
 }
