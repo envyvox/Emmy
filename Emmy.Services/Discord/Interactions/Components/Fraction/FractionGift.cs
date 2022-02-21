@@ -16,6 +16,7 @@ using Emmy.Services.Game.Currency.Commands;
 using Emmy.Services.Game.Currency.Queries;
 using Emmy.Services.Game.Fraction.Queries;
 using Emmy.Services.Game.Localization;
+using Emmy.Services.Game.User.Commands;
 using Emmy.Services.Game.User.Queries;
 using Emmy.Services.Game.World.Queries;
 using Humanizer;
@@ -69,12 +70,14 @@ namespace Emmy.Services.Discord.Interactions.Components.Fraction
 
             var giftCooldownDurationInHours = await _mediator.Send(new GetWorldPropertyValueQuery(
                 WorldProperty.FractionGiftCooldownDurationInHours));
+            var xpFractionGift = await _mediator.Send(new GetWorldPropertyValueQuery(WorldProperty.XpFractionGift));
             var randomUser = await _mediator.Send(new GetRandomFractionUserQuery(user.Fraction, user.Id));
             var randomSocketUser = await _mediator.Send(new GetSocketGuildUserQuery((ulong) randomUser.Id));
 
             await _mediator.Send(new RemoveCurrencyFromUserCommand(user.Id, Currency.Token, giftPrice));
             await _mediator.Send(new AddCooldownToUserCommand(
                 user.Id, Cooldown.FractionGift, TimeSpan.FromHours(giftCooldownDurationInHours)));
+            await _mediator.Send(new AddXpToUserCommand(user.Id, xpFractionGift));
             await _mediator.Send(new AddContainerToUserCommand(randomUser.Id, Container.Token, 1));
             await _mediator.Send(new AddContainerToUserCommand(randomUser.Id, Container.Supply, 1));
 
@@ -86,7 +89,8 @@ namespace Emmy.Services.Discord.Interactions.Components.Fraction
                     $"ты успешно отправил {randomSocketUser?.Mention.AsGameMention(randomUser.Title)} " +
                     $"{emotes.GetEmote(Container.Token.EmoteName())}{emotes.GetEmote(Container.Supply.EmoteName())} " +
                     $"припасы и заплатил за это {emotes.GetEmote(Currency.Token.ToString())} {giftPrice} " +
-                    $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString(), giftPrice)}.");
+                    $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString(), giftPrice)}." +
+                    $"\n\n{emotes.GetEmote("Arrow")} Получено {emotes.GetEmote("Xp")} {xpFractionGift} ед. опыта.");
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
 
