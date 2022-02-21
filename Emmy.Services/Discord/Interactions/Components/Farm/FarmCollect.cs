@@ -92,7 +92,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Farm
                     await _mediator.Send(new ResetUserFarmCommand(user.Id, userFarm.Number));
 
                     desc +=
-                        $"\n{emotes.GetEmote("Arrow")} Ячейка {emotes.GetEmote(Building.Farm.ToString())} теперь свободна.";
+                        $"\n{emotes.GetEmote("Arrow")} Ячейка {emotes.GetEmote(Building.Farm.ToString())} фермы теперь свободна.";
                 }
 
                 var xpAmount = await _mediator.Send(new GetWorldPropertyValueQuery(
