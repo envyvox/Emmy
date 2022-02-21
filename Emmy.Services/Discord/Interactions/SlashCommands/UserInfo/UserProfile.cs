@@ -16,6 +16,7 @@ using Emmy.Services.Game.Transit.Queries;
 using Emmy.Services.Game.User.Queries;
 using Humanizer;
 using MediatR;
+using static Discord.Emote;
 using StringExtensions = Emmy.Services.Extensions.StringExtensions;
 
 namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
@@ -105,7 +106,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Профиль")
+                .WithAuthor("Профиль", Context.User.GetAvatarUrl())
                 .WithThumbnailUrl(socketUser.GetAvatarUrl())
                 .WithDescription(
                     $"{socketUser.Mention.AsGameMention(user.Title)}")
@@ -137,7 +138,15 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             if (mentionedUser is null)
             {
-                components.WithButton("Изменить информацию", "user-profile-update-about");
+                components
+                    .WithButton(
+                        "Изменить информацию",
+                        "user-profile-update-about")
+                    .WithButton(
+                        "Изменить цвет команд",
+                        "user-profile-update-commandcolor",
+                        emote: Parse(emotes.GetEmote("Premium")),
+                        disabled: user.IsPremium is false);
             }
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed, components.Build()));

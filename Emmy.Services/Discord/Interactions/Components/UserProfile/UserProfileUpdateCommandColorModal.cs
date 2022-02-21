@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
 using Emmy.Services.Discord.Embed;
@@ -9,30 +10,32 @@ using MediatR;
 
 namespace Emmy.Services.Discord.Interactions.Components.UserProfile
 {
-    public class UserProfileUpdateAboutModal : InteractionModuleBase<SocketInteractionContext>
+    public class UserProfileUpdateCommandColorModal : InteractionModuleBase<SocketInteractionContext>
     {
         private readonly IMediator _mediator;
 
-        public UserProfileUpdateAboutModal(IMediator mediator)
+        public UserProfileUpdateCommandColorModal(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [ModalInteraction("user-profile-update-about-modal")]
-        public async Task Execute(UpdateAboutModal modal)
+        [ModalInteraction("user-profile-update-commandcolor-modal")]
+        public async Task Execute(UpdateCommandColorModal modal)
         {
             await Context.Interaction.DeferAsync();
 
+            var newColor = modal.CommandColor.Replace("#", "");
+
             var user = await _mediator.Send(new GetUserQuery((long) Context.User.Id));
 
-            await _mediator.Send(new UpdateUserAboutCommand(user.Id, modal.About));
+            await _mediator.Send(new UpdateUserCommandColorCommand(user.Id, newColor));
 
             var embed = new EmbedBuilder()
-                .WithUserColor(user.CommandColor)
-                .WithAuthor("Изменение информации профиля", Context.User.GetAvatarUrl())
+                .WithColor(new Color(uint.Parse(newColor, NumberStyles.HexNumber)))
+                .WithAuthor("Изменение цвета команд", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
-                    "информация в твоем профиле была успешно изменена.");
+                    "цвет команд успешно изменен.");
 
             await _mediator.Send(new FollowUpEmbedCommand(Context.Interaction, embed));
         }
