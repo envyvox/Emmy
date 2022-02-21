@@ -36,7 +36,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserTitles
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Титулы")
+                .WithAuthor("Титулы", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(title)}, " +
                     $"ты успешно обновил свой титул на {emotes.GetEmote(title.EmoteName())} {title.Localize()}.")

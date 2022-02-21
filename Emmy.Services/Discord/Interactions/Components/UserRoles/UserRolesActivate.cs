@@ -45,7 +45,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserRoles
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Роли")
+                .WithAuthor("Роли", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     (addedRolesString.Length > 0

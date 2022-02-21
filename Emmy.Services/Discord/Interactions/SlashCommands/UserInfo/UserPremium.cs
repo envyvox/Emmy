@@ -64,7 +64,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Премиум")
+                .WithAuthor("Премиум", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"тут отображается информация о статусе {emotes.GetEmote("Premium")} премиум:" +

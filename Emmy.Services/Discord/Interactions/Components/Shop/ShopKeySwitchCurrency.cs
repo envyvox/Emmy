@@ -41,7 +41,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Магазин ключей")
+                .WithAuthor("Магазин ключей", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображаются доступные для приобретения ключи открывающие различный функционал:" +

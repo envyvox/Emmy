@@ -59,7 +59,7 @@ namespace Emmy.Services.Discord.Interactions.Components.PrivateRoom
         {
             var embed = new EmbedBuilder()
                 .WithUserColor(_user.CommandColor)
-                .WithAuthor("Создание и настройка приватного сектора")
+                .WithAuthor("Создание и настройка приватного сектора", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для создания собственного приватного сектора необходимо выполнить несколько простых шагов:" +
@@ -88,7 +88,7 @@ namespace Emmy.Services.Discord.Interactions.Components.PrivateRoom
 
             var embed = new EmbedBuilder()
                 .WithUserColor(_user.CommandColor)
-                .WithAuthor("Продление приватного сектора")
+                .WithAuthor("Продление приватного сектора", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для продения собственного приватного сектора еще на 30 дней необходимо выполнить несколько простых шагов:" +

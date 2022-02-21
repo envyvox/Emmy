@@ -49,14 +49,14 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPrivateRooms
 
                 var embed = new EmbedBuilder()
                     .WithUserColor(user.CommandColor)
-                    .WithAuthor("Приватные секторы")
+                    .WithAuthor("Приватные секторы", socketUser?.GetAvatarUrl())
                     .WithDescription(
-                        $"{socketUser.Mention.AsGameMention(user.Title)}, " +
+                        $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
                         $"твой приватный сектор {entity.ChannelId.ToMention(MentionType.Channel)} исстекает **через 3 дня**." +
                         $"\n\n{emotes.GetEmote("Arrow")} Не забудь заглянуть в {emotes.GetEmote("DiscordSlashCommand")} `/приватные-секторы` чтобы продлить его.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.PrivateRoom)));
 
-                await _mediator.Send(new SendEmbedToUserCommand(socketUser.Id, embed));
+                await _mediator.Send(new SendEmbedToUserCommand(socketUser!.Id, embed));
             }
         }
     }

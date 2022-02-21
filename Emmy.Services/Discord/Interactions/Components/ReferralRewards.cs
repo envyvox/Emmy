@@ -34,7 +34,7 @@ namespace Emmy.Services.Discord.Interactions.Components
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Награды реферальной системы")
+                .WithAuthor("Награды реферальной системы", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"[Нажми сюда чтобы посмотреть {emotes.GetEmote(banner.Rarity.EmoteName())} " +
                     $"{banner.Rarity.Localize().ToLower()} баннер «{banner.Name}»]({banner.Url})")

@@ -70,7 +70,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredPrivateRooms
 
                 var notify = new EmbedBuilder()
                     .WithUserColor(entity.User.CommandColor)
-                    .WithAuthor("Приватный сектор")
+                    .WithAuthor("Приватный сектор", socketUser.GetAvatarUrl())
                     .WithDescription(
                         $"{socketUser.Mention.AsGameMention(entity.User.Title)}, " +
                         "твой приватный сектор был удален, так как ты его не продлил." +

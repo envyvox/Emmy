@@ -49,7 +49,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Farm
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Ферма")
+                .WithAuthor("Ферма", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Farm)));
 
             var components = new ComponentBuilder();

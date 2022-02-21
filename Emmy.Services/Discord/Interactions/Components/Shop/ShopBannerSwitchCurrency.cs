@@ -60,7 +60,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Магазин баннеров")
+                .WithAuthor("Магазин баннеров", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображаются доступные для приобретения баннеры:" +

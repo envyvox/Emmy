@@ -9,6 +9,7 @@ using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.User.Queries;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -39,11 +40,14 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
                 var message = await _mediator.Send(new GetUserMessageQuery(
                     (ulong) messageDislikes[0].ContentMessage.ChannelId, (ulong) messageDislikes[0].ContentMessage.MessageId));
                 var emotes = DiscordRepository.Emotes;
+                var user = await _mediator.Send(new GetUserQuery((long) message.Author.Id));
 
                 var embed = new EmbedBuilder()
-                    .WithAuthor("Оповещение от доски сообщества")
+                    .WithAuthor("Оповещение от доски сообщества", message.Author.GetAvatarUrl())
                     .WithDescription(
-                        $"Твоя публикация собрала {emotes.GetEmote("Dislike")} 5 дизлайков и была автоматически удалена из <#{message.Channel.Id}>.")
+                        $"{message.Author.Mention.AsGameMention(user.Title)}, " +
+                        $"твоя публикация собрала {emotes.GetEmote("Dislike")} 5 дизлайков и была " +
+                        $"автоматически удалена из <#{message.Channel.Id}>.")
                     .WithImageUrl(message.Attachments.First().Url);
 
                 await _mediator.Send(new SendEmbedToUserCommand(message.Author.Id, embed));

@@ -49,7 +49,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Farm
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Ферма")
+                .WithAuthor("Ферма", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты отправляешься поливать свою {emotes.GetEmote(Building.Farm.ToString())} ферму." +

@@ -83,7 +83,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Fraction
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Фракция")
+                .WithAuthor("Фракция", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно отправил {randomSocketUser?.Mention.AsGameMention(randomUser.Title)} " +
@@ -96,7 +96,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Fraction
 
             var notify = new EmbedBuilder()
                 .WithUserColor(randomUser.CommandColor)
-                .WithAuthor("Фракция")
+                .WithAuthor("Фракция", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{randomSocketUser?.Mention.AsGameMention(randomUser.Title)}, " +
                     "тебе случайным образом достаются отправленные " +

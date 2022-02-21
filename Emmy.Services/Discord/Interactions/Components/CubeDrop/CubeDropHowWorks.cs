@@ -28,7 +28,7 @@ namespace Emmy.Services.Discord.Interactions.Components.CubeDrop
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Как работают кубики")
+                .WithAuthor("Как работают кубики", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "после нажатия на кнопку **Бросить кубики** ты бросаешь три своих кубика и их сумма становится результатом броска кубиков и определяет твой успех." +

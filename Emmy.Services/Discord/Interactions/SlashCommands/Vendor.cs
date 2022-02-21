@@ -48,7 +48,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Скупщик")
+                .WithAuthor("Скупщик", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображаются товары которые скупщик готов купить:" +

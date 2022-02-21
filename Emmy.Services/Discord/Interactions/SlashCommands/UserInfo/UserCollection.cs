@@ -51,7 +51,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Коллекция")
+                .WithAuthor("Коллекция", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"тут отображается твоя коллекция в категории **{category.Localize()}**:" +

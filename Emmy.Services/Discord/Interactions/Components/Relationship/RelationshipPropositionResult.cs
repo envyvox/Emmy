@@ -56,7 +56,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
                 if (userHasRelationship)
                 {
                     throw new GameUserExpectedException(
-                        $"к сожалению {socketUser.Mention.AsGameMention(user.Title)} уже состоит в отношениях, " +
+                        $"к сожалению {socketUser?.Mention.AsGameMention(user.Title)} уже состоит в отношениях, " +
                         $"видимо ты слишком долго {(targetUser.Gender is Gender.Male ? "думал" : "думала")}.");
                 }
 
@@ -64,10 +64,10 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
 
                 var embed = new EmbedBuilder()
                     .WithUserColor(targetUser.CommandColor)
-                    .WithAuthor("Отношения")
+                    .WithAuthor("Отношения", Context.User.GetAvatarUrl())
                     .WithDescription(
                         $"Ты {(targetUser.Gender is Gender.Male ? "принял" : "приняла")} предложение отношений " +
-                        $"от {socketUser.Mention.AsGameMention(user.Title)}, желаю вам всех благ!")
+                        $"от {socketUser?.Mention.AsGameMention(user.Title)}, желаю вам всех благ!")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Relationship)));
 
                 await Context.Interaction.ModifyOriginalResponseAsync(x =>
@@ -78,9 +78,9 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
 
                 var notify = new EmbedBuilder()
                     .WithUserColor(user.CommandColor)
-                    .WithAuthor("Отношения")
+                    .WithAuthor("Отношения", Context.User.GetAvatarUrl())
                     .WithDescription(
-                        $"{targetSocketUser.Mention.AsGameMention(targetUser.Title)} " +
+                        $"{targetSocketUser?.Mention.AsGameMention(targetUser.Title)} " +
                         $"{(targetUser.Gender is Gender.Male ? "принял" : "приняла")} предложенные тобою отношения, " +
                         "желаю вам всех благ!")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Relationship)));
@@ -91,7 +91,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
             {
                 var embed = new EmbedBuilder()
                     .WithUserColor(targetUser.CommandColor)
-                    .WithAuthor("Отношения")
+                    .WithAuthor("Отношения", Context.User.GetAvatarUrl())
                     .WithDescription(
                         $"Ты {(targetUser.Gender is Gender.Male ? "отказался" : "отказалась")} от предложенных отношений.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Relationship)));
@@ -104,9 +104,9 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
 
                 var notify = new EmbedBuilder()
                     .WithUserColor(user.CommandColor)
-                    .WithAuthor("Отношения")
+                    .WithAuthor("Отношения", Context.User.GetAvatarUrl())
                     .WithDescription(
-                        $"{targetSocketUser.Mention.AsGameMention(targetUser.Title)} " +
+                        $"{targetSocketUser?.Mention.AsGameMention(targetUser.Title)} " +
                         $"{(targetUser.Gender is Gender.Male ? "отказался" : "отказалась")} от предложенных тобою отношений.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Relationship)));
 

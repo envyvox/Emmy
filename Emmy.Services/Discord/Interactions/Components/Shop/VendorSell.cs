@@ -54,7 +54,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Скупщик")
+                .WithAuthor("Скупщик", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Vendor)));
 
             uint totalCurrencyAmount = 0;

@@ -62,7 +62,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Инвентарь")
+                .WithAuthor("Инвентарь", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.UserInventory)));
 
             var components = new ComponentBuilder();

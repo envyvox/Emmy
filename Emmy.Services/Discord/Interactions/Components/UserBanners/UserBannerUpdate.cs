@@ -49,7 +49,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserBanners
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Баннеры")
+                .WithAuthor("Баннеры", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"твой баннер успешно обновлен на {emotes.GetEmote(banner.Rarity.EmoteName())} " +

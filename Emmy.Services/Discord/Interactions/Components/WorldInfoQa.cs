@@ -39,7 +39,7 @@ namespace Emmy.Services.Discord.Interactions.Components
                 case "timesDay":
 
                     embed
-                        .WithAuthor("Время суток")
+                        .WithAuthor("Время суток", Context.User.GetAvatarUrl())
                         .WithDescription(
                             $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                             "время суток влияет на виды рыб, которые ты можешь поймать во время рыбалки. " +
@@ -50,7 +50,7 @@ namespace Emmy.Services.Discord.Interactions.Components
                 case "weather":
 
                     embed
-                        .WithAuthor("Погода")
+                        .WithAuthor("Погода", Context.User.GetAvatarUrl())
                         .WithDescription(
                             $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                             "погода влияет на виды рыб, которые ты можешь поймать во время рыбалки. " +
@@ -61,7 +61,7 @@ namespace Emmy.Services.Discord.Interactions.Components
                 case "season":
 
                     embed
-                        .WithAuthor("Сезон")
+                        .WithAuthor("Сезон", Context.User.GetAvatarUrl())
                         .WithDescription(
                             $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                             "текущий сезон определяет ассортимент семян в магазине, а так же виды рыб, которые ты можешь " +

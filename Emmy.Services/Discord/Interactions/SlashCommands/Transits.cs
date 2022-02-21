@@ -53,7 +53,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Отправления")
+                .WithAuthor("Отправления", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}," +
                     "тут отображаются доступные отправления из твоей текущей локации:" +

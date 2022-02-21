@@ -44,7 +44,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Отношения")
+                .WithAuthor("Отношения", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"твои отношения с {socketPartner.Mention.AsGameMention(partner.Title)} закончены.")

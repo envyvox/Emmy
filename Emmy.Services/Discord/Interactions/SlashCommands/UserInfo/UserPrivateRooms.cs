@@ -55,7 +55,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Приватные секторы")
+                .WithAuthor("Приватные секторы", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображаются твои приватные секторы:" +

@@ -3,6 +3,7 @@ using Discord;
 using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
+using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.Calculation;
@@ -46,6 +47,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
 
             var emotes = DiscordRepository.Emotes;
             var user = await _mediator.Send(new GetUserQuery(userId));
+            var socketUser = await _mediator.Send(new GetSocketGuildUserQuery((ulong) user.Id));
             var timesDay = await _mediator.Send(new GetCurrentTimesDayQuery());
             var weather = await _mediator.Send(new GetWeatherTodayQuery());
             var season = await _mediator.Send(new GetCurrentSeasonQuery());
@@ -61,7 +63,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
             await _mediator.Send(new AddXpToUserCommand(userId, fishingXp));
 
             var embed = new EmbedBuilder()
-                .WithAuthor(Location.Fishing.Localize())
+                .WithAuthor(Location.Fishing.Localize(), socketUser?.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.Fishing)));
 
             if (success)
@@ -73,7 +75,8 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
 
                 embed
                     .WithDescription(
-                        "Ты возвращаешься с улыбкой на лице и гордо демонстрируешь жителям города полученную рыбу." +
+                        $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
+                        "ты возвращаешься с улыбкой на лице и гордо демонстрируешь жителям города полученную рыбу." +
                         "\nЕсть чем гордиться, понимаю, но рыбы в здешних водах еще полно, возвращайся за новым уловом поскорее!" +
                         $"\n{StringExtensions.EmptyChar}")
                     .AddField("Полученная награда",
@@ -83,7 +86,8 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
             {
                 embed
                     .WithDescription(
-                        "В этот раз тебе не повезло, ведь вернувшись тебе совсем нечем похвастаться перед жителями города." +
+                        $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
+                        "в этот раз тебе не повезло, ведь вернувшись тебе совсем нечем похвастаться перед жителями города." +
                         $"\nТы почти поймал {emotes.GetEmote(fish.Name)} {_local.Localize(LocalizationCategory.Fish, fish.Name)}, " +
                         "однако хитрая рыба смогла сорваться с крючка. Но не расстраивайся, " +
                         "рыба в здешних водах никуда не денется, возвращайся и попытай удачу еще раз!" +
@@ -93,7 +97,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
             }
 
             // todo check achievements
-            await _mediator.Send(new SendEmbedToUserCommand((ulong) user.Id, embed));
+            await _mediator.Send(new SendEmbedToUserCommand(socketUser!.Id, embed));
         }
     }
 }

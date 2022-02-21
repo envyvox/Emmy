@@ -45,7 +45,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteTransit
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Отправления")
+                .WithAuthor("Отправления", socketUser?.GetAvatarUrl())
                 .WithDescription(
                     $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
                     $"ты достиг точки прибытия, добро пожаловать в **{destination.Localize()}**.")

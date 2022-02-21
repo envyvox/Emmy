@@ -74,7 +74,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship.LoveRoom
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Любовное гнездо")
+                .WithAuthor("Любовное гнездо", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно продлил любовное гнездо {loveRoom.ChannelId.ToMention(MentionType.Channel)} на 30 дней. " +

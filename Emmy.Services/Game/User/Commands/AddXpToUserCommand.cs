@@ -168,7 +168,7 @@ namespace Emmy.Services.Game.User.Commands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Повышение уровня")
+                .WithAuthor("Повышение уровня", socketUser?.GetAvatarUrl())
                 .WithDescription(
                     $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
                     $"набрав достаточное количество {emotes.GetEmote("Xp")} ед. опыта, твой уровень повышается " +

@@ -52,25 +52,25 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredLoveRooms
 
                 var embed1 = new EmbedBuilder()
                     .WithUserColor(entity.Relationship.User1.CommandColor)
-                    .WithAuthor("Любовные гнезда")
+                    .WithAuthor("Любовные гнезда", socketUser1?.GetAvatarUrl())
                     .WithDescription(
-                        $"{socketUser1.Mention.AsGameMention(entity.Relationship.User1.Title)}, " +
-                        $"твое любовное гнездо с {socketUser2.Mention.AsGameMention(entity.Relationship.User2.Title)} исстекает **через 3 дня**." +
+                        $"{socketUser1?.Mention.AsGameMention(entity.Relationship.User1.Title)}, " +
+                        $"твое любовное гнездо с {socketUser2?.Mention.AsGameMention(entity.Relationship.User2.Title)} исстекает **через 3 дня**." +
                         $"\n\n{emotes.GetEmote("Arrow")} Не забудьте заглянуть в {emotes.GetEmote("DiscordSlashCommand")} `/отношения` чтобы продлить его.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.Relationship)));
 
-                await _mediator.Send(new SendEmbedToUserCommand(socketUser1.Id, embed1));
+                await _mediator.Send(new SendEmbedToUserCommand(socketUser1!.Id, embed1));
 
                 var embed2 = new EmbedBuilder()
                     .WithUserColor(entity.Relationship.User1.CommandColor)
-                    .WithAuthor("Любовные гнезда")
+                    .WithAuthor("Любовные гнезда", socketUser2?.GetAvatarUrl())
                     .WithDescription(
-                        $"{socketUser2.Mention.AsGameMention(entity.Relationship.User2.Title)}, " +
+                        $"{socketUser2?.Mention.AsGameMention(entity.Relationship.User2.Title)}, " +
                         $"твое любовное гнездо с {socketUser1.Mention.AsGameMention(entity.Relationship.User1.Title)} исстекает **через 3 дня**." +
                         $"\n\n{emotes.GetEmote("Arrow")} Не забудьте заглянуть {emotes.GetEmote("DiscordSlashCommand")} в `/отношения` чтобы продлить его.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.Relationship)));
 
-                await _mediator.Send(new SendEmbedToUserCommand(socketUser2.Id, embed2));
+                await _mediator.Send(new SendEmbedToUserCommand(socketUser2!.Id, embed2));
             }
         }
     }

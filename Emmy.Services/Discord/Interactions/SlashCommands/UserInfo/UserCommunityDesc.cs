@@ -96,7 +96,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
             var totalLikes = (uint) userVotes.Count(x => x.Vote == Vote.Like);
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Доска сообщества")
+                .WithAuthor("Доска сообщества", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут собрана информация о твоем участии в доске сообщества: " +

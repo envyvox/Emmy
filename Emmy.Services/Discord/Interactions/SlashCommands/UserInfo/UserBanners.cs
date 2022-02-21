@@ -54,7 +54,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Баннеры")
+                .WithAuthor("Баннеры", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображается твоя коллекция баннеров:" +

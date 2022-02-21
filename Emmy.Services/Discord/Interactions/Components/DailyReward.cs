@@ -213,7 +213,7 @@ namespace Emmy.Services.Discord.Interactions.Components
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Ежедневная награда")
+                .WithAuthor("Ежедневная награда", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты получаешь награду: {rewardString}.")

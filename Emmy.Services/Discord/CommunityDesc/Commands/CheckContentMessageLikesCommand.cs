@@ -8,8 +8,10 @@ using Emmy.Services.Discord.CommunityDesc.Queries;
 using Emmy.Services.Discord.Embed;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Commands;
+using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Role.Commands;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.User.Queries;
 using MediatR;
 
 namespace Emmy.Services.Discord.CommunityDesc.Commands
@@ -36,20 +38,22 @@ namespace Emmy.Services.Discord.CommunityDesc.Commands
             {
                 var emotes = DiscordRepository.Emotes;
                 var roles = DiscordRepository.Roles;
+                var user = await _mediator.Send(new GetUserQuery(contentMessage.User.Id));
+                var socketUser = await _mediator.Send(new GetSocketGuildUserQuery((ulong) user.Id));
 
                 await _mediator.Send(new AddRoleToGuildUserByRoleTypeCommand(
-                    (ulong) contentMessage.User.Id, Data.Enums.Discord.Role.ContentProvider));
+                    socketUser!.Id, Data.Enums.Discord.Role.ContentProvider));
                 await _mediator.Send(new AddRoleToUserCommand(
-                    contentMessage.User.Id, (long) roles[Data.Enums.Discord.Role.ContentProvider].Id,
-                    TimeSpan.FromDays(30)));
+                    user.Id, (long) roles[Data.Enums.Discord.Role.ContentProvider].Id, TimeSpan.FromDays(30)));
 
                 var embed = new EmbedBuilder()
-                    .WithAuthor("Оповещение от доски сообщества")
+                    .WithAuthor("Оповещение от доски сообщества", socketUser.GetAvatarUrl())
                     .WithDescription(
-                        $"Твои публикации в **доске сообщества** были {emotes.GetEmote("Like")} оценены, " +
+                        $"{socketUser.Mention.AsGameMention(user.Title)}, " +
+                        $"твои публикации в **доске сообщества** были {emotes.GetEmote("Like")} оценены, " +
                         $"за что ты получаешь роль **{Data.Enums.Discord.Role.ContentProvider.Name()}** на 30 дней.");
 
-                await _mediator.Send(new SendEmbedToUserCommand((ulong) contentMessage.User.Id, embed));
+                await _mediator.Send(new SendEmbedToUserCommand(socketUser.Id, embed));
             }
 
             return Unit.Value;

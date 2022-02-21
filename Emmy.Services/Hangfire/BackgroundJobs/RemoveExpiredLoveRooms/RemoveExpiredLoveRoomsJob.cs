@@ -73,7 +73,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredLoveRooms
 
                 var notify1 = new EmbedBuilder()
                     .WithUserColor(entity.Relationship.User1.CommandColor)
-                    .WithAuthor("Любовное гнездо")
+                    .WithAuthor("Любовное гнездо", socketUser1.GetAvatarUrl())
                     .WithDescription(
                         $"{socketUser1.Mention.AsGameMention(entity.Relationship.User1.Title)}, " +
                         $"твое любовное гнездо с {socketUser2.Mention.AsGameMention(entity.Relationship.User2.Title)} было удалено, так как вы его не продлили." +
@@ -82,7 +82,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.RemoveExpiredLoveRooms
 
                 var notify2 = new EmbedBuilder()
                     .WithUserColor(entity.Relationship.User2.CommandColor)
-                    .WithAuthor("Любовное гнездо")
+                    .WithAuthor("Любовное гнездо", socketUser2.GetAvatarUrl())
                     .WithDescription(
                         $"{socketUser2.Mention.AsGameMention(entity.Relationship.User2.Title)}, " +
                         $"твое любовное гнездо с {socketUser1.Mention.AsGameMention(entity.Relationship.User1.Title)} было удалено, так как вы его не продлили." +

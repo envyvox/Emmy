@@ -50,7 +50,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Farm
                 case "harvesting":
                 {
                     embed
-                        .WithAuthor("Выращивание урожая")
+                        .WithAuthor("Выращивание урожая", Context.User.GetAvatarUrl())
                         .WithDescription(
                             $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                             "для выращивания урожая необходимо выполнить несколько простых шагов:" +
@@ -76,7 +76,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Farm
                         WorldProperty.FarmExpansionL2Price));
 
                     embed
-                        .WithAuthor("Расширение фермы")
+                        .WithAuthor("Расширение фермы", Context.User.GetAvatarUrl())
                         .WithDescription(
                             $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                             $"ты можешь улучшить свою {emotes.GetEmote(Building.Farm.ToString())} ферму и увеличить количество ячеек для выращивания урожая." +

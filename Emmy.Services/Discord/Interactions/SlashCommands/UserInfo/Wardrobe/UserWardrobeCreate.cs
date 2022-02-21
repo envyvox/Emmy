@@ -54,7 +54,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo.Wardrobe
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Гардеробная")
+                .WithAuthor("Гардеробная", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно создал собственную роль {createdRoleId.ToMention(MentionType.Role)}. " +

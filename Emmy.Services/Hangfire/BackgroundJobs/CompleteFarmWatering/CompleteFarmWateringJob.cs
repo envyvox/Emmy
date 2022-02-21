@@ -49,7 +49,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFarmWatering
             await _mediator.Send(new AddXpToUserCommand(user.Id, xpFarmWatering * farmCount));
 
             var embed = new EmbedBuilder()
-                .WithAuthor("Ферма")
+                .WithAuthor("Ферма", socketUser?.GetAvatarUrl())
                 .WithDescription(
                     $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно полил семена на своей {emotes.GetEmote(Building.Farm.ToString())} ферме, теперь можно быть уверенным в том, что они будут расти." +

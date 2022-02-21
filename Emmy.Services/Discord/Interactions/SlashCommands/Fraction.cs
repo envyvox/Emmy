@@ -49,7 +49,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
             {
                 var embed = new EmbedBuilder()
                     .WithUserColor(user.CommandColor)
-                    .WithAuthor("Фракция")
+                    .WithAuthor("Фракция", Context.User.GetAvatarUrl())
                     .WithDescription(
                         $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                         "тебе необходимо выбрать в какую фракцию ты хочешь вступить, " +
@@ -94,7 +94,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
                 var embed = new EmbedBuilder()
                     .WithUserColor(user.CommandColor)
-                    .WithAuthor("Фракция")
+                    .WithAuthor("Фракция", Context.User.GetAvatarUrl())
                     .WithDescription(
                         $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                         $"ты состоишь во фракции {emotes.GetEmote(user.Fraction.EmoteName())} **{user.Fraction.Localize()}**." +

@@ -71,7 +71,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Магазин семян")
+                .WithAuthor("Магазин семян", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно приобрел {emotes.GetEmote(seed.Name)} 5 " +

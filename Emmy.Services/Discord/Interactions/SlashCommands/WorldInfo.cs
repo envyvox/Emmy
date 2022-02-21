@@ -53,7 +53,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Информация о мире")
+                .WithAuthor("Информация о мире", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображается информация о текущем состоянии мира:")

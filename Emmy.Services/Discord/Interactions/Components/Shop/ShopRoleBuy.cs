@@ -64,7 +64,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Магазин ролей")
+                .WithAuthor("Магазин ролей", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно приобрел роль {socketRole.Mention} на 30 дней за " +

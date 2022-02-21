@@ -60,7 +60,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Shop
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Магазин семян")
+                .WithAuthor("Магазин семян", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут можно приобрести различные сезонные семена для выращивания урожая:" +

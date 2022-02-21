@@ -62,7 +62,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserPremium
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Премиум")
+                .WithAuthor("Премиум", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно {(user.IsPremium ? "продлил" : "приобрел")} статус {emotes.GetEmote("Premium")} премиум на {days} дней за " +

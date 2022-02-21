@@ -49,14 +49,14 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.NotifyExpiredPremiums
 
                 var embed = new EmbedBuilder()
                     .WithUserColor(user.CommandColor)
-                    .WithAuthor("Премиум")
+                    .WithAuthor("Премиум", socketUser?.GetAvatarUrl())
                     .WithDescription(
-                        $"{socketUser.Mention.AsGameMention(user.Title)}, " +
+                        $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
                         $"твоя подписка на статус {emotes.GetEmote("Premium")} премиум исстекает **через 3 дня**." +
                         $"\n\n{emotes.GetEmote("Arrow")} Не забудь заглянуть в {emotes.GetEmote("DiscordSlashCommand")} `/премиум` чтобы продлить ее.")
                     .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Image.GetPremium)));
 
-                await _mediator.Send(new SendEmbedToUserCommand(socketUser.Id, embed));
+                await _mediator.Send(new SendEmbedToUserCommand(socketUser!.Id, embed));
             }
         }
     }

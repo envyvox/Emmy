@@ -53,7 +53,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Wardrobe
         {
             var embed = new EmbedBuilder()
                 .WithUserColor(_user.CommandColor)
-                .WithAuthor("Гардеробная")
+                .WithAuthor("Гардеробная", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     $"для создания собственной роли напиши {_emotes.GetEmote("DiscordSlashCommand")} `/гардеробная-создать` и укажи желаемые название и цвет роли." +
@@ -67,7 +67,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Wardrobe
         {
             var embed = new EmbedBuilder()
                 .WithUserColor(_user.CommandColor)
-                .WithAuthor("Гардеробная")
+                .WithAuthor("Гардеробная", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     $"для обновления собственной роли напиши {_emotes.GetEmote("DiscordSlashCommand")} `/гардеробная-обновить` и укажи новые название и цвет роли." +

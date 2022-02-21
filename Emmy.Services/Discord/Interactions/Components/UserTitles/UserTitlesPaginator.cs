@@ -54,7 +54,7 @@ namespace Emmy.Services.Discord.Interactions.Components.UserTitles
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Титулы")
+                .WithAuthor("Титулы", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображаются полученные тобою титулы:" +

@@ -54,7 +54,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Ежедневная награда")
+                .WithAuthor("Ежедневная награда", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "получай награду за ежедневную активность в игровом мире." +

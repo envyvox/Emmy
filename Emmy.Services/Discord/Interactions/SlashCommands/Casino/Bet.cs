@@ -154,7 +154,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Casino
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Казино")
+                .WithAuthor("Казино", Context.User.GetAvatarUrl())
                 .WithDescription(cubeDropString)
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Casino)));
 

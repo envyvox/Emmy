@@ -42,9 +42,9 @@ namespace Emmy.Services.Discord.Interactions.Components.RequestGender
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Запрос подтверждения пола")
+                .WithAuthor("Запрос подтверждения пола", Context.User.GetAvatarUrl())
                 .WithDescription(
-                    $"{socketUser.Mention.AsGameMention(user.Title)}, " +
+                    $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
                     $"твой пол обновлен на {emotes.GetEmote(gender.EmoteName())} {gender.Localize().ToLower()}.");
 
             await _mediator.Send(new SendEmbedToUserCommand((ulong) userId, embed));
@@ -52,7 +52,7 @@ namespace Emmy.Services.Discord.Interactions.Components.RequestGender
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
             {
                 x.Content =
-                    $"Модератор {Context.User.Mention} подтвердил пользователю {socketUser.Mention} " +
+                    $"Модератор {Context.User.Mention} подтвердил пользователю {socketUser?.Mention} " +
                     $"{emotes.GetEmote(gender.EmoteName())} {gender.Localize().ToLower()} пол.";
                 x.Components = new ComponentBuilder().Build();
             });

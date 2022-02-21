@@ -97,7 +97,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Передача валюты")
+                .WithAuthor("Передача валюты", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно передал {targetSocketUser.Mention.AsGameMention(user.Title)} " +
@@ -112,7 +112,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var notify = new EmbedBuilder()
                 .WithUserColor(targetUser.CommandColor)
-                .WithAuthor("Передача валюты")
+                .WithAuthor("Передача валюты", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)} передал тебе " +
                     $"{emotes.GetEmote(currency.ToString())} {amountAfterTax} " +

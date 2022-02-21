@@ -74,7 +74,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Referral
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Реферальная система")
+                .WithAuthor("Реферальная система", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "тут отображается информация о твоем участии в реферальной системе:" +

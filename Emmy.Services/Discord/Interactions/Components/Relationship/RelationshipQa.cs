@@ -68,7 +68,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
         {
             var embed = new EmbedBuilder()
                 .WithUserColor(_user.CommandColor)
-                .WithAuthor("Как начать отношения")
+                .WithAuthor("Как начать отношения", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для того чтобы начать отношения необходимо выполнить несколько простых шагов:" +
@@ -84,7 +84,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
         {
             var embed = new EmbedBuilder()
                 .WithUserColor(_user.CommandColor)
-                .WithAuthor("Как закончить отношения")
+                .WithAuthor("Как закончить отношения", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "если вдруг отношения начали тебя тяготить, нажми на кнопку **Закончить отношения** и все исчезнет, будто ничего и не было." +
@@ -105,7 +105,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
         {
             var embed = new EmbedBuilder()
                 .WithUserColor(_user.CommandColor)
-                .WithAuthor("Создание любовного гнезда")
+                .WithAuthor("Создание любовного гнезда", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для создания собственного любовного гнезда необходимо выполнить несколько простых шагов:" +
@@ -130,7 +130,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Relationship
         {
             var embed = new EmbedBuilder()
                 .WithUserColor(_user.CommandColor)
-                .WithAuthor("Продление любовного гнезда")
+                .WithAuthor("Продление любовного гнезда", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(_user.Title)}, " +
                     "для продления собственного любовного гнезда необходимо выполнить несколько простых шагов:" +

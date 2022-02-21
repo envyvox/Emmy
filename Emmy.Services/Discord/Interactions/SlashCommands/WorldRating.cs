@@ -59,7 +59,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Рейтинг по токенам")
+                .WithAuthor("Рейтинг по токенам", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Rating)));
 
             if (entities.Any())
@@ -107,7 +107,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Рейтинг по сообщениям")
+                .WithAuthor("Рейтинг по сообщениям", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Rating)));
 
             if (entities.Any())
@@ -155,7 +155,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Рейтинг по голосовой активности")
+                .WithAuthor("Рейтинг по голосовой активности", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Rating)));
 
             if (entities.Any())
@@ -200,7 +200,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Рейтинг по пожертвованиям")
+                .WithAuthor("Рейтинг по пожертвованиям", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Rating)));
 
             if (entities.Any())
@@ -246,7 +246,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Рейтинг по опыту")
+                .WithAuthor("Рейтинг по опыту", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Rating)));
 
             for (var i = 1; i <= entities.Count; i++)
@@ -281,7 +281,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Рейтинг фракций")
+                .WithAuthor("Рейтинг фракций", Context.User.GetAvatarUrl())
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.Rating)));
 
             for (var i = 1; i <= fractions.Count; i++)

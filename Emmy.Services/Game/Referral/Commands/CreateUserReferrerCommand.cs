@@ -154,7 +154,7 @@ namespace Emmy.Services.Game.Referral.Commands
             var socketUser = await _mediator.Send(new GetSocketGuildUserQuery((ulong) user.Id));
 
             var embed = new EmbedBuilder()
-                .WithAuthor("Реферальная система")
+                .WithAuthor("Реферальная система", socketUser?.GetAvatarUrl())
                 .WithDescription(
                     $"{socketUser?.Mention.AsGameMention(user.Title)} указал тебя своим реферером и ты получаешь {rewardString}." +
                     $"\n\n{emotes.GetEmote("Arrow")} Напиши {emotes.GetEmote("DiscordSlashCommand")} `/приглашения` чтобы посмотреть информацию о своем участии в реферальной системе.");

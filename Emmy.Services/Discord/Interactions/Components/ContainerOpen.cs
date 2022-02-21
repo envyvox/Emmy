@@ -52,7 +52,7 @@ namespace Emmy.Services.Discord.Interactions.Components
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Открытие контейнеров");
+                .WithAuthor("Открытие контейнеров", Context.User.GetAvatarUrl());
 
             switch (container)
             {

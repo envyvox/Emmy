@@ -50,7 +50,7 @@ namespace Emmy.Services.Discord.Interactions.Components
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Отправления")
+                .WithAuthor("Отправления", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты решил отправиться в **{transit.Destination.Localize()}**." +

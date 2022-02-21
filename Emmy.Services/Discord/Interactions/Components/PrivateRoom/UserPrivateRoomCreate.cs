@@ -53,7 +53,7 @@ namespace Emmy.Services.Discord.Interactions.Components.PrivateRoom
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Приватные секторы")
+                .WithAuthor("Приватные секторы", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно создал приватный сектор {channelId.ToMention(MentionType.Channel)} на 30 дней. " +

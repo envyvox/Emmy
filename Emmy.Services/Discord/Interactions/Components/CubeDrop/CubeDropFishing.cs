@@ -74,7 +74,7 @@ namespace Emmy.Services.Discord.Interactions.Components.CubeDrop
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Рыбалка")
+                .WithAuthor("Рыбалка", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"**{Location.Neutral.Localize()}** полна желающих поймать крутой улов и теперь ты один из них. " +

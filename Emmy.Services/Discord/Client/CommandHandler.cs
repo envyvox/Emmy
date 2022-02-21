@@ -6,6 +6,7 @@ using Discord.WebSocket;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Extensions;
 using Emmy.Services.Game.User.Queries;
+using Humanizer;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using static Emmy.Services.Extensions.ExceptionExtensions;
@@ -116,7 +117,7 @@ namespace Emmy.Services.Discord.Client
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Ой, кажется что-то пошло не так...");
+                .WithAuthor("Ой, кажется что-то пошло не так...", interaction.User.GetAvatarUrl());
 
             switch (result.Exception)
             {
@@ -155,7 +156,7 @@ namespace Emmy.Services.Discord.Client
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Ой, кажется что-то пошло не так...")
+                .WithAuthor("Ой, кажется что-то пошло не так...", interaction.User.GetAvatarUrl())
                 .WithDescription(
                     $"{interaction.User.Mention.AsGameMention(user.Title)}, {result.ErrorReason}")
                 .WithImageUrl(await _mediator.Send(new GetImageUrlQuery(Data.Enums.Image.ExpectedException)));

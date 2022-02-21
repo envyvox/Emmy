@@ -72,7 +72,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Fraction
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Фракция")
+                .WithAuthor("Фракция", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     $"ты успешно вступил во фракцию {emotes.GetEmote(fraction.EmoteName())} **{fraction.Localize()}**." +

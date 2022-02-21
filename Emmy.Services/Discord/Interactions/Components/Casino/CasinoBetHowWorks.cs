@@ -30,7 +30,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Casino
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Как работают ставки")
+                .WithAuthor("Как работают ставки", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "после того как ты делаешь ставку - выбирается два случайных числа **от 1 до 100** и их среднее становится результатом броска кубика и определяет твой успех:" +

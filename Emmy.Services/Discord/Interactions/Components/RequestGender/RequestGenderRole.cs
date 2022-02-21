@@ -58,7 +58,7 @@ namespace Emmy.Services.Discord.Interactions.Components.RequestGender
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Запрос подтверждения пола")
+                .WithAuthor("Запрос подтверждения пола", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "наши курьеры доставили твою заявку на подтверждение пола. Скоро с тобой свяжется кто-то из " +

@@ -85,7 +85,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)
-                .WithAuthor("Отношения")
+                .WithAuthor("Отношения", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)}, " +
                     "твое предложение об отношениях успешно отправлено " +
@@ -96,7 +96,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands
 
             var notify = new EmbedBuilder()
                 .WithUserColor(targetUser.CommandColor)
-                .WithAuthor("Отношения")
+                .WithAuthor("Отношения", Context.User.GetAvatarUrl())
                 .WithDescription(
                     $"{Context.User.Mention.AsGameMention(user.Title)} предлагает тебе начать отношения, " +
                     "ты можешь **Согласиться** или **Отказаться** нажав на кнопку под этим сообщением.")
