@@ -57,7 +57,10 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.ActivityReward
 
                 var lobbsCount = (uint) Math.Ceiling(activityTokens / ActivityTokenPerLobbs);
 
-                await _mediator.Send(new AddCurrencyToUserCommand(user.Id, Currency.Lobbs, lobbsCount));
+                if (lobbsCount > 0)
+                {
+                    await _mediator.Send(new AddCurrencyToUserCommand(user.Id, Currency.Lobbs, lobbsCount));
+                }
             }
 
             await _db.Database.ExecuteSqlRawAsync("truncate user_statistics;");
