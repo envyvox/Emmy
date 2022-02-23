@@ -11,4 +11,9 @@ namespace Emmy.Services.Game.Statistic.Models
     {
         public UserStatisticProfile() => CreateMap<UserStatistic, UserStatisticDto>();
     }
+
+    public class UserAllTimeStatisticProfile : Profile
+    {
+        public UserAllTimeStatisticProfile() => CreateMap<UserAllTimeStatistic, UserStatisticDto>();
+    }
 }
