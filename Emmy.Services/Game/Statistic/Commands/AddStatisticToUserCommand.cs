@@ -60,6 +60,36 @@ namespace Emmy.Services.Game.Statistic.Commands
                     request.UserId, request.Type.ToString(), request.Amount);
             }
 
+            return await AddAllTimeStatisticToUser(request.UserId, request.Type, request.Amount);
+        }
+
+        private async Task<Unit> AddAllTimeStatisticToUser(long userId, Data.Enums.Statistic type, uint amount = 1)
+        {
+            var entity = await _db.UserAllTimeStatistics
+                .SingleOrDefaultAsync(x =>
+                    x.UserId == userId &&
+                    x.Type == type);
+
+            if (entity is null)
+            {
+                await _db.CreateEntity(new UserStatistic
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    Type = type,
+                    Amount = amount,
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    UpdatedAt = DateTimeOffset.UtcNow
+                });
+            }
+            else
+            {
+                entity.Amount += amount;
+                entity.UpdatedAt = DateTimeOffset.UtcNow;
+
+                await _db.UpdateEntity(entity);
+            }
+
             return Unit.Value;
         }
     }

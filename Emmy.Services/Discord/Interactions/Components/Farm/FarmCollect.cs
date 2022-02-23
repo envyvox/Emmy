@@ -9,6 +9,7 @@ using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Achievement.Commands;
 using Emmy.Services.Game.Collection.Commands;
 using Emmy.Services.Game.Crop.Commands;
 using Emmy.Services.Game.Farm.Commands;
@@ -110,6 +111,13 @@ namespace Emmy.Services.Discord.Interactions.Components.Farm
 
             await _mediator.Send(new AddStatisticToUserCommand(
                 user.Id, Statistic.CropHarvested, (uint) userFarms.Count));
+            await _mediator.Send(new CheckAchievementsInUserCommand(user.Id, new[]
+            {
+                Achievement.Collect50Crop,
+                Achievement.Collect100Crop,
+                Achievement.Collect300Crop,
+                Achievement.CompleteCollectionCrop
+            }));
 
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
             {

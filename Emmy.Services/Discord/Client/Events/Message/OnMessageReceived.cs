@@ -9,6 +9,7 @@ using Emmy.Services.Discord.CommunityDesc.Commands;
 using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Extensions;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Achievement.Commands;
 using Emmy.Services.Game.Statistic.Commands;
 using Emmy.Services.Game.User.Queries;
 using MediatR;
@@ -63,8 +64,7 @@ namespace Emmy.Services.Discord.Client.Events.Message
                 var user = await _mediator.Send(new GetUserQuery((long) request.SocketMessage.Author.Id));
 
                 await _mediator.Send(new AddStatisticToUserCommand(user.Id, Statistic.Messages));
-                // todo check achievements
-                // await _mediator.Send(new CheckAchievementInUserCommand(user.Id, AchievementType.FirstMessage));
+                await _mediator.Send(new CheckAchievementInUserCommand(user.Id, Achievement.FirstMessage));
             }
 
             if (request.SocketMessage.Channel.Id == channels[Channel.Commands].Id)

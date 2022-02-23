@@ -5,6 +5,7 @@ using Emmy.Data;
 using Emmy.Data.Entities.User;
 using Emmy.Data.Enums;
 using Emmy.Data.Extensions;
+using Emmy.Services.Game.Achievement.Commands;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -16,13 +17,16 @@ namespace Emmy.Services.Game.Collection.Commands
     public class AddCollectionToUserHandler : IRequestHandler<AddCollectionToUserCommand>
     {
         private readonly ILogger<AddCollectionToUserHandler> _logger;
+        private readonly IMediator _mediator;
         private readonly AppDbContext _db;
 
         public AddCollectionToUserHandler(
             DbContextOptions options,
-            ILogger<AddCollectionToUserHandler> logger)
+            ILogger<AddCollectionToUserHandler> logger,
+            IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
             _db = new AppDbContext(options);
         }
 
@@ -49,9 +53,12 @@ namespace Emmy.Services.Game.Collection.Commands
                 "Created user collection entity {@Entity}",
                 created);
 
-            // todo check collection achievements
-
-            return Unit.Value;
+            return await _mediator.Send(new CheckAchievementInUserCommand(request.UserId, request.Category switch
+            {
+                CollectionCategory.Crop => Data.Enums.Achievement.CompleteCollectionCrop,
+                CollectionCategory.Fish => Data.Enums.Achievement.CompleteCollectionFish,
+                _ => throw new ArgumentOutOfRangeException()
+            }));
         }
     }
 }

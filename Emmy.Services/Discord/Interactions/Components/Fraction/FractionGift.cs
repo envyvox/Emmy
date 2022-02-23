@@ -9,6 +9,7 @@ using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Achievement.Commands;
 using Emmy.Services.Game.Container.Commands;
 using Emmy.Services.Game.Cooldown.Commands;
 using Emmy.Services.Game.Cooldown.Queries;
@@ -78,6 +79,13 @@ namespace Emmy.Services.Discord.Interactions.Components.Fraction
             await _mediator.Send(new AddCooldownToUserCommand(
                 user.Id, Cooldown.FractionGift, TimeSpan.FromHours(giftCooldownDurationInHours)));
             await _mediator.Send(new AddXpToUserCommand(user.Id, xpFractionGift));
+            await _mediator.Send(new CheckAchievementsInUserCommand(user.Id, new[]
+            {
+                Achievement.FirstFractionGift,
+                Achievement.Fraction10Gift,
+                Achievement.Fraction50Gift,
+                Achievement.Fraction333Gift
+            }));
             await _mediator.Send(new AddContainerToUserCommand(randomUser.Id, Container.Token, 1));
             await _mediator.Send(new AddContainerToUserCommand(randomUser.Id, Container.Supply, 1));
 

@@ -9,6 +9,7 @@ using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Achievement.Commands;
 using Emmy.Services.Game.Cooldown.Commands;
 using Emmy.Services.Game.Cooldown.Queries;
 using Emmy.Services.Game.Currency.Commands;
@@ -126,10 +127,11 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Casino
                         $"{_local.Localize(LocalizationCategory.Currency, Currency.Token.ToString(), amount * 10)}! " +
                         "Главное, не теряй свое чувство меры!";
 
-                    await _mediator.Send(new AddStatisticToUserCommand(
-                        user.Id, Statistic.CasinoBet));
                     await _mediator.Send(new AddCurrencyToUserCommand(
                         user.Id, Currency.Token, amount * 9));
+                    await _mediator.Send(new AddStatisticToUserCommand(
+                        user.Id, Statistic.CasinoJackpot));
+                    await _mediator.Send(new CheckAchievementInUserCommand(user.Id, Achievement.FirstJackpot));
 
                     break;
 
@@ -151,6 +153,14 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.Casino
 
             await _mediator.Send(new AddCooldownToUserCommand(
                 user.Id, Cooldown.CasinoBet, TimeSpan.FromMinutes(cooldownDurationInMinutes)));
+            await _mediator.Send(new AddStatisticToUserCommand(user.Id, Statistic.CasinoBet));
+            await _mediator.Send(new CheckAchievementsInUserCommand(user.Id, new[]
+            {
+                Achievement.FirstBet,
+                Achievement.Casino33Bet,
+                Achievement.Casino333Bet,
+                Achievement.Casino777Bet
+            }));
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)

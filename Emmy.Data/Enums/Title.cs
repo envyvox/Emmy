@@ -14,8 +14,7 @@ namespace Emmy.Data.Enums
         StockyFarmer = 8,
         WineSamurai = 9,
         DescendantOcean = 10,
-        ResourcefulCatcher = 11,
-        Lucky = 12
+        Lucky = 11
     }
 
     public static class TitleHelper
@@ -34,7 +33,6 @@ namespace Emmy.Data.Enums
                 Title.StockyFarmer => "Запасливый фермер",
                 Title.WineSamurai => "Винный самурай",
                 Title.DescendantOcean => "Потомок океана",
-                Title.ResourcefulCatcher => "Находчивый ловец",
                 Title.Lucky => "Приносящий удачу",
                 _ => throw new ArgumentOutOfRangeException(nameof(title), title, null)
             };

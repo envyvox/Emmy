@@ -33,6 +33,7 @@ namespace Emmy.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserVoice> UserVoices { get; set; }
 
+        public DbSet<Achievement> Achievements { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Crop> Crops { get; set; }
         public DbSet<Fish> Fishes { get; set; }
@@ -47,6 +48,8 @@ namespace Emmy.Data
         public DbSet<WorldState> WorldStates { get; set; }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserAchievement> UserAchievements { get; set; }
+        public DbSet<UserAllTimeStatistic> UserAllTimeStatistics { get; set; }
         public DbSet<UserBanner> UserBanners { get; set; }
         public DbSet<UserBuilding> UserBuildings { get; set; }
         public DbSet<UserCollection> UserCollections { get; set; }

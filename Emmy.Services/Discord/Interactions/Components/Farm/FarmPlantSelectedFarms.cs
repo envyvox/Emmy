@@ -8,6 +8,7 @@ using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Achievement.Commands;
 using Emmy.Services.Game.Farm.Commands;
 using Emmy.Services.Game.Farm.Queries;
 using Emmy.Services.Game.Localization;
@@ -71,6 +72,13 @@ namespace Emmy.Services.Discord.Interactions.Components.Farm
             await _mediator.Send(new PlantUserFarmsCommand(user.Id, selectedFarms, seed.Id));
             await _mediator.Send(new AddStatisticToUserCommand(
                 user.Id, Statistic.SeedPlanted, (uint) selectedFarms.Length));
+            await _mediator.Send(new CheckAchievementsInUserCommand(user.Id, new[]
+            {
+                Achievement.FirstPlant,
+                Achievement.Plant25Seed,
+                Achievement.Plant50Seed,
+                Achievement.Plant150Seed
+            }));
 
             var embed = new EmbedBuilder()
                 .WithUserColor(user.CommandColor)

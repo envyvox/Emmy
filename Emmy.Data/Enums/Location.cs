@@ -21,7 +21,7 @@ namespace Emmy.Data.Enums
             return location switch
             {
                 Location.Neutral => declension ? "Нейтральной зоне" : "Нейтральная зона",
-                Location.RedRose => declension ? "Угуисидане" : "Угуисудани", // todo добавить название
+                Location.RedRose => declension ? "Угуисидане" : "Угуисудани",
                 Location.WhiteCrow => declension ? "Андеграунде" : "Андеграунд",
                 Location.GoldenShark => declension ? "Ясуде дзайбацу" : "Ясуда дзайбацу",
                 Location.Fishing => declension ? "рыбалке" : "Рыбалка",

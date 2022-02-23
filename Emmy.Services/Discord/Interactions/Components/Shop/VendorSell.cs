@@ -8,12 +8,14 @@ using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Discord.Interactions.Attributes;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Achievement.Commands;
 using Emmy.Services.Game.Crop.Commands;
 using Emmy.Services.Game.Crop.Queries;
 using Emmy.Services.Game.Currency.Commands;
 using Emmy.Services.Game.Fish.Commands;
 using Emmy.Services.Game.Fish.Queries;
 using Emmy.Services.Game.Localization;
+using Emmy.Services.Game.Statistic.Commands;
 using Emmy.Services.Game.User.Queries;
 using MediatR;
 using static Emmy.Services.Extensions.ExceptionExtensions;
@@ -75,6 +77,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                     foreach (var (fish, amount) in userFishes)
                     {
                         await _mediator.Send(new RemoveFishFromUserCommand(user.Id, fish.Id, amount));
+                        await _mediator.Send(new AddStatisticToUserCommand(user.Id, Statistic.VendorSell, amount));
 
                         var currencyAmount = fish.Price * amount;
                         totalCurrencyAmount += currencyAmount;
@@ -102,6 +105,7 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
                     foreach (var (crop, amount) in userCrops)
                     {
                         await _mediator.Send(new RemoveCropFromUserCommand(user.Id, crop.Id, amount));
+                        await _mediator.Send(new AddStatisticToUserCommand(user.Id, Statistic.VendorSell, amount));
 
                         var currencyAmount = crop.Price * amount;
                         totalCurrencyAmount += currencyAmount;
@@ -118,6 +122,14 @@ namespace Emmy.Services.Discord.Interactions.Components.Shop
             }
 
             await _mediator.Send(new AddCurrencyToUserCommand(user.Id, Currency.Token, totalCurrencyAmount));
+            await _mediator.Send(new CheckAchievementsInUserCommand(user.Id, new[]
+            {
+                Achievement.FirstVendorDeal,
+                Achievement.Vendor100Sell,
+                Achievement.Vendor777Sell,
+                Achievement.Vendor1500Sell,
+                Achievement.Vendor3500Sell
+            }));
 
             var descString =
                 soldItems +

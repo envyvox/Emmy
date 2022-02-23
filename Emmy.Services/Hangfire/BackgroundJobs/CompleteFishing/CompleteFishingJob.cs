@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Discord;
 using Emmy.Data.Enums;
 using Emmy.Services.Discord.Embed;
@@ -6,6 +7,7 @@ using Emmy.Services.Discord.Emote.Extensions;
 using Emmy.Services.Discord.Guild.Queries;
 using Emmy.Services.Discord.Image.Queries;
 using Emmy.Services.Extensions;
+using Emmy.Services.Game.Achievement.Commands;
 using Emmy.Services.Game.Calculation;
 using Emmy.Services.Game.Collection.Commands;
 using Emmy.Services.Game.Fish.Commands;
@@ -70,8 +72,33 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
             {
                 await _mediator.Send(new AddFishToUserCommand(userId, fish.Id, 1));
                 await _mediator.Send(new AddCollectionToUserCommand(userId, CollectionCategory.Fish, fish.Id));
-                await _mediator.Send(new AddStatisticToUserCommand(userId, Statistic.Fishing));
-                // todo check achievements
+                await _mediator.Send(new AddStatisticToUserCommand(userId, Statistic.CatchFish));
+                await _mediator.Send(new CheckAchievementsInUserCommand(user.Id, new[]
+                {
+                    Achievement.FirstFish,
+                    Achievement.Catch50Fish,
+                    Achievement.Catch100Fish,
+                    Achievement.Catch300Fish
+                }));
+
+                switch (rarity)
+                {
+                    case FishRarity.Common:
+                    case FishRarity.Rare:
+                        // ignored
+                        break;
+                    case FishRarity.Epic:
+                        await _mediator.Send(new CheckAchievementInUserCommand(userId, Achievement.CatchEpicFish));
+                        break;
+                    case FishRarity.Mythical:
+                        await _mediator.Send(new CheckAchievementInUserCommand(userId, Achievement.CatchMythicalFish));
+                        break;
+                    case FishRarity.Legendary:
+                        await _mediator.Send(new CheckAchievementInUserCommand(userId, Achievement.CatchLegendaryFish));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
 
                 embed
                     .WithDescription(
@@ -97,7 +124,7 @@ namespace Emmy.Services.Hangfire.BackgroundJobs.CompleteFishing
                         $"{emotes.GetEmote("Xp")} {fishingXp} ед. опыта");
             }
 
-            // todo check achievements
+
             await _mediator.Send(new SendEmbedToUserCommand(socketUser!.Id, embed));
         }
     }
