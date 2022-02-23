@@ -80,7 +80,7 @@ namespace Emmy.Services.Discord.Interactions.SlashCommands.UserInfo
                             $"{((Title) achievement.RewardNumber).Localize()}",
                         _ => throw new ArgumentOutOfRangeException()
                     } + (exist
-                        ? $"\nВыполнено в {userAchievement.CreatedAt.ToString("HH:MM, dd MMMM yyyy", new CultureInfo("ru-RU"))}"
+                        ? $"\nВыполнено в {userAchievement.CreatedAt.ToString("dd MMMM yyyy", new CultureInfo("ru-RU"))}"
                         : ""));
             }
 
