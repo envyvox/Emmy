@@ -72,7 +72,7 @@ namespace Emmy.Services.Game.Statistic.Commands
 
             if (entity is null)
             {
-                await _db.CreateEntity(new UserStatistic
+                await _db.CreateEntity(new UserAllTimeStatistic
                 {
                     Id = Guid.NewGuid(),
                     UserId = userId,
