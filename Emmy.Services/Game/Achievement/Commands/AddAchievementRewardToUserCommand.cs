@@ -75,7 +75,8 @@ namespace Emmy.Services.Game.Achievement.Commands
                 .WithDescription(
                     $"{socketUser?.Mention.AsGameMention(user.Title)}, " +
                     $"ты выполнил достижение {emotes.GetEmote("Achievement")} **{achievement.Name}** из категории " +
-                    $"**{achievement.Category.Localize()}** и в качестве награды получаешь {rewardString}");
+                    $"**{achievement.Category.Localize()}** и в качестве награды получаешь {rewardString}" +
+                    $"\n\n{emotes.GetEmote("Arrow")} Посмотреть свои достижения можно в {emotes.GetEmote("DiscordSlashCommand")} `/достижения`.");
 
             return await _mediator.Send(new SendEmbedToUserCommand(socketUser!.Id, embed));
         }
